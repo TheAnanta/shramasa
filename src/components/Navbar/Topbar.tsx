@@ -1,11 +1,6 @@
 "use client";
 import React from "react";
 
-interface NavbarProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
-
 export default function Topbar({ isOpen, toggle }: NavbarProps) {
   return (
     <div className="flex justify-between items-center pt-[37px] pb-7 mx-[8.25%]">

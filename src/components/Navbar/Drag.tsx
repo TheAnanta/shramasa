@@ -2,14 +2,12 @@
 import React from "react";
 import styles from "./navbar.module.css";
 
-interface DragProps {
-  toggle: () => void;
-}
-
-export default function Drag({ toggle }: DragProps) {
+export default function Drag({ isOpen, toggle }: NavbarProps) {
   return (
     <div
-      className={`${styles.drag} ${styles.open} transition-all duration-200`}
+      className={`${styles.drag} ${
+        isOpen ? `${styles.open}` : `${styles.closed}`
+      }`}
     >
       <img
         src="/close.svg"

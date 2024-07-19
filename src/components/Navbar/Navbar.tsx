@@ -20,7 +20,7 @@ export default function ParentComponent() {
     <div>
       <Topbar isOpen={isOpen} toggle={toggle} />
       {isOpen && <div className={styles.backdrop} onClick={toggle} />}
-      {isOpen && <Drag toggle={toggle} />}
+      {<Drag toggle={toggle} isOpen={isOpen} />}
     </div>
   );
 }
