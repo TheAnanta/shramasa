@@ -2,10 +2,10 @@
 import React from "react";
 import styles from "./navbar.module.css";
 
-export default function Drag({ isOpen, toggle }: NavbarProps) {
+export default function Drawer({ isOpen, toggle }: NavbarProps) {
   return (
     <div
-      className={`${styles.drag} ${
+      className={`${styles.drawer} ${
         isOpen ? `${styles.open}` : `${styles.closed}`
       }`}
     >
@@ -21,7 +21,7 @@ export default function Drag({ isOpen, toggle }: NavbarProps) {
           alt=""
           className="absolute left-[34px] pb-[13.33%]"
         />
-        <div className="space-y-[5.70%] flex flex-col items-start justify-center h-[60%] pt-[13.33%] pb-[41.20%]">
+        <div className="drawer-list space-y-[5.70%] flex flex-col items-start justify-center h-[60%] pt-[13.33%] pb-[41.20%]">
           <p>Hair Care</p>
           <p>Skin Care</p>
           <p>Body Care</p>

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Topbar from "./Topbar";
-import Drag from "./Drag";
+import Drawer from "./Drawer";
 import styles from "./navbar.module.css";
 
 export default function Navbar() {
@@ -15,7 +15,7 @@ export default function Navbar() {
     <div>
       <Topbar isOpen={isOpen} toggle={toggle} />
       {isOpen && <div className={styles.backdrop} onClick={toggle} />}
-      {<Drag toggle={toggle} isOpen={isOpen} />}
+      {<Drawer toggle={toggle} isOpen={isOpen} />}
     </div>
   );
 }
