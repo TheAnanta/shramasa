@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import Topbar from "./TopBar";
+import Topbar from "./Topbar";
 import Drag from "./Drag";
+import styles from "./navbar.module.css";
 
 interface NavbarProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export default function ParentComponent() {
   return (
     <div>
       <Topbar isOpen={isOpen} toggle={toggle} />
+      {isOpen && <div className={styles.backdrop} onClick={toggle} />}
       {isOpen && <Drag toggle={toggle} />}
     </div>
   );
