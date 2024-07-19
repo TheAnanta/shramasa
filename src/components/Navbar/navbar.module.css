@@ -9,46 +9,10 @@
   padding-top: 3rem; /* Replace @apply pt-12 pl-6 */
   padding-left: 3rem;
   padding-bottom: 3rem;
+  height: 100vh;
+  min-width: 400px;
 }
 
-/* Large screens */
-@media (min-width: 1024px) {
-  .drag {
-    width: 30%;
-  }
-}
-
-@media (min-width: 850px) and (max-width: 1023px) {
-  .drag {
-    width: 40%;
-  }
-}
-
-@media (min-width: 650px) and (max-width: 850px) {
-  .drag {
-    width: 55%;
-  }
-}
-
-/* Small screens */
-@media (min-width: 600px) and (max-width: 650px) {
-  .drag {
-    width: 70%;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 600px) {
-  .drag {
-    width: 75%;
-  }
-}
-
-@media (max-width: 400px) {
-  .drag {
-    height: 70%;
-    width: 100%;
-  }
-}
 
 
 .drag.open {
