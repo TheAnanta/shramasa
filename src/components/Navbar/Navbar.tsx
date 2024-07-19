@@ -4,12 +4,7 @@ import Topbar from "./Topbar";
 import Drag from "./Drag";
 import styles from "./navbar.module.css";
 
-interface NavbarProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
-
-export default function ParentComponent() {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggle = () => {
