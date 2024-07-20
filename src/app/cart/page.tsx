@@ -2,7 +2,7 @@ import Catalogue from "@/components/catalogue";
 
 export default function Cart() {
   return (
-    <div className="px-[8.25%]">
+    <div className="px-[8.25%] pb-12">
       <div
         className="mt-[44px] space-x-[2.77%] flex
     lg:flex-row items-center lg:items-start justify-center flex-col"

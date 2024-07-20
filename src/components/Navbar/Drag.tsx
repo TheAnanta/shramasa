@@ -10,14 +10,14 @@ export default function Drag({ isOpen, toggle }: NavbarProps) {
       }`}
     >
       <img
-        src="/close.svg"
+        src="/navbar/close.svg"
         alt="close"
         className={`${styles.close} absolute top-4 right-4`}
         onClick={toggle}
       />
       <div className="flex flex-col justify-between space-y-4">
         <img
-          src="/logo.svg"
+          src="/navbar/logo.svg"
           alt=""
           className="absolute left-[34px] pb-[13.33%]"
         />
