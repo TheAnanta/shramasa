@@ -39,23 +39,43 @@ export default function Hero() {
           <HeroCard className={"flex flex-col !py-4"}>
             <div>
               <img
+                src="/icons/arrow_down.svg"
+                className="size-8 md:hidden ml-auto -rotate-90"
+              />
+              <img
                 src="/images/products/mockup.png"
                 className="h-[12vh] object-contain md:h-[15vh] mix-blend-multiply"
               />
-              <p className="md:w-[15ch] text-sm">
-                choose care for your purified face FACE 48H
-              </p>
+              <div className="flex justify-between items-end">
+                <p className="md:w-[15ch] text-sm">
+                  choose care for your purified face FACE 48H
+                </p>
+                <img
+                  src="/icons/arrow_down.svg"
+                  className="size-12 hidden md:flex"
+                />
+              </div>
             </div>
           </HeroCard>
           <HeroCard className={"flex flex-col !py-4"}>
             <div>
               <img
+                src="/icons/arrow_down.svg"
+                className="size-8 md:hidden ml-auto -rotate-90"
+              />
+              <img
                 src="/images/products/mockup-two.png"
                 className="h-[12vh] object-contain md:h-[14.5vh] mix-blend-multiply"
               />
-              <p className="md:w-[15ch] text-sm">
-                choose care for your shiny, silky hair HAIR 48H
-              </p>
+              <div className="flex justify-between items-end">
+                <p className="md:w-[15ch] text-sm">
+                  choose care for your shiny, silky hair HAIR 48H
+                </p>
+                <img
+                  src="/icons/arrow_down.svg"
+                  className="size-12 hidden md:flex"
+                />
+              </div>
             </div>
           </HeroCard>
         </div>
