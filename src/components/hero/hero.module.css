@@ -31,5 +31,15 @@
 
 .hero .card{
     background-color: #F2F2F2;
-    padding: 45px 40px;
+    padding: 24px 20px;
+}
+
+@media screen and (min-width: 480px) {
+    .hero .organic{
+        padding: 45px 40px;
+    }
+}
+
+.soyuzgrotesk{
+    font-family: 'Soyuz Grotesk';
 }
