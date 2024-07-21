@@ -6,17 +6,17 @@ export default function Topbar({ isOpen, toggle }: NavbarProps) {
     <div className="flex justify-between items-center pt-[37px] pb-7 mx-[8.25%]">
       <div className="flex">
         <img
-          src="/menu.svg"
+          src="/navbar/menu.svg"
           alt="menu"
           className="cursor-pointer"
           onClick={toggle}
         />
-        <img src="/user.svg" alt="user" className="pl-[30px]" />
+        <img src="/navbar/user.svg" alt="user" className="pl-[30px]" />
       </div>
-      <img src="/logo.svg" alt="logo" />
+      <img src="/navbar/logo.svg" alt="logo" />
       <div className="flex">
-        <img src="/search.svg" alt="search" />
-        <img src="/cart.svg" alt="cart" className="pl-[30px]" />
+        <img src="/navbar/search.svg" alt="search" />
+        <img src="/navbar/cart.svg" alt="cart" className="pl-[30px]" />
       </div>
     </div>
   );
