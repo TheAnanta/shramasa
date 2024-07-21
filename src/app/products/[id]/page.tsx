@@ -1,6 +1,20 @@
+"use client";
 import ProductCard from "@/components/ProductCard";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Cart() {
+export default function ProductPage({ params }: any) {
+  const data = [
+    {
+      id: "soapnut-shampoo",
+      name: "soapnut shampoo",
+    },
+    {
+      id: "abc",
+      name: "abc",
+    },
+  ];
+  const product = data.filter((e) => e.id == params.id)[0];
   return (
     <div className="px-[8.25%] pb-12">
       <div
@@ -18,7 +32,7 @@ export default function Cart() {
               <h3 className="text-xl font-medium opacity-50 leading-4">
                 hair care
               </h3>
-              <h2 className="text-4xl font-bold">soapnut shampoo</h2>
+              <h2 className="text-4xl font-bold">{product.name}</h2>
             </div>
             <div className="flex flex-col items-end">
               <img src="/cart/star.svg" alt="star" className="w-20" />
