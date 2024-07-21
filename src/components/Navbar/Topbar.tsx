@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 
-export default function Topbar({ isOpen, toggle }: NavbarProps) {
+export default function Topbar({ toggle }: NavbarProps) {
   return (
     <div className="flex justify-between items-center pt-[37px] pb-7 mx-[8.25%]">
       <div className="flex">
@@ -13,7 +14,9 @@ export default function Topbar({ isOpen, toggle }: NavbarProps) {
         />
         <img src="/navbar/user.svg" alt="user" className="pl-[30px]" />
       </div>
-      <img src="/navbar/logo.svg" alt="logo" />
+      <Link href="/">
+        <img src="/navbar/logo.svg" alt="logo" />
+      </Link>
       <div className="flex">
         <img src="/navbar/search.svg" alt="search" />
         <img src="/navbar/cart.svg" alt="cart" className="pl-[30px]" />
