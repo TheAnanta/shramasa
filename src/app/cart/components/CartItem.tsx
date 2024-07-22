@@ -1,8 +1,8 @@
 export function CartItem() {
   return (
     <tr className="border-t">
-      <td>
-        <div className="flex flex-col md:flex-row gap-x-5">
+      <td className="shink-0">
+        <div className="flex gap-x-5">
           <img
             src="/images/products/hair-shampoo-banner.png"
             className="w-[125px] h-[125px] rounded-2xl bg-gray-100 object-cover"
@@ -11,7 +11,7 @@ export function CartItem() {
             <p className="text-[0.65rem] font-medium uppercase opacity-65">
               Product name
             </p>
-            <p className="text-[1.05rem] mt-2 font-semibold uppercase max-w-[14ch]">
+            <p className="text-[1.05rem] mt-2 font-semibold uppercase w-[14ch]">
               face creame for skin care
             </p>
             <p className="text-[0.98rem] opacity-60 mt-auto">200 ml</p>

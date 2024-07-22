@@ -1,12 +1,18 @@
 import { CartItem } from "./components/CartItem";
+import { MobileCartItem } from "./components/MobileCartItem";
 
 export default function CartPage() {
   return (
-    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-gray-50 gap-x-4">
+    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-gray-50 gap-4">
       <div className="grow">
         <h2 className="text-4xl font-semibold mb-8 soyuz-grotesk">Your cart</h2>
-        <div className="px-8 py-4 rounded-3xl shadow-sm bg-white">
-          <table>
+        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white">
+          <div className="md:hidden">
+            <MobileCartItem isFirstItem={true} />
+            <MobileCartItem />
+            <MobileCartItem />
+          </div>
+          <table className="hidden md:table">
             <thead className="font-bold">
               <td>Product</td>
               <td>Quantity</td>
