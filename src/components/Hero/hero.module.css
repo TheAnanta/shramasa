@@ -1,0 +1,52 @@
+.hero{
+    
+}
+
+.hero .carousel{
+    width: 100%;
+    aspect-ratio: 1;
+    height: unset;
+    transition: all 0.5ms ease-in-out;
+    background-color: #F2F2F2;
+}
+
+@media screen and (min-width: 480px) {
+    .hero .carousel{
+        width: 100%;
+        aspect-ratio: 1.8;
+        height: unset;
+    }
+}
+
+@media screen and (min-width: 860px) {
+    .hero{
+        flex-direction: row;
+    }
+    .hero .carousel{
+        width: 44%;
+        height: 80vh;
+        aspect-ratio: unset;
+    }
+}
+
+.hero .card{
+    background-color: #F2F2F2;
+    padding: 24px 20px;
+}
+
+@media (prefers-color-scheme: dark){
+    .hero .card{
+        background-color: #111827;
+        padding: 24px 20px;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .hero .organic{
+        padding: 45px 40px;
+    }
+}
+
+.soyuzgrotesk{
+    font-family: 'Soyuz Grotesk';
+}
