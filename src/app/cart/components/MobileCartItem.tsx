@@ -1,9 +1,7 @@
 export function MobileCartItem({ isFirstItem }: any | undefined) {
   return (
     <div
-      className={`flex-col flex gap-1 items-end py-5 ${
-        isFirstItem ? `` : `border-t`
-      }`}
+      className={`flex-col flex gap-1 py-5 ${isFirstItem ? `` : `border-t`}`}
     >
       <div className="flex gap-x-5">
         <img
@@ -21,7 +19,7 @@ export function MobileCartItem({ isFirstItem }: any | undefined) {
           <p className="font-semibold">₹100.00 </p>
         </div>
       </div>
-      <div>
+      <div className="ml-auto">
         <div className="flex gap-4 pt-2">
           <div className="flex gap-x-[18px] items-center rounded-2xl bg-gray-50">
             <div className="p-2 bg-gray-100">
