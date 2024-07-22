@@ -8,6 +8,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-color-scheme){
+  *{
+    color: white;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -25,4 +31,14 @@
 
 .soyuz-grotesk{
   font-family: 'Soyuz Grotesk';
+}
+
+table td {
+  padding: 20px 44px 20px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  table td {
+    padding: 20px 88px 20px 0px;
+  }
 }

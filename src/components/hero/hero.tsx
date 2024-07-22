@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <div className={`${styles.hero} flex flex-col w-full gap-3`}>
       <div className={`${styles.carousel} rounded-3xl`}>
-        <Link href="/cart">
+        <Link href="/products/soapnut-shampoo">
           <img
             src="/images/products/hair-shampoo-banner.png"
             className="h-full w-full object-cover rounded-3xl"
@@ -47,7 +47,7 @@ export default function Hero() {
               />
               <img
                 src="/images/products/mockup.png"
-                className="h-[12vh] object-contain md:h-[15vh] mix-blend-multiply"
+                className="h-[12vh] object-contain md:h-[15vh]"
               />
               <div className="flex justify-between items-end">
                 <p className="md:w-[15ch] text-sm">
@@ -68,7 +68,7 @@ export default function Hero() {
               />
               <img
                 src="/images/products/mockup-two.png"
-                className="h-[12vh] object-contain md:h-[14.5vh] mix-blend-multiply"
+                className="h-[12vh] object-contain md:h-[14.5vh]"
               />
               <div className="flex justify-between items-end">
                 <p className="md:w-[15ch] text-sm">
