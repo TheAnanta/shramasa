@@ -26,3 +26,7 @@
 .soyuz-grotesk{
   font-family: 'Soyuz Grotesk';
 }
+
+table td {
+  padding: 20px 88px 20px 0px;
+}

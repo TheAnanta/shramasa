@@ -19,7 +19,10 @@ export default function Topbar({ toggle }: NavbarProps) {
       </Link>
       <div className="flex">
         <img src="/navbar/search.svg" alt="search" />
-        <img src="/navbar/cart.svg" alt="cart" className="pl-[30px]" />
+
+        <Link href={"/cart"}>
+          <img src="/navbar/cart.svg" alt="cart" className="pl-[30px]" />
+        </Link>
       </div>
     </div>
   );
