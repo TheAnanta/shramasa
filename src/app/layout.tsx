@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={manrope.className}>
+      <body
+        className={`${manrope.className} dark:bg-slate-950 dark:text-white`}
+      >
         <Navbar />
         {children}
         <Footer />

@@ -5,7 +5,7 @@ export function CartItem() {
         <div className="flex gap-x-5">
           <img
             src="/images/products/hair-shampoo-banner.png"
-            className="w-[125px] h-[125px] rounded-2xl bg-gray-100 object-cover"
+            className="w-[125px] h-[125px] rounded-2xl bg-gray-100 object-cover dark:bg-gray-950"
           />
           <div className="flex flex-col">
             <p className="text-[0.65rem] font-medium uppercase opacity-65">
@@ -19,19 +19,19 @@ export function CartItem() {
         </div>
       </td>
       <td>
-        <div className="flex gap-x-[18px] items-center rounded-2xl bg-gray-50">
-          <div className="p-2 bg-gray-100">
+        <div className="flex gap-x-[18px] items-center rounded-2xl bg-gray-50 dark:bg-gray-950/30">
+          <div className="p-2 bg-gray-100 dark:bg-gray-950">
             <img src="/icons/minus.svg" className="size-4" />
           </div>
           <p>1</p>
-          <div className="p-2 bg-gray-100">
+          <div className="p-2 bg-gray-100 dark:bg-gray-950">
             <img src="/icons/plus.svg" className="size-4" />
           </div>
         </div>
       </td>
       <td className="font-semibold">₹100.00 </td>
       <td className="!mr-0">
-        <div className="p-2 bg-gray-100">
+        <div className="p-2 bg-gray-100 dark:bg-gray-950">
           <img src="/icons/delete.svg" className="size-6" />
         </div>
       </td>

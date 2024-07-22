@@ -8,6 +8,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-color-scheme){
+  *{
+    color: white;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
