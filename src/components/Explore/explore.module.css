@@ -1,0 +1,13 @@
+.filter {
+  position: fixed;
+  top: 0;
+  background: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding-top: 3rem; /* Replace @apply pt-12 pl-6 */
+  padding-left: 3rem;
+  padding-bottom: 3rem;
+  height: 100vh;
+  width: 33%;
+  transition: all 0.3s ease-in-out;
+}

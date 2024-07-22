@@ -1,4 +1,5 @@
 import React from "react";
+import Item from "./Item";
 
 export default function NewSection() {
   return (
@@ -9,33 +10,9 @@ export default function NewSection() {
         className="w-48 object-cover py-6"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full mx-[8.25%] gap-6 pb-6">
-        <div className="flex flex-col items-start justify-center gap-y-2">
-          <img src="/newSection/product.svg" alt="" />
-          <p className="pt-4">face cream</p>
-          <p>Lorem ipsum dolor amet sit contest</p>
-          <div className="flex space-x-3 items-end">
-            <p className="text-lg font-semibold">₹20.19 </p>
-            <p className="text-[#999999] line-through text-base">₹22.35</p>
-          </div>
-        </div>
-        <div className="flex flex-col items-start justify-center gap-y-2">
-          <img src="/newSection/product.svg" alt="" />
-          <p className="pt-4">face cream</p>
-          <p>Lorem ipsum dolor amet sit contest</p>
-          <div className="flex space-x-3 items-end">
-            <p className="text-lg font-semibold">₹20.19 </p>
-            <p className="text-[#999999] line-through text-base">₹22.35</p>
-          </div>
-        </div>
-        <div className="flex flex-col items-start justify-center gap-y-2">
-          <img src="/newSection/product.svg" alt="" />
-          <p className="pt-4">face cream</p>
-          <p>Lorem ipsum dolor amet sit contest</p>
-          <div className="flex space-x-3 items-end">
-            <p className="text-lg font-semibold">₹20.19 </p>
-            <p className="text-[#999999] line-through text-base">₹22.35</p>
-          </div>
-        </div>
+        <Item />
+        <Item />
+        <Item />
       </div>
 
       {/* New Section Below */}
