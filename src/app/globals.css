@@ -33,12 +33,12 @@
   font-family: 'Soyuz Grotesk';
 }
 
-table td {
+table#cart td {
   padding: 20px 44px 20px 0px;
 }
 
 @media screen and (min-width: 768px) {
-  table td {
+  table#cart td {
     padding: 20px 88px 20px 0px;
   }
 }

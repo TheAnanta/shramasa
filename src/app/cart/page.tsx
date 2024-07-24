@@ -13,7 +13,7 @@ export default function CartPage() {
             <MobileCartItem />
             <MobileCartItem />
           </div>
-          <table className="hidden md:table">
+          <table id="cart" className="hidden md:table">
             <thead className="font-bold">
               <td>Product</td>
               <td>Quantity</td>

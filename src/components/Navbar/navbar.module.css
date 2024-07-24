@@ -13,7 +13,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-@media (prefers-color-scheme){
+@media (prefers-color-scheme:dark){
  .drawer{
   background: #111827;
  } 
