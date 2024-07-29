@@ -1,35 +1,87 @@
 import express from "express";
 import cors from "cors";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 const app = express();
-app.use(cors);
+app.use(cors());
+app.use(express.json());
 const PORT = 3001;
 
-app.get("/products", (req, res) => {
-  console.log("Hi there");
-  return res.json({ msg: "hi there" });
+// Get all products
+app.get("/products", async (req, res) => {
+  try {
+    const products = await prisma.product.findMany();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching products" });
+  }
 });
 
-app.get("/product/:product_id", (req, res) => {
-  console.log("Hi there");
-  return res.json({ msg: "hi there" });
+// Get a single product by ID
+app.get("/product/:productId", async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await prisma.product.findUnique({
+      where: { productId: parseInt(productId) },
+    });
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching product" });
+  }
 });
 
-app.get("/cart", (req, res) => {
-  console.log("Hi there");
-  return res.json({ msg: "hi there" });
+// Get the cart items for a user
+app.get("/cart", async (req, res) => {
+  const { userId, cartId } = req.body;
+  try {
+    const cartItems = await prisma.cart.findMany({
+      where: { userId: parseInt(userId), cartId: parseInt(cartId) },
+      include: { product: true },
+    });
+    res.json(cartItems);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching cart items" });
+  }
 });
 
-app.get("/wishlist", (req, res) => {
-  console.log("Hi there");
-  return res.json({ msg: "hi there" });
+// Get the wishlist items for a user
+app.get("/wishlist", async (req, res) => {
+  const { userId, wishlistId } = req.body;
+  try {
+    const wishlistItems = await prisma.wishlist.findMany({
+      where: {
+        wishlistId: parseInt(wishlistId),
+        userId: parseInt(userId),
+      },
+      include: { product: true },
+    });
+    res.json(wishlistItems);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching wishlist items" });
+  }
 });
 
-app.get("/orders/:order_id", (req, res) => {
-  console.log("Hi there");
-  return res.json({ msg: "hi there" });
+// Get an order by ID
+app.get("/orders/:orderId", async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    const order = await prisma.order.findUnique({
+      where: { orderId: parseInt(orderId) },
+      include: { product: true },
+    });
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching order" });
+  }
 });
 
-app.listen(3001, () => {
-  console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

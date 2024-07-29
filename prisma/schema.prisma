@@ -3,12 +3,73 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// schema.prisma
+// schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model User {
+  userId                    Int        @id @default(autoincrement())
+  firstname                 String
+  lastname                  String?
+  email                     String     @unique
+  phone                     String     @unique
+  password                  String?
+  address                   String?
+  pincode                   String?
+  cartItems                 Cart[]
+  wishlistItems             Wishlist[]
+  orders                    Order[]
+  forgotPasswordToken       String?
+  forgotPasswordTokenExpiry DateTime?
+  verifyToken               String?
+  verifyTokenExpiry         DateTime?
+}
+
+model Product {
+  productId     Int        @id @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  cartItems     Cart[]
+  orderItems    Order[]
+  wishlistItems Wishlist[]
+}
+
+model Cart {
+  cartId    Int     @id @default(autoincrement())
+  userId    Int
+  productId Int
+  quantity  Int     @default(0)
+  user      User    @relation(fields: [userId], references: [userId])
+  product   Product @relation(fields: [productId], references: [productId])
+
+  @@unique([userId, productId])
+}
+
+model Wishlist {
+  wishlistId Int     @id @default(autoincrement())
+  userId     Int
+  productId  Int
+  user       User    @relation(fields: [userId], references: [userId])
+  product    Product @relation(fields: [productId], references: [productId])
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  orderId   Int     @id @default(autoincrement())
+  userId    Int
+  productId Int
+  quantity  Int     @default(0)
+  user      User    @relation(fields: [userId], references: [userId])
+  product   Product @relation(fields: [productId], references: [productId])
+
+  @@unique([userId, productId])
 }
