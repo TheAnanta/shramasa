@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(cors());
 app.use(express.json());
-const PORT = 3001;
+const PORT = process.env.PORT;
 
 // Get all products
 app.get("/products", async (req, res) => {

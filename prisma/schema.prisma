@@ -21,7 +21,12 @@ model User {
   email                     String     @unique
   phone                     String     @unique
   password                  String?
-  address                   String?
+  homeNumber                String?
+  laneOne                   String?
+  laneTwo                   String?
+  city                      String?
+  state                     String?
+  country                   String?
   pincode                   String?
   cartItems                 Cart[]
   wishlistItems             Wishlist[]
