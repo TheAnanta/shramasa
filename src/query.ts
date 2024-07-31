@@ -294,9 +294,56 @@ app.post("/add-product", async (req: Request, res: Response) => {
 });
 //________________________________________________________
 
+app.post("/publish-product-review", async(req: Request, res: Response)=>{
+  checkAuthorizedByAdmin(req, res);
+  const {review, productId} = req.body;
+
+  if(!productId){
+    res.status(400).json({error: "Unable to provide rating. Product doesn't exist."})
+  }
+  if(!review.name){
+    res.status(400).json({error: "Name not provided along with the review. The user isn't logged in."})
+  }else if(!review.rating){
+    res.status(400).json({error: "Please provide a rating from 1 to 5 stars."})
+  }
+
+  try{
+    const updatedProductWithReview = await prisma.product.update({
+      where:{
+        productId: productId
+      },
+      data:{
+        reviews:{
+          push: review
+        }
+      }
+    })
+    res.json(updatedProductWithReview)
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ error: "Internal server error: " + error});
+  }
+});
+
 app.get("/get-all-products", async (req: Request, res: Response) => {
   try {
-    const products = await prisma.product.findMany();
+    const productsTemp: any = await prisma.product.findMany();
+    const products = await Promise.all(productsTemp.map(async (e:any)=>{
+      console.log(e["category"]);
+      const tempCategoryId = e["category"];
+      const tempSubcategoryId = e["subCategory"];
+      e["category"] = await prisma.category.findUnique({where: {
+        categoryId: tempCategoryId
+      }});
+      e["subCategory"] = await prisma.subCategory.findUnique({
+        where: {
+          subCategoryId: tempSubcategoryId
+        }
+      });
+      e["aggregateRating"] = e["reviews"].map((e:any)=>e["rating"]).reduce((acc:any, value:any)=>acc+value, 0) / e["reviews"].length;
+      console.log(e);
+      return e;
+    }));
     res.json(products);
   } catch (error) {
     console.error(error);
