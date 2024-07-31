@@ -215,10 +215,6 @@ app.post("/update-subcategory",async (req, res)=>{
   }
 });
 
-app.listen(3001, () => {
-  console.log("Server is running on http://localhost:3001");
-});
-
 //___PRODUCTS CRUD BELOW________________________________
 
 app.post("/add-product", async (req: Request, res: Response) => {
