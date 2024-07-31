@@ -295,7 +295,7 @@ app.post("/add-product", async (req: Request, res: Response) => {
 //________________________________________________________
 
 app.post("/publish-product-review", async(req: Request, res: Response)=>{
-  checkAuthorizedByAdmin(req, res);
+  // checkAuthorizedByAdmin(req, res);
   const {review, productId} = req.body;
 
   if(!productId){
