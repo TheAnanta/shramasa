@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "./Item";
+import CategoriesSection from "./CategoriesSection";
 
 export default function NewSection() {
   return (
@@ -16,56 +17,7 @@ export default function NewSection() {
       </div>
 
       {/* New Section Below */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:justify-between md:items-center w-full gap-8 md:gap-x-6 pt-12">
-        <div>
-          <img
-            src="/newSection/petal.svg"
-            alt="petal"
-            className="w-full h-auto object-cover"
-          />
-          <p className="p-1">hair care</p>
-        </div>
-        <div>
-          <img
-            src="/newSection/petal.svg"
-            alt="petal"
-            className="w-full h-auto object-cover"
-          />
-          <p className="p-1">hair care</p>
-        </div>
-        <div>
-          <img
-            src="/newSection/petal.svg"
-            alt="petal"
-            className="w-full h-auto object-cover"
-          />
-          <p className="p-1">hair care</p>
-        </div>
-        <div>
-          <img
-            src="/newSection/petal.svg"
-            alt="petal"
-            className="w-full h-auto object-cover"
-          />
-          <p className="p-1">hair care</p>
-        </div>
-        <div>
-          <img
-            src="/newSection/petal.svg"
-            alt="petal"
-            className="w-full h-auto object-cover"
-          />
-          <p className="p-1">hair care</p>
-        </div>
-        <div>
-          <img
-            src="/newSection/petal.svg"
-            alt="petal"
-            className="w-full h-auto object-cover"
-          />
-          <p className="p-1">hair care</p>
-        </div>
-      </div>
+      <CategoriesSection />
     </div>
   );
 }
