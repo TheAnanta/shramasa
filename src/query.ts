@@ -7,7 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
 app.get("/get-all-categories", async (_: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany();
@@ -41,24 +40,43 @@ app.post("/add-category", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/update-category-by-id", async (req, res)=>{
+app.post("/update-category-by-id", async (req, res) => {
   const { name, image, categoryId } = req.body;
-  if(!categoryId){
-    return res.status(400).json({error: "Invalid category id."});
+  if (!categoryId) {
+    return res.status(400).json({ error: "Invalid category id." });
   }
   if (!name && !image) {
     return res.status(400).json({ error: "Field to be updated not provided." });
   }
   // return res.send(categoryId + " " + image);
-  try{
-    const updatedCategory = await prisma.category.update({where: {
-      categoryId: categoryId
-    }, data:{
-      name: name,
-      image: image
-    }});
+  try {
+    const updatedCategory = await prisma.category.update({
+      where: {
+        categoryId: categoryId,
+      },
+      data: {
+        name: name,
+        image: image,
+      },
+    });
     res.status(200).json(updatedCategory);
-  }catch(error){
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
+  const { categoryId } = req.body;
+  try {
+    const response = await prisma.category.delete({
+      where: {
+        categoryId: categoryId,
+      },
+    });
+    console.log("Category deleted successfully");  
+    res.status(200).json(response);
+  } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
