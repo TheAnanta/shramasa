@@ -13,72 +13,115 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
-  userId                    Int        @id @default(autoincrement())
-  firstname                 String
-  lastname                  String?
-  email                     String     @unique
-  phone                     String     @unique
-  password                  String?
-  homeNumber                String?
-  laneOne                   String?
-  laneTwo                   String?
-  city                      String?
-  state                     String?
-  country                   String?
-  pincode                   String?
-  cart                      Cart[]
-  wishlistItems             Wishlist[]
-  orders                    Order[]
-  forgotPasswordToken       String?
-  forgotPasswordTokenExpiry DateTime?
-  verifyToken               String?
-  verifyTokenExpiry         DateTime?
+  userId      String   @id
+  firstName   String
+  lastName    String?
+  email       String   @unique
+  phone       String   @unique
+  role        UserRole
+  houseNumber String?
+  floor       String?
+  apartment   String?
+  landmark    String?
+  address     String?
+  pincode     Int?
+  avatarId    String?
+}
+
+model Category {
+  categoryId String @id
+  name       String
+  image      String
+}
+
+model SubCategory {
+  subCategoryId String @id
+  name          String
+  image         String
+  categoryId    String
 }
 
 model Product {
-  productId     Int        @id @default(autoincrement())
+  productId     String   @id
   name          String
   description   String
+  category      String
+  subCategory   String
+  images        String[]
+  ingredients   Json[]
+  discount      Float
   price         Float
-  cartItems     CartItem[]
-  orderItems    Order[]
-  wishlistItems Wishlist[]
+  howToUse      String
+  videoLink     String
+  rating        Float
+  videoProvider String
+  reviews       Json[]
 }
 
 model Cart {
-  cartId        Int         @id @default(autoincrement())
-  userId        Int
-  items         CartItem[]
-  user          User        @relation(fields: [userId], references: [userId])
-}
-
-model CartItem {
-  cartItemId    Int         @id @default(autoincrement())
-  cartId        Int
-  productId     Int
-  quantity      Int         @default(1)
-  cart          Cart        @relation(fields: [cartId], references: [cartId])
-  product       Product     @relation(fields: [productId], references: [productId])
+  cartId Int    @id
+  userId Int
+  items  Json[]
 }
 
 model Wishlist {
-  wishlistId Int     @id @default(autoincrement())
-  userId     Int
-  productId  Int
-  user       User    @relation(fields: [userId], references: [userId])
-  product    Product @relation(fields: [productId], references: [productId])
+  userId Int      @id
+  items  String[]
+} 
 
-  @@unique([userId, productId])
+//___________________________________________________________________________________________
+// Order Management
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  COD
+  UPI
+  NETBANKING
+  CREDITCARD
+  DEBITCARD
+  WALLET
+}
+
+enum OrderStatus {
+  INPROGRESS
+  PROCESSING
+  CONFIRMED
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  AMOUNT
 }
 
 model Order {
-  orderId   Int     @id @default(autoincrement())
-  userId    Int
-  productId Int
-  quantity  Int     @default(0)
-  user      User    @relation(fields: [userId], references: [userId])
-  product   Product @relation(fields: [productId], references: [productId])
+  orderId        Int           @id
+  userId         Int
+  items          Json[]
+  status         OrderStatus
+  totalAmount    Float
+  paymentMethod  PaymentMethod
+  paymentStatus  PaymentStatus
+  paymentDetails Json
 
-  @@unique([userId, productId])
+  deliveryAddress String
+  deliveryDate    DateTime?
+  orderDate       DateTime     @default(now())
+  couponCode      String
+  discount        Float
+  discountType    DiscountType
 }
