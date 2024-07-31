@@ -66,15 +66,15 @@ model Product {
 }
 
 model Cart {
-  cartId Int    @id
-  userId Int
+  cartId String @id
+  userId String
   items  Json[]
 }
 
 model Wishlist {
-  userId Int      @id
+  userId String   @id
   items  String[]
-} 
+}
 
 //___________________________________________________________________________________________
 // Order Management
@@ -109,8 +109,8 @@ enum DiscountType {
 }
 
 model Order {
-  orderId        Int           @id
-  userId         Int
+  orderId        String        @id
+  userId         String
   items          Json[]
   status         OrderStatus
   totalAmount    Float

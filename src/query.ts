@@ -7,12 +7,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-function checkAuthorizedByAdmin(req:Request){
+function checkAuthorizedByAdmin(req: Request) {
   const authToken = req.headers.authorization;
   //TODO: Replace with actual representation
   return authToken == "admin";
 }
 
+//Catergories CRUD
 app.get("/get-all-categories", async (_: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany();
@@ -77,8 +78,8 @@ app.post("/update-category-by-id", async (req, res) => {
 app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
   checkAuthorizedByAdmin(req);
   const { categoryId } = req.body;
-  if(!categoryId){
-    res.status(400).json({error: "Category id not provided."})
+  if (!categoryId) {
+    res.status(400).json({ error: "Category id not provided." });
   }
   try {
     const response = await prisma.category.delete({
@@ -90,79 +91,83 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
     res.status(200).json(response);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error: "+ error });
+    res.status(500).json({ error: "Internal server error: " + error });
   }
 });
 
-app.get("/get-all-subcategories", async(req, res)=>{
+// SubCategories CRUD
+app.get("/get-all-subcategories", async (req, res) => {
   try {
     const subcategories = await prisma.subCategory.findMany();
     res.json(subcategories);
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" + error.name });
   }
 });
 
-app.get("/get-subcategories-by-category", async(req, res)=>{
-  const {categoryId} = req.query;
-  if(!categoryId){
-    res.status(400).json({error:"Category ID not provided"});
+app.get("/get-subcategories-by-category", async (req, res) => {
+  const { categoryId } = req.query;
+  if (!categoryId) {
+    res.status(400).json({ error: "Category ID not provided" });
   }
   try {
     const subcategories = await prisma.subCategory.findMany({
       where: {
-        categoryId: categoryId?.toString()
-      }
+        categoryId: categoryId?.toString(),
+      },
     });
-    if(subcategories.length <= 0){
-      res.status(422).json({error: "No subcategories found for the category id."})
+    if (subcategories.length <= 0) {
+      res
+        .status(422)
+        .json({ error: "No subcategories found for the category id." });
     }
     res.json(subcategories);
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" + error.name });
   }
 });
 
-app.post("/add-subcategory",async (req, res)=>{
+app.post("/add-subcategory", async (req, res) => {
   checkAuthorizedByAdmin(req);
-  const {subcategoryName, subcategoryImage, categoryId} = req.body;
+  const { subcategoryName, subcategoryImage, categoryId } = req.body;
   const subcategoryId = subcategoryName.replace(/ /g, "-");
-  if(!categoryId){
-    res.status(400).json({error: "categoryId expected. Found null."})
+  if (!categoryId) {
+    res.status(400).json({ error: "categoryId expected. Found null." });
   }
-  if(!subcategoryName){
-    res.status(400).json({error: "subcategoryName not provided."})
-  }else if(!subcategoryImage){
-    res.status(400).json({error: "subcategoryImage not provided."})
+  if (!subcategoryName) {
+    res.status(400).json({ error: "subcategoryName not provided." });
+  } else if (!subcategoryImage) {
+    res.status(400).json({ error: "subcategoryImage not provided." });
   }
   try {
-    const doesCategoryExist = (await prisma.category.count({where:{
-      categoryId: categoryId
-    }})) >= 1;
-    if(doesCategoryExist){
+    const doesCategoryExist =
+      (await prisma.category.count({
+        where: {
+          categoryId: categoryId,
+        },
+      })) >= 1;
+    if (doesCategoryExist) {
       const subcategory = await prisma.subCategory.create({
-        data:{
+        data: {
           name: subcategoryName,
           subCategoryId: subcategoryId,
           image: subcategoryImage,
           categoryId: categoryId,
-        }
+        },
       });
       res.json(subcategory);
-    }else{
-      res.status(400).json({error: "Invalid category id. Can't add subcategory."})
+    } else {
+      res
+        .status(400)
+        .json({ error: "Invalid category id. Can't add subcategory." });
     }
     res.status(200).json(doesCategoryExist);
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Couldn't add subcategory: " + error.name });
   }
-});
-
-app.listen(3001, () => {
-  console.log("Server is running on http://localhost:3001");
 });
 
 //___PRODUCTS CRUD BELOW________________________________
@@ -243,3 +248,37 @@ app.post("/add-product", async (req: Request, res: Response) => {
   return res.status(200).json(product);
 });
 //________________________________________________________
+
+app.get("/get-all-products", async (req: Request, res: Response) => {
+  try {
+    const products = await prisma.product.findMany();
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.delete("/delete-product-by-id", async (req: Request, res: Response) => {
+  checkAuthorizedByAdmin(req);
+  const { productId } = req.body;
+  if (!productId) {
+    res.status(400).json({ error: "Product id not provided." });
+  }
+  try {
+    const response = await prisma.product.delete({
+      where: {
+        productId: productId,
+      },
+    });
+    console.log("Product deleted successfully");
+    res.status(200).json(response);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error: " + error });
+  }
+});
+
+app.listen(3001, () => {
+  console.log("Server is running on http://localhost:3001");
+});
