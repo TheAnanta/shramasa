@@ -19,7 +19,7 @@ app.get("/products", async (req, res) => {
 });
 
 // Get a single product by ID
-app.get("/product/:productId", async (req, res) => {
+app.get("/products/:productId", async (req, res) => {
   const { productId } = req.params;
   try {
     const product = await prisma.product.findUnique({
@@ -36,16 +36,7 @@ app.get("/product/:productId", async (req, res) => {
 
 // Get the cart items for a user
 app.get("/cart", async (req, res) => {
-  const { userId, cartId } = req.body;
-  try {
-    const cartItems = await prisma.cart.findMany({
-      where: { userId: parseInt(userId), cartId: parseInt(cartId) },
-      include: { product: true },
-    });
-    res.json(cartItems);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching cart items" });
-  }
+  res.json({ message: "Get cart items" });
 });
 
 // Get the wishlist items for a user

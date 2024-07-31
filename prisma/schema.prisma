@@ -13,7 +13,6 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-
 model User {
   userId                    Int        @id @default(autoincrement())
   firstname                 String
@@ -28,7 +27,7 @@ model User {
   state                     String?
   country                   String?
   pincode                   String?
-  cartItems                 Cart[]
+  cart                      Cart[]
   wishlistItems             Wishlist[]
   orders                    Order[]
   forgotPasswordToken       String?
@@ -42,20 +41,25 @@ model Product {
   name          String
   description   String
   price         Float
-  cartItems     Cart[]
+  cartItems     CartItem[]
   orderItems    Order[]
   wishlistItems Wishlist[]
 }
 
 model Cart {
-  cartId    Int     @id @default(autoincrement())
-  userId    Int
-  productId Int
-  quantity  Int     @default(0)
-  user      User    @relation(fields: [userId], references: [userId])
-  product   Product @relation(fields: [productId], references: [productId])
+  cartId        Int         @id @default(autoincrement())
+  userId        Int
+  items         CartItem[]
+  user          User        @relation(fields: [userId], references: [userId])
+}
 
-  @@unique([userId, productId])
+model CartItem {
+  cartItemId    Int         @id @default(autoincrement())
+  cartId        Int
+  productId     Int
+  quantity      Int         @default(1)
+  cart          Cart        @relation(fields: [cartId], references: [cartId])
+  product       Product     @relation(fields: [productId], references: [productId])
 }
 
 model Wishlist {
