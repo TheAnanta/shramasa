@@ -7,6 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+function checkAuthorizedByAdmin(req:Request){
+  const authToken = req.headers.authorization;
+  //TODO: Replace with actual representation
+  return authToken == "admin";
+}
+
 app.get("/get-all-categories", async (_: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany();
@@ -18,8 +24,9 @@ app.get("/get-all-categories", async (_: Request, res: Response) => {
 });
 
 app.post("/add-category", async (req: Request, res: Response) => {
+  checkAuthorizedByAdmin(req);
   const { name, image } = req.body;
-  if (!name) {
+  if (!name || !image) {
     return res.status(400).json({ error: "Name is required" });
   }
   const categoryId = name.replace(/ /g, "-");
@@ -41,6 +48,7 @@ app.post("/add-category", async (req: Request, res: Response) => {
 });
 
 app.post("/update-category-by-id", async (req, res) => {
+  checkAuthorizedByAdmin(req);
   const { name, image, categoryId } = req.body;
   if (!categoryId) {
     return res.status(400).json({ error: "Invalid category id." });
@@ -67,7 +75,11 @@ app.post("/update-category-by-id", async (req, res) => {
 });
 
 app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
+  checkAuthorizedByAdmin(req);
   const { categoryId } = req.body;
+  if(!categoryId){
+    res.status(400).json({error: "Category id not provided."})
+  }
   try {
     const response = await prisma.category.delete({
       where: {
@@ -92,11 +104,38 @@ app.get("/get-all-subcategories", async(req, res)=>{
   }
 });
 
+app.get("/get-subcategories-by-category", async(req, res)=>{
+  const {categoryId} = req.query;
+  if(!categoryId){
+    res.status(400).json({error:"Category ID not provided"});
+  }
+  try {
+    const subcategories = await prisma.subCategory.findMany({
+      where: {
+        categoryId: categoryId?.toString()
+      }
+    });
+    if(subcategories.length <= 0){
+      res.status(422).json({error: "No subcategories found for the category id."})
+    }
+    res.json(subcategories);
+  } catch (error:any) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" + error.name });
+  }
+});
+
 app.post("/add-subcategory",async (req, res)=>{
+  checkAuthorizedByAdmin(req);
   const {subcategoryName, subcategoryImage, categoryId} = req.body;
   const subcategoryId = subcategoryName.replace(/ /g, "-");
   if(!categoryId){
     res.status(400).json({error: "categoryId expected. Found null."})
+  }
+  if(!subcategoryName){
+    res.status(400).json({error: "subcategoryName not provided."})
+  }else if(!subcategoryImage){
+    res.status(400).json({error: "subcategoryImage not provided."})
   }
   try {
     const doesCategoryExist = (await prisma.category.count({where:{
@@ -129,6 +168,7 @@ app.listen(3001, () => {
 //___PRODUCTS CRUD BELOW________________________________
 
 app.post("/add-product", async (req: Request, res: Response) => {
+  checkAuthorizedByAdmin(req);
   const {
     name,
     description,
@@ -160,7 +200,7 @@ app.post("/add-product", async (req: Request, res: Response) => {
     !videoProvider ||
     !reviews
   ) {
-    return res.status(400).json({ error: "Enter all details" });
+    return res.status(400).json({ error: "Enter all fields required." });
   }
 
   const productId = name.replace(/ /g, "-");
