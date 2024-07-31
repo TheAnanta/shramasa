@@ -78,7 +78,47 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
     res.status(200).json(response);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error: "+ error });
+  }
+});
+
+app.get("/get-all-subcategories", async(req, res)=>{
+  try {
+    const subcategories = await prisma.subCategory.findMany();
+    res.json(subcategories);
+  } catch (error:any) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" + error.name });
+  }
+});
+
+app.post("/add-subcategory",async (req, res)=>{
+  const {subcategoryName, subcategoryImage, categoryId} = req.body;
+  const subcategoryId = subcategoryName.replace(/ /g, "-");
+  if(!categoryId){
+    res.status(400).json({error: "categoryId expected. Found null."})
+  }
+  try {
+    const doesCategoryExist = (await prisma.category.count({where:{
+      categoryId: categoryId
+    }})) >= 1;
+    if(doesCategoryExist){
+      const subcategory = await prisma.subCategory.create({
+        data:{
+          name: subcategoryName,
+          subCategoryId: subcategoryId,
+          image: subcategoryImage,
+          categoryId: categoryId,
+        }
+      });
+      res.json(subcategory);
+    }else{
+      res.status(400).json({error: "Invalid category id. Can't add subcategory."})
+    }
+    res.status(200).json(doesCategoryExist);
+  } catch (error:any) {
+    console.error(error);
+    res.status(500).json({ error: "Couldn't add subcategory: " + error.name });
   }
 });
 
