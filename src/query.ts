@@ -84,6 +84,7 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
     res.status(400).json({ error: "Category id not provided." });
   }
   try {
+
     const response = await prisma.category.delete({
       where: {
         categoryId: categoryId,
@@ -95,6 +96,7 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error: " + error });
   }
+
 });
 
 // SubCategories CRUD
@@ -214,6 +216,8 @@ app.post("/update-subcategory",async (req, res)=>{
     res.status(500).json({ error: "Couldn't update subcategory: " + error.name });
   }
 });
+
+
 
 //___PRODUCTS CRUD BELOW________________________________
 
@@ -340,7 +344,8 @@ app.get("/get-all-products", async (req: Request, res: Response) => {
           subCategoryId: tempSubcategoryId
         }
       });
-      e["aggregateRating"] = e["reviews"].map((e:any)=>e["rating"]).reduce((acc:any, value:any)=>acc+value, 0) / e["reviews"].length;
+      e["rating"] = (e["reviews"].map((e:any)=>e["rating"]).reduce((acc:any, value:any)=>acc+value, 0) / e["reviews"].length).toFixed(2);
+      e["customerRatingCount"] = e.reviews.length,
       console.log(e);
       return e;
     }));
