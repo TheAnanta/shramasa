@@ -74,7 +74,7 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
         categoryId: categoryId,
       },
     });
-    console.log("Category deleted successfully");  
+    console.log("Category deleted successfully");
     res.status(200).json(response);
   } catch (error: any) {
     console.error(error);
@@ -85,3 +85,81 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
 app.listen(3001, () => {
   console.log("Server is running on http://localhost:3001");
 });
+
+//___PRODUCTS CRUD BELOW________________________________
+
+app.post("/add-product", async (req: Request, res: Response) => {
+  const {
+    name,
+    description,
+    images,
+    categoryId,
+    subCategoryId,
+    ingredients,
+    discount,
+    price,
+    howToUse,
+    videoLink,
+    rating,
+    videoProvider,
+    reviews,
+  } = req.body;
+
+  if (
+    !name ||
+    !categoryId ||
+    !subCategoryId ||
+    !price ||
+    !description ||
+    !images ||
+    !ingredients ||
+    !discount ||
+    !howToUse ||
+    !videoLink ||
+    !rating ||
+    !videoProvider ||
+    !reviews
+  ) {
+    return res.status(400).json({ error: "Enter all details" });
+  }
+
+  const productId = name.replace(/ /g, "-");
+
+  const subCategory = await prisma.subCategory.findUnique({
+    where: {
+      subCategoryId: subCategoryId,
+    },
+  });
+
+  if (!subCategory) {
+    return res.status(400).json({ error: "Doesn't not exist" });
+  }
+
+  if (subCategory.categoryId != categoryId) {
+    return res
+      .status(400)
+      .json({ error: "Subcategory doesn't belong to the category" });
+  }
+
+  const product = await prisma.product.create({
+    data: {
+      productId: productId,
+      name: name,
+      description: description,
+      images: images,
+      category: categoryId,
+      subCategory: subCategoryId,
+      ingredients: ingredients,
+      discount: discount,
+      price: price,
+      howToUse: howToUse,
+      videoLink: videoLink,
+      rating: rating,
+      videoProvider: videoProvider,
+      reviews: reviews,
+    },
+  });
+
+  return res.status(200).json(product);
+});
+//________________________________________________________
