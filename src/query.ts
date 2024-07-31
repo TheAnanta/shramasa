@@ -7,10 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-function checkAuthorizedByAdmin(req: Request) {
+function checkAuthorizedByAdmin(req:Request, res:Response){
   const authToken = req.headers.authorization;
   //TODO: Replace with actual representation
-  return authToken == "admin";
+  if(authToken !== "Basic YWRtaW46bWFsbGE="){
+    res.status(401).json({error: "You're unauthorized to perform this operation"})
+  }
 }
 
 //Catergories CRUD
@@ -25,7 +27,7 @@ app.get("/get-all-categories", async (_: Request, res: Response) => {
 });
 
 app.post("/add-category", async (req: Request, res: Response) => {
-  checkAuthorizedByAdmin(req);
+  checkAuthorizedByAdmin(req, res);
   const { name, image } = req.body;
   if (!name || !image) {
     return res.status(400).json({ error: "Name is required" });
@@ -49,7 +51,7 @@ app.post("/add-category", async (req: Request, res: Response) => {
 });
 
 app.post("/update-category-by-id", async (req, res) => {
-  checkAuthorizedByAdmin(req);
+  checkAuthorizedByAdmin(req, res);
   const { name, image, categoryId } = req.body;
   if (!categoryId) {
     return res.status(400).json({ error: "Invalid category id." });
@@ -76,7 +78,7 @@ app.post("/update-category-by-id", async (req, res) => {
 });
 
 app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
-  checkAuthorizedByAdmin(req);
+  checkAuthorizedByAdmin(req, res);
   const { categoryId } = req.body;
   if (!categoryId) {
     res.status(400).json({ error: "Category id not provided." });
@@ -129,9 +131,9 @@ app.get("/get-subcategories-by-category", async (req, res) => {
   }
 });
 
-app.post("/add-subcategory", async (req, res) => {
-  checkAuthorizedByAdmin(req);
-  const { subcategoryName, subcategoryImage, categoryId } = req.body;
+app.post("/add-subcategory",async (req, res)=>{
+  checkAuthorizedByAdmin(req, res);
+  const {subcategoryName, subcategoryImage, categoryId} = req.body;
   const subcategoryId = subcategoryName.replace(/ /g, "-");
   if (!categoryId) {
     res.status(400).json({ error: "categoryId expected. Found null." });
@@ -170,10 +172,57 @@ app.post("/add-subcategory", async (req, res) => {
   }
 });
 
+app.post("/update-subcategory",async (req, res)=>{
+  checkAuthorizedByAdmin(req, res);
+  const {subcategoryName, subcategoryImage, categoryId, subcategoryId} = req.body;
+  if(!subcategoryId){
+    res.status(400).json({error: "subcategoryId expected. Found null."})
+  }
+  if(!categoryId){
+    res.status(400).json({error: "categoryId expected. Found null."})
+  }
+  if(!subcategoryName && !subcategoryImage){
+    res.status(400).json({error: "Updatable fields not provided."})
+  }
+  try {
+    const doesCategoryExist =  !categoryId || (await prisma.category.count({where:{
+      categoryId: categoryId
+    }})) >= 1;
+    const doesSubcategoryExist = (await prisma.subCategory.count({where:{
+      subCategoryId: subcategoryId
+    }})) >= 1;
+    if(doesCategoryExist && doesSubcategoryExist){
+      const subcategory = await prisma.subCategory.update({
+        where: {
+          subCategoryId: subcategoryId
+        },
+        data:{
+          name: subcategoryName,
+          image: subcategoryImage,
+          categoryId: categoryId,
+        }
+      });
+      res.json(subcategory);
+    }else if(doesSubcategoryExist){
+      res.status(400).json({error: "Invalid category id. Can't update subcategory."})
+    }else{
+      res.status(400).json({error: "Invalid subcategory id. Can't update subcategory."})
+    }
+    res.status(200).json(doesCategoryExist);
+  } catch (error:any) {
+    console.error(error);
+    res.status(500).json({ error: "Couldn't update subcategory: " + error.name });
+  }
+});
+
+app.listen(3001, () => {
+  console.log("Server is running on http://localhost:3001");
+});
+
 //___PRODUCTS CRUD BELOW________________________________
 
 app.post("/add-product", async (req: Request, res: Response) => {
-  checkAuthorizedByAdmin(req);
+  checkAuthorizedByAdmin(req, res);
   const {
     name,
     description,
@@ -260,7 +309,7 @@ app.get("/get-all-products", async (req: Request, res: Response) => {
 });
 
 app.delete("/delete-product-by-id", async (req: Request, res: Response) => {
-  checkAuthorizedByAdmin(req);
+  checkAuthorizedByAdmin(req, res);
   const { productId } = req.body;
   if (!productId) {
     res.status(400).json({ error: "Product id not provided." });
