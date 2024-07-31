@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc -b && node dist/index.js"
+    "dev": "tsc -b && nodemon dist/index.js",
+    "query": "tsc -b && nodemon dist/query.js",
+    "seed" : "node src/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,7 @@
     "@types/express": "^4.17.21",
     "axios": "^1.7.2",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4"
   }
 }
