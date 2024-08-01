@@ -7,11 +7,54 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-function checkAuthorizedByAdmin(req:Request, res:Response){
+//USER CRUD
+app.post("/signup", async (req: Request, res: Response) => {
+  const { firstName, lastName, email, phone } = req.body;
+
+  if (!firstName || !lastName || !email || !phone) {
+    return res.status(400).json({ error: "Enter all fields required." });
+  }
+  const userId = "1";
+  try {
+    const userExists = await prisma.user.findUnique({
+      where: {
+        userId,
+        email,
+        phone,
+      },
+    });
+    // userId, NOT VALID , testing PURPOSES ONLY
+
+    if (!userExists) {
+      const user = await prisma.user.create({
+        data: {
+          userId,
+          firstName,
+          lastName,
+          email,
+          phone,
+          role: "USER",
+        },
+      });
+
+      res.status(200).json(user);
+    } else {
+      res.status(400).json({ error: "User already exists" });
+    }
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//
+function checkAuthorizedByAdmin(req: Request, res: Response) {
   const authToken = req.headers.authorization;
   //TODO: Replace with actual representation
-  if(authToken !== "Basic YWRtaW46bWFsbGE="){
-    res.status(401).json({error: "You're unauthorized to perform this operation"})
+  if (authToken !== "Basic YWRtaW46bWFsbGE") {
+    res
+      .status(401)
+      .json({ error: "You're unauthorized to perform this operation" });
   }
 }
 
@@ -84,7 +127,6 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
     res.status(400).json({ error: "Category id not provided." });
   }
   try {
-
     const response = await prisma.category.delete({
       where: {
         categoryId: categoryId,
@@ -96,7 +138,6 @@ app.delete("/delete-category-by-id", async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error: " + error });
   }
-
 });
 
 // SubCategories CRUD
@@ -133,9 +174,9 @@ app.get("/get-subcategories-by-category", async (req, res) => {
   }
 });
 
-app.post("/add-subcategory",async (req, res)=>{
+app.post("/add-subcategory", async (req, res) => {
   checkAuthorizedByAdmin(req, res);
-  const {subcategoryName, subcategoryImage, categoryId} = req.body;
+  const { subcategoryName, subcategoryImage, categoryId } = req.body;
   const subcategoryId = subcategoryName.replace(/ /g, "-");
   if (!categoryId) {
     res.status(400).json({ error: "categoryId expected. Found null." });
@@ -174,50 +215,62 @@ app.post("/add-subcategory",async (req, res)=>{
   }
 });
 
-app.post("/update-subcategory",async (req, res)=>{
+app.post("/update-subcategory", async (req, res) => {
   checkAuthorizedByAdmin(req, res);
-  const {subcategoryName, subcategoryImage, categoryId, subcategoryId} = req.body;
-  if(!subcategoryId){
-    res.status(400).json({error: "subcategoryId expected. Found null."})
+  const { subcategoryName, subcategoryImage, categoryId, subcategoryId } =
+    req.body;
+  if (!subcategoryId) {
+    res.status(400).json({ error: "subcategoryId expected. Found null." });
   }
-  if(!categoryId){
-    res.status(400).json({error: "categoryId expected. Found null."})
+  if (!categoryId) {
+    res.status(400).json({ error: "categoryId expected. Found null." });
   }
-  if(!subcategoryName && !subcategoryImage){
-    res.status(400).json({error: "Updatable fields not provided."})
+  if (!subcategoryName && !subcategoryImage) {
+    res.status(400).json({ error: "Updatable fields not provided." });
   }
   try {
-    const doesCategoryExist =  !categoryId || (await prisma.category.count({where:{
-      categoryId: categoryId
-    }})) >= 1;
-    const doesSubcategoryExist = (await prisma.subCategory.count({where:{
-      subCategoryId: subcategoryId
-    }})) >= 1;
-    if(doesCategoryExist && doesSubcategoryExist){
+    const doesCategoryExist =
+      !categoryId ||
+      (await prisma.category.count({
+        where: {
+          categoryId: categoryId,
+        },
+      })) >= 1;
+    const doesSubcategoryExist =
+      (await prisma.subCategory.count({
+        where: {
+          subCategoryId: subcategoryId,
+        },
+      })) >= 1;
+    if (doesCategoryExist && doesSubcategoryExist) {
       const subcategory = await prisma.subCategory.update({
         where: {
-          subCategoryId: subcategoryId
+          subCategoryId: subcategoryId,
         },
-        data:{
+        data: {
           name: subcategoryName,
           image: subcategoryImage,
           categoryId: categoryId,
-        }
+        },
       });
       res.json(subcategory);
-    }else if(doesSubcategoryExist){
-      res.status(400).json({error: "Invalid category id. Can't update subcategory."})
-    }else{
-      res.status(400).json({error: "Invalid subcategory id. Can't update subcategory."})
+    } else if (doesSubcategoryExist) {
+      res
+        .status(400)
+        .json({ error: "Invalid category id. Can't update subcategory." });
+    } else {
+      res
+        .status(400)
+        .json({ error: "Invalid subcategory id. Can't update subcategory." });
     }
     res.status(200).json(doesCategoryExist);
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Couldn't update subcategory: " + error.name });
+    res
+      .status(500)
+      .json({ error: "Couldn't update subcategory: " + error.name });
   }
 });
-
-
 
 //___PRODUCTS CRUD BELOW________________________________
 
@@ -298,57 +351,72 @@ app.post("/add-product", async (req: Request, res: Response) => {
 });
 //________________________________________________________
 
-app.post("/publish-product-review", async(req: Request, res: Response)=>{
+app.post("/publish-product-review", async (req: Request, res: Response) => {
   // checkAuthorizedByAdmin(req, res);
-  const {review, productId} = req.body;
+  const { review, productId } = req.body;
 
-  if(!productId){
-    res.status(400).json({error: "Unable to provide rating. Product doesn't exist."})
+  if (!productId) {
+    res
+      .status(400)
+      .json({ error: "Unable to provide rating. Product doesn't exist." });
   }
-  if(!review.name){
-    res.status(400).json({error: "Name not provided along with the review. The user isn't logged in."})
-  }else if(!review.rating){
-    res.status(400).json({error: "Please provide a rating from 1 to 5 stars."})
+  if (!review.name) {
+    res.status(400).json({
+      error:
+        "Name not provided along with the review. The user isn't logged in.",
+    });
+  } else if (!review.rating) {
+    res
+      .status(400)
+      .json({ error: "Please provide a rating from 1 to 5 stars." });
   }
 
-  try{
+  try {
     const updatedProductWithReview = await prisma.product.update({
-      where:{
-        productId: productId
+      where: {
+        productId: productId,
       },
-      data:{
-        reviews:{
-          push: review
-        }
-      }
-    })
-    res.json(updatedProductWithReview)
-  }catch(error){
+      data: {
+        reviews: {
+          push: review,
+        },
+      },
+    });
+    res.json(updatedProductWithReview);
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error: " + error});
+    res.status(500).json({ error: "Internal server error: " + error });
   }
 });
 
 app.get("/get-all-products", async (req: Request, res: Response) => {
   try {
     const productsTemp: any = await prisma.product.findMany();
-    const products = await Promise.all(productsTemp.map(async (e:any)=>{
-      console.log(e["category"]);
-      const tempCategoryId = e["category"];
-      const tempSubcategoryId = e["subCategory"];
-      e["category"] = await prisma.category.findUnique({where: {
-        categoryId: tempCategoryId
-      }});
-      e["subCategory"] = await prisma.subCategory.findUnique({
-        where: {
-          subCategoryId: tempSubcategoryId
-        }
-      });
-      e["rating"] = (e["reviews"].map((e:any)=>e["rating"]).reduce((acc:any, value:any)=>acc+value, 0) / e["reviews"].length).toFixed(2);
-      e["customerRatingCount"] = e.reviews.length,
-      console.log(e);
-      return e;
-    }));
+    const products = await Promise.all(
+      productsTemp.map(async (e: any) => {
+        console.log(e["category"]);
+        const tempCategoryId = e["category"];
+        const tempSubcategoryId = e["subCategory"];
+        e["category"] = await prisma.category.findUnique({
+          where: {
+            categoryId: tempCategoryId,
+          },
+        });
+        e["subCategory"] = await prisma.subCategory.findUnique({
+          where: {
+            subCategoryId: tempSubcategoryId,
+          },
+        });
+        e["rating"] = (
+          e["reviews"]
+            .map((e: any) => e["rating"])
+            .reduce((acc: any, value: any) => acc + value, 0) /
+          e["reviews"].length
+        ).toFixed(2);
+        (e["customerRatingCount"] = e.reviews.length), console.log(e);
+        return e;
+      })
+    );
     res.json(products);
   } catch (error) {
     console.error(error);
