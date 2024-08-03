@@ -5,9 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc -b && nodemon dist/index.js",
-    "query": "tsc -b && nodemon dist/query.js",
     "seed": "tsc  -b && nodemon dist/seed.js",
-    "delete-force": "tsc -b && nodemon dist/delete.js"
+    "migrate": "npx prisma migrate dev --name init",
+    "generate": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

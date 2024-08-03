@@ -20,19 +20,25 @@ enum UserRole {
 }
 
 model User {
-  userId      String   @id
-  firstName   String
-  lastName    String?
-  email       String   @unique
-  phone       String   @unique
-  role        UserRole
-  houseNumber String?
-  floor       String?
-  apartment   String?
-  landmark    String?
-  address     String?
-  pincode     Int?
-  avatarId    String?
+  userId    String      @id
+  name      String
+  email     String      @unique
+  phone     String      @unique
+  role      UserRole
+  avatarId  String?
+  addresses Address[]
+}
+
+model Address {
+  addressId   String  @id
+  userId      String
+  houseNumber String
+  floor       String
+  apartment   String
+  landmark    String
+  address     String
+  pincode     Int
+  user        User    @relation(fields: [userId], references: [userId])
 }
 
 model Category {
@@ -111,6 +117,7 @@ enum DiscountType {
 model Order {
   orderId        String        @id
   userId         String
+  addressId      String
   items          Json[]
   status         OrderStatus
   totalAmount    Float
@@ -124,4 +131,5 @@ model Order {
   couponCode      String
   discount        Float
   discountType    DiscountType
+  additionalInfo  Json
 }
