@@ -55,7 +55,7 @@ function checkAuthorizedByAdmin(req: Request, res: Response) {
     res
       .status(401)
       .json({ error: "You're unauthorized to perform this operation" });
-  }
+ co  }
 }
 
 //Catergories CRUD
