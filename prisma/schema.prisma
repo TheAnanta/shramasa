@@ -20,17 +20,17 @@ enum UserRole {
 }
 
 model User {
-  userId    String      @id
+  userId    String    @id
   name      String
-  email     String      @unique
-  phone     String      @unique
+  email     String    @unique
+  phone     String    @unique
   role      UserRole
   avatarId  String?
   addresses Address[]
 }
 
 model Address {
-  addressId   String  @id
+  addressId   String @id
   userId      String
   houseNumber String
   floor       String
@@ -38,7 +38,7 @@ model Address {
   landmark    String
   address     String
   pincode     Int
-  user        User    @relation(fields: [userId], references: [userId])
+  user        User   @relation(fields: [userId], references: [userId])
 }
 
 model Category {
@@ -69,6 +69,7 @@ model Product {
   rating        Float
   videoProvider String
   reviews       Json[]
+  stock         Int @default(0)
 }
 
 model Cart {

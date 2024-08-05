@@ -26,7 +26,7 @@ export const addCategory = async (req: Request, res: Response) => {
       data: {
         categoryId: categoryId,
         name: name,
-        image: image,
+        image: image, 
       },
     });
 
