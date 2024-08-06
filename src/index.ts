@@ -6,6 +6,7 @@ import subCategoryRoutes from "./routes/subCategoryRoute";
 import productRoutes from "./routes/productRoute";
 import cartRoutes from "./routes/cartRoute";
 import wishlistRoutes from "./routes/wishlistRoute";
+import orderRoutes from "./routes/orderRoute";
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use("/api/subcategories", subCategoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.listen(3001, () => {
   console.log("Server is running on http://localhost:3001");
