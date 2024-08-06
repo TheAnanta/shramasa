@@ -69,11 +69,11 @@ model Product {
   rating        Float
   videoProvider String
   reviews       Json[]
-  stock         Int @default(0)
+  stock         Int      @default(0)
 }
 
 model Cart {
-  cartId String @id
+  cartId Int    @id @default(autoincrement())
   userId String
   items  Json[]
 }
