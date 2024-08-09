@@ -116,21 +116,35 @@ enum DiscountType {
 }
 
 model Order {
-  orderId        String        @id
-  userId         String
-  addressId      String
-  items          Json[]
-  status         OrderStatus
-  totalAmount    Float
-  paymentMethod  PaymentMethod
-  paymentStatus  PaymentStatus
-  paymentDetails Json
-
+  orderId         String        @id @default(uuid())
+  userId          String
+  items           Json[]
+  status          OrderStatus   @default(PROCESSING)
+  paymentId       String
+  payment         Payment       @relation(fields: [paymentId], references: [paymentId])
   deliveryAddress String
   deliveryDate    DateTime?
-  orderDate       DateTime     @default(now())
-  couponCode      String
-  discount        Float
-  discountType    DiscountType
-  additionalInfo  Json
+  orderDate       DateTime      @default(now())
+  couponCode      String?
+  discount        Float?
+  discountType    DiscountType?
+  additionalInfo  Json?
+}
+
+model Payment {
+  paymentId      String         @id @default(uuid())
+  amount         Float
+  status         PaymentStatus  @default(PENDING)
+  method         PaymentMethod?
+  paymentDetails Json?
+  Order          Order[]
+}
+
+model Coupon {
+  couponId  String       @id
+  code      String
+  discount  Float
+  type      DiscountType
+  validTill DateTime
+  isActive  Boolean
 }
