@@ -19,6 +19,12 @@ enum UserRole {
   USER
 }
 
+model DeletedUser {
+  deleted_Id String @id @default(uuid())
+  name       String
+  email      String @unique
+}
+
 model User {
   userId    String    @id
   name      String

@@ -36,7 +36,7 @@ export const getUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
-    res.json(user);
+    res.status(200).json(user);
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -52,7 +52,7 @@ export const updateUser = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "No fields to update." });
   }
   try {
-    const user = await prisma.user.findMany({
+    const user = await prisma.user.findUnique({
       where: { userId: userId.toString() },
     });
     if (!user) {
@@ -67,7 +67,7 @@ export const updateUser = async (req: Request, res: Response) => {
       where: { userId: userId.toString() },
       data: { name, email, phone },
     });
-    res.json(user);
+    res.status(200).json(user);
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -80,21 +80,29 @@ export const deleteUser = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "User ID not provided." });
   }
   try {
-    const user = await prisma.user.findMany({
+    const user = await prisma.user.findUnique({
       where: { userId: userId.toString() },
     });
     if (!user) {
       return res.status(404).json({ error: "User not found." });
+    } else {
+      const deleteUser = await prisma.deletedUser.create({
+        data: {
+          name: user.name,
+          email: user.email,
+        },
+      });
     }
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
   try {
-    const user = await prisma.user.delete({
+    await prisma.user.delete({
       where: { userId: userId.toString() },
     });
-    res.json(user);
+
+    res.status(201).json({ message: "User deleted successfully" });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

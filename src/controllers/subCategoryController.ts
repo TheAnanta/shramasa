@@ -72,14 +72,13 @@ export const addSubCategory = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "Invalid category id. Can't add subcategory." });
     }
-    res.status(200).json(doesCategoryExist);
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Couldn't add subcategory: " + error.name });
   }
 };
 
-export const updateCategory = async (req: Request, res: Response) => {
+export const updateSubCategory = async (req: Request, res: Response) => {
   const { subcategoryName, subcategoryImage, categoryId, subcategoryId } =
     req.body;
   if (!subcategoryId) {
@@ -126,7 +125,6 @@ export const updateCategory = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "Invalid subcategory id. Can't update subcategory." });
     }
-    res.status(200).json(doesCategoryExist);
   } catch (error: any) {
     console.error(error);
     res

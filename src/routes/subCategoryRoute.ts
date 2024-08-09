@@ -3,14 +3,14 @@ import {
   addSubCategory,
   getAllSubCategories,
   getSubCategoriesByCategory,
-  updateCategory,
+  updateSubCategory,
 } from "../controllers/subCategoryController";
 
 const router = Router();
 
 router.post("/add-subcategory", addSubCategory);
 router.get("/get-all-subcategories", getAllSubCategories);
-router.put("/get-subcategories-by-category", getSubCategoriesByCategory);
-router.delete("/update-category", updateCategory);
+router.get("/get-subcategories-by-category", getSubCategoriesByCategory);
+router.delete("/update-subcategory", updateSubCategory);
 
 export default router;

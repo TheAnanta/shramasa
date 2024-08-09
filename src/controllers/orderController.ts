@@ -4,13 +4,13 @@ import { DiscountType, OrderStatus, PaymentStatus } from "@prisma/client";
 import { randomUUID } from "crypto";
 
 export const instantiateOrder = async (req: Request, res: Response) => {
-    const { userId, addressId, couponCode } = req.body;
+    const { userId, cartId, addressId, couponCode } = req.body;
     try {
-        const cartItems = (await Promise.all(((await prisma.cart.findMany({
+        const cartItems = (await Promise.all(((await prisma.cart.findUnique({
             where: {
-                userId: userId,
+                cartId : cartId,
             }
-        }))[0]).items.map(async (i1) => {
+        })))!.items.map(async (i1) => {
             const item = i1 as { productId: string; quantity: number };
             const price = (await (prisma.product.findUnique({
                 where: {
