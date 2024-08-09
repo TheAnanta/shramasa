@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prismaClient";
 import { DiscountType, OrderStatus, PaymentStatus } from "@prisma/client";
+import { randomUUID } from "crypto";
 
 export const instantiateOrder = async (req: Request, res: Response) => {
     const { userId, addressId, couponCode } = req.body;
@@ -32,15 +33,20 @@ export const instantiateOrder = async (req: Request, res: Response) => {
             }
         }))[0];
         const totalAmount = cartItems.map((e) => (e.price ?? 0) * e.quantity).reduce((p, c) => p + c);
-        const discount = coupon.type == DiscountType.AMOUNT ? coupon.discount : (coupon.discount * totalAmount) / 100;
-        // coupon.maxDiscount -> Add to schema, add min cart value to coupon
+        if (totalAmount < coupon.minCartValue) {
+            return res.status(400).json({ error: "Cart value is less than the minimum cart value required for the coupon." });
+        }
+        const discount = Math.max(coupon.type == DiscountType.AMOUNT ? coupon.discount : (coupon.discount * totalAmount) / 100, coupon.maxDiscount);
         const address = await prisma.address.findUnique({
             where: {
                 addressId: addressId
             }
         });
+        const razorpayPaymentId = randomUUID();
+        //TODO: Call the razorpay api to generate a razorpay order id to replace with `razorpayPaymentId`
         const payment = await prisma.payment.create({
             data: {
+                paymentId: razorpayPaymentId,
                 amount: totalAmount - discount,
             }
         });
@@ -60,6 +66,27 @@ export const instantiateOrder = async (req: Request, res: Response) => {
             },
         });
         res.status(201).json(order);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+};
+
+export const addPaymentInfoFromRazorpay = async (req: Request, res: Response) => {
+    const { razorpayPaymentId, paymentStatus, paymentMethod, paymentMethodDetails } = req.body;
+    try {
+        const order = await prisma.payment.update({
+            where: {
+                paymentId: razorpayPaymentId
+            },
+            data: {
+                status: paymentStatus,
+                method: paymentMethod,
+                paymentDetails: {
+                    paymentMethodDetails: paymentMethodDetails,
+                }
+            }
+        });
+        res.status(200).json(order);
     } catch (error) {
         res.status(400).json({ error: error });
     }

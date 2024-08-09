@@ -132,7 +132,7 @@ model Order {
 }
 
 model Payment {
-  paymentId      String         @id @default(uuid())
+  paymentId      String         @id
   amount         Float
   status         PaymentStatus  @default(PENDING)
   method         PaymentMethod?
@@ -141,10 +141,12 @@ model Payment {
 }
 
 model Coupon {
-  couponId  String       @id
-  code      String
-  discount  Float
-  type      DiscountType
-  validTill DateTime
-  isActive  Boolean
+  couponId     String       @id
+  code         String
+  discount     Float
+  type         DiscountType
+  validTill    DateTime
+  isActive     Boolean
+  maxDiscount  Float
+  minCartValue Float
 }
