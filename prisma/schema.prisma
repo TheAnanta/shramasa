@@ -92,10 +92,11 @@ model Wishlist {
 //___________________________________________________________________________________________
 // Order Management
 enum PaymentStatus {
-  PENDING
-  SUCCESS
-  FAILED
-  CANCELLED
+  PENDING // indicates that the payment is pending
+  SUCCESS // indicates that the payment was successful
+  FAILED // indicates that the payment has failed due to any reason, eg. payment failure, user cancellation
+  CANCELLED // indicates that payment has been cancelled after success
+  REFUNDED // indicates that the payment has been refunded
 }
 
 enum PaymentMethod {
@@ -108,12 +109,12 @@ enum PaymentMethod {
 }
 
 enum OrderStatus {
-  INPROGRESS
-  PROCESSING
-  CONFIRMED
-  DISPATCHED
-  DELIVERED
-  CANCELLED
+  INPROGRESS //Indicates if user is in progress of placing order
+  PROCESSING //Indicates that the user has placed the order and is being processed
+  CONFIRMED //Indicates that the order has been confirmed by Shramasa team
+  DISPATCHED // Indicates that the order has been dispatched
+  DELIVERED //Indicates that the order has been delivered
+  CANCELLED //Indicates that the order has been cancelled by the user
 }
 
 enum DiscountType {
@@ -125,7 +126,7 @@ model Order {
   orderId         String        @id @default(uuid())
   userId          String
   items           Json[]
-  status          OrderStatus   @default(PROCESSING)
+  status          OrderStatus   @default(INPROGRESS)
   paymentId       String
   payment         Payment       @relation(fields: [paymentId], references: [paymentId])
   deliveryAddress String

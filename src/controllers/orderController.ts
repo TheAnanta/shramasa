@@ -56,9 +56,7 @@ export const instantiateOrder = async (req: Request, res: Response) => {
                 items: cartItems,
                 // addressId: addressId,
                 couponCode: couponCode,
-                additionalInfo: {
-                    'razorpayId': ''
-                },
+                additionalInfo: {},
                 deliveryAddress: JSON.stringify(address),
                 discount: discount,
                 discountType: coupon.type,
@@ -81,13 +79,100 @@ export const addPaymentInfoFromRazorpay = async (req: Request, res: Response) =>
             data: {
                 status: paymentStatus,
                 method: paymentMethod,
-                paymentDetails: {
-                    paymentMethodDetails: paymentMethodDetails,
-                }
+                paymentDetails: paymentMethodDetails
             }
         });
         res.status(200).json(order);
     } catch (error) {
         res.status(400).json({ error: error });
     }
+};
+
+export const updateOrder = async (orderId: string, data: any, callback: (paymentId: string) => Promise<void>, res: Response) => {
+
+    try {
+        const order = await prisma.order.update({
+            where: {
+                orderId: orderId
+            },
+            data: data
+        });
+        await callback(order.paymentId);
+        res.status(200).json(order);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+};
+
+// Shramasa accepted the order
+export const confirmOrder = async (req: Request, res: Response) => {
+    const { orderId, data } = req.body;
+    if (!data["deliveryDate"]) {
+        return res.status(400).json({ error: "Delivery date is required." });
+    }
+    if (!data["deliveryPartner"]) {
+        return res.status(400).json({ error: "Delivery partner is required." });
+    }
+    const updatedData = {
+        deliveryDate: data["deliveryDate"],
+        additionalInfo: {
+            deliveryPartner: data["deliveryPartner"],
+        },
+        status: OrderStatus.CONFIRMED,
+    };
+    updateOrder(orderId, updatedData, async () => { }, res);
+};
+
+//user cancelled the order
+export const cancelOrder = async (req: Request, res: Response) => {
+    const { orderId } = req.body;
+    const updatedData = {
+        status: OrderStatus.CANCELLED,
+    };
+
+    updateOrder(orderId, updatedData, async (paymentId) => {
+        const updatedPayment = await prisma.payment.update({
+            where: {
+                paymentId: paymentId
+            },
+            data: {
+                status: PaymentStatus.CANCELLED
+            }
+        });
+    }, res);
+};
+
+//the payment was successful
+export const processOrder = async (req: Request, res: Response) => {
+    const { orderId } = req.body;
+    const updatedData = {
+        status: OrderStatus.PROCESSING,
+    };
+
+    updateOrder(orderId, updatedData, async (paymentId) => { }, res);
+};
+
+//the order was dispatched by the delivery partner
+export const dispatchOrder = async (req: Request, res: Response) => {
+    const { orderId, deliveryTracking } = req.body;
+    const updatedData = {
+        additionalInfo: {
+            put: {
+                deliveryTracking: deliveryTracking
+            }
+        },
+        status: OrderStatus.DISPATCHED,
+    };
+
+    updateOrder(orderId, updatedData, async (paymentId) => { }, res);
+};
+
+//the order was delivered to the customer
+export const deliverOrder = async (req: Request, res: Response) => {
+    const { orderId } = req.body;
+    const updatedData = {
+        status: OrderStatus.DELIVERED,
+    };
+
+    updateOrder(orderId, updatedData, async (paymentId) => { }, res);
 };
