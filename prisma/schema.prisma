@@ -76,6 +76,7 @@ model Product {
   videoProvider String
   reviews       Json[]
   stock         Int      @default(0)
+  dateAdded     DateTime @default(now())
 }
 
 model Cart {
@@ -87,6 +88,14 @@ model Cart {
 model Wishlist {
   userId String   @id
   items  String[]
+}
+
+model Review {
+  reviewId   String @id
+  userId     String
+  rating     Float
+  reviewText String
+  dateAdded  DateTime @default(now())
 }
 
 //___________________________________________________________________________________________
