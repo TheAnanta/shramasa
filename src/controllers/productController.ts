@@ -3,6 +3,22 @@ import prisma from "../prismaClient";
 import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 // checkAuthorizedByAdmin
 
+
+export const getLatestProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await prisma.product.findMany({
+      orderBy: {
+        dateAdded: "desc"
+      },
+      take: 5
+    });
+    res.status(200).json(products);
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
 export const addProduct = async (req: Request, res: Response) => {
   const {
     name,
