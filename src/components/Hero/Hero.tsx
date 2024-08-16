@@ -1,3 +1,4 @@
+import { Carousel } from "./Carousel";
 import HeroCard from "./hero-card";
 import styles from "./hero.module.css";
 import Link from "next/link";
@@ -5,14 +6,18 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <div className={`${styles.hero} flex flex-col w-full gap-3`}>
-      <div className={`${styles.carousel} rounded-3xl`}>
-        <Link href="/products/soapnut-shampoo">
-          <img
-            src="/images/products/hair-shampoo-banner.png"
-            className="h-full w-full object-cover rounded-3xl"
-          />
-        </Link>
-      </div>
+      <Carousel
+        carouselItems={[
+          {
+            image: "/images/products/hair-shampoo-banner.png",
+            productId: "soapnut-shampoo",
+          },
+          {
+            image: "/images/banners/mireender-keer.jpg",
+            productId: "abc",
+          },
+        ]}
+      />
       <div className="grow gap-3 flex flex-col">
         <div className="h-[64%] shrink-0 relative">
           <HeroCard className={`${styles.organic}`}>
