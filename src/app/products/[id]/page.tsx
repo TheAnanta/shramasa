@@ -1,20 +1,43 @@
 "use client";
 import ProductCard from "@/components/ProductCard";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Product } from "@/types/interfaces";
+import React from "react";
 
-export default function ProductPage({ params }: any) {
-  const data = [
-    {
-      id: "soapnut-shampoo",
-      name: "soapnut shampoo",
-    },
-    {
-      id: "abc",
-      name: "abc",
-    },
-  ];
-  const product = data.filter((e) => e.id == params.id)[0];
+export default function ProductPage({ params }: { params: { id: string } }) {
+  console.log(params.id);
+
+  const [product, setProduct] = React.useState<Product>();
+
+  React.useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/products/get-product-by-id",
+          {
+            // Update with the correct endpoint
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              productId: params.id, // Ensure params.id is available
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch product data");
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        setProduct(data);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+
+    getData();
+  }, [params.id]); // Add params.id as a dependency
   return (
     <div className="px-[8.25%] pb-12">
       <div
@@ -24,7 +47,7 @@ export default function ProductPage({ params }: any) {
         <img
           src="/images/products/hair-shampoo-banner.png"
           alt="product_image"
-          className="rounded-xl pb-12 lg:pb-0 object-cover md:w-[80%] md:aspect-[0.85]"
+          className="rounded-xl pb-12 lg:pb-0 object-cover md:aspect-[0.85]"
         />
         <div className="flex flex-col items-start justify-start lg:w-1/2 xl:w-auto">
           <div className="flex pt-4 pb-4 gap-x-2 justify-between items-start w-full">
@@ -32,24 +55,32 @@ export default function ProductPage({ params }: any) {
               <h3 className="text-xl font-medium opacity-50 leading-4">
                 hair care
               </h3>
-              <h2 className="text-4xl font-bold">{product.name}</h2>
+              <h2 className="text-4xl font-bold">{product?.name}</h2>
             </div>
             <div className="flex flex-col items-end">
               <img src="/cart/star.svg" alt="star" className="w-20" />
               <p className="text-sm font-semibold text-end">
-                4.5 <span className="opacity-60">(200K)</span>
+                {product?.rating} <span className="opacity-60">(200K)</span>
               </p>
             </div>
           </div>
           <p className="font-light line-clamp-[8] mt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
             <br />
             <br />
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
+            {product?.description}
           </p>
           <h2 className="font-semibold py-3">Ingredients</h2>
           <div className="pl-5 flex items-start justify-start space-x-12 pb-6">
@@ -68,8 +99,10 @@ export default function ProductPage({ params }: any) {
           </div>
           <div className="flex flex-col md:flex-row gap-4 md:gap-[unset] items-end justify-between w-full pt-8">
             <div className="flex items-end justify-start space-x-6">
-              <h3 className="font-semibold text-5xl">₹20.19</h3>{" "}
-              <p className="text-[#999999] line-through text-2xl">₹22.35</p>
+              <h3 className="font-semibold text-5xl">₹{product?.price}</h3>{" "}
+              <p className="text-[#999999] line-through text-2xl">
+                ₹ {product?.price! + 20}
+              </p>
             </div>
             <div
               className="flex items-start
@@ -87,11 +120,7 @@ export default function ProductPage({ params }: any) {
       <div className="flex flex-col lg:flex-row justify-center lg:items-start lg:justify-start lg:space-x-16 pt-8 md:pt-20">
         <div className="lg:w-1/2 pb-8 md:pb-20 lg:pb-0 shrink-0">
           <h2 className="font-semibold text-2xl">How to use?</h2>
-          <p className="pt-4 pb-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-          </p>
+          <p className="pt-4 pb-8">{product?.howToUse}</p>
           <iframe
             width="560"
             height="315"
