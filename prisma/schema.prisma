@@ -75,6 +75,7 @@ model Product {
   rating        Float
   videoProvider String
   reviews       Json[]
+  reviewCount   Int
   stock         Int      @default(0)
   dateAdded     DateTime @default(now())
 }
@@ -91,7 +92,7 @@ model Wishlist {
 }
 
 model Review {
-  reviewId   String @id
+  reviewId   String   @id
   userId     String
   rating     Float
   reviewText String
@@ -165,4 +166,10 @@ model Coupon {
   isActive     Boolean
   maxDiscount  Float
   minCartValue Float
+}
+
+model Carousel {
+  carouselId String @id
+  image      String
+  link       String
 }

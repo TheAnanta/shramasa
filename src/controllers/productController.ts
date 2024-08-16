@@ -85,6 +85,7 @@ export const addProduct = async (req: Request, res: Response) => {
       rating: 0,
       videoProvider: videoProvider,
       reviews: [],
+      reviewCount: 0,
       stock: stock
     },
   });
@@ -207,6 +208,9 @@ export const publishProductReview = async (req: Request, res: Response) => {
         reviews: {
           push: review,
         },
+        reviewCount: {
+          increment: 1,
+        }
       },
     });
     const data = [updatedProductWithReview];
@@ -295,3 +299,76 @@ export const deleteProductById = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error: " + error });
   }
 };
+
+/**
+ * An API to fetch the top grossing products from the categories specified.
+ * @param req categories from which the user needs top grossing
+ * @param res A sample response
+ */
+export const getHeroProducts = async (req: Request, res: Response) => {
+  try {
+    const categories: string[] = req.body.categories;
+
+    if (!categories || categories.length === 0) {
+      return res.status(400).json({ error: "Categories not provided." });
+    }
+
+    const heroProducts = await Promise.all(
+      categories.map(async (category) => {
+        if (!category) {
+          return null;
+        }
+        return await prisma.product.findFirst({
+          where: {
+            category: category,
+          },
+          orderBy: [
+            {
+              reviewCount: "desc",
+            },
+          ],
+        });
+      })
+    );
+
+    const filteredProducts = heroProducts.filter((product) => product !== null);
+
+    res.status(200).json(filteredProducts);
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const getProductById = async (req: Request, res: Response) => {
+  const { productId } = req.query;
+  if (!productId) {
+    res.status(400).json({ error: "Product id not provided." });
+  }
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        productId: productId as string,
+      },
+    });
+    if (product === null) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+    const productWithRating = ([product].map((e: any) => {
+      return {
+        ...e,
+        "rating": (e.reviews.length > 0 ? (
+          e["reviews"]
+            .map((e: any) => e["rating"])
+            .reduce((acc: any, value: any) => acc + value, 0) /
+          e["reviews"].length
+        ).toFixed(2) : 0),
+        "customerRatingCount": e.reviews.length,
+      }
+    })[0]);
+    console.log(productWithRating);
+    res.status(200).json(productWithRating);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
