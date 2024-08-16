@@ -62,9 +62,12 @@ export default function Explore() {
               className="grid grid-cols-2 lg:grid-cols-3 gap-8"
             >
               <ExporeItem
+                productId={product?.productId}
                 name={product?.name}
                 description={product?.description}
                 price={product?.price}
+                image={product?.images[0]}
+                discount={product?.discount}
               />
             </div>
           );

@@ -42,3 +42,20 @@ table#cart td {
     padding: 20px 88px 20px 0px;
   }
 }
+
+
+.material-symbols-outlined .filled {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.material-symbols-outlined .outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

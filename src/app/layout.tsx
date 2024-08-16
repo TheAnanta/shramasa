@@ -6,12 +6,12 @@ import Footer from "@/components/Footer";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Shramasa",
-  description:
-    "Shramasa is an organic mom's beauty brand that offers a wide range of natural beauty products for all the hard-working mothers out there.",
-  keywords: ["organic", "beauty", "mom", "natural", "products", "shramasa"],
-};
+// export const metadata: Metadata = {
+//   title: "Shramasa",
+//   description:
+//     "Shramasa is an organic mom's beauty brand that offers a wide range of natural beauty products for all the hard-working mothers out there.",
+//   keywords: ["organic", "beauty", "mom", "natural", "products", "shramasa"],
+// };
 
 export default function RootLayout({
   children,
@@ -20,6 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+      </head>
       <body
         className={`${manrope.className} dark:bg-slate-950 dark:text-white`}
       >
