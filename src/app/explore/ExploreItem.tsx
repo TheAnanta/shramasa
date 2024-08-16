@@ -1,14 +1,18 @@
 import { Product } from "@/types/interfaces";
 import React from "react";
 
-export default function Item(props: {
+export default function ExploreItem(props: {
   name: string;
   description: string;
   price: string;
 }) {
   return (
     <div className="flex flex-col items-start justify-center gap-y-2">
-      <img src="/images/products/mockup.png" alt="" />
+      <img
+        src="/test2.JPG"
+        alt=""
+        className="w-full aspect-square rounded-md object-cover"
+      />
       <p className="pt-4">{props.name}</p>
       <p>{props.description}</p>
       <div className="flex space-x-3 items-end">

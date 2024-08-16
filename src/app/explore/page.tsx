@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import Item from "../../components/Item";
+import ExporeItem from "./ExploreItem";
 import styles from "./explore.module.css";
 import { Product } from "@/types/interfaces";
 
 export default function Explore() {
   const [open, setOpen] = React.useState(false);
-  const [products, setProducts] = React.useState<any>();
+  const [products, setProducts] = React.useState<Product[]>();
 
   React.useEffect(() => {
     async function getData() {
@@ -61,7 +61,7 @@ export default function Explore() {
               key={product.name}
               className="grid grid-cols-2 lg:grid-cols-3 gap-8"
             >
-              <Item
+              <ExporeItem
                 name={product?.name}
                 description={product?.description}
                 price={product?.price}

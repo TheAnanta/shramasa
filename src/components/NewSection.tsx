@@ -1,5 +1,5 @@
 import React from "react";
-import Item from "./Item";
+import Item from "../app/explore/ExploreItem";
 import CategoriesSection from "./CategoriesSection";
 
 export default function NewSection() {

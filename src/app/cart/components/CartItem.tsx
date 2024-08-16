@@ -1,4 +1,9 @@
-export function CartItem() {
+export function CartItem(props: {
+  image: string;
+  name: String;
+  description: string;
+  quantity: string;
+}) {
   return (
     <tr className="border-t">
       <td className="shink-0">
@@ -12,9 +17,11 @@ export function CartItem() {
               Product name
             </p>
             <p className="text-[1.05rem] mt-2 font-semibold uppercase w-[14ch]">
-              face creame for skin care
+              {props.name}
             </p>
-            <p className="text-[0.98rem] opacity-60 mt-auto">200 ml</p>
+            <p className="text-[0.98rem] opacity-60 mt-auto">
+              {props.quantity} ml
+            </p>
           </div>
         </div>
       </td>
