@@ -69,14 +69,15 @@ model Product {
   images        String[]
   ingredients   Json[]
   discount      Float
-  price         Float
+  price         Float[]
+  variants      String[]
   howToUse      String
   videoLink     String
   rating        Float
   videoProvider String
   reviews       Json[]
   reviewCount   Int
-  stock         Int      @default(0)
+  stock         Int[]      @default([0])
   dateAdded     DateTime @default(now())
 }
 

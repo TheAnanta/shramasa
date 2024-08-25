@@ -29,6 +29,7 @@ export const addProduct = async (req: Request, res: Response) => {
     ingredients,
     discount,
     price,
+    variants,
     howToUse,
     videoLink,
     videoProvider,
@@ -46,7 +47,7 @@ export const addProduct = async (req: Request, res: Response) => {
     !discount ||
     !howToUse ||
     !videoLink ||
-    !videoProvider || !stock
+    !videoProvider || !stock || !variants
   ) {
     return res.status(400).json({ error: "Enter all fields required." });
   }
@@ -69,6 +70,12 @@ export const addProduct = async (req: Request, res: Response) => {
       .json({ error: "Subcategory doesn't belong to the category" });
   }
 
+  if (stock.length !== variants.length) {
+    return res.status(400).json({ error: "Stock and variants do not match." });
+  }
+  if (price.length !== variants.length) {
+    return res.status(400).json({ error: "Price and variants do not match." });
+  }
   const product = await prisma.product.create({
     data: {
       productId: productId,
@@ -83,6 +90,7 @@ export const addProduct = async (req: Request, res: Response) => {
       howToUse: howToUse,
       videoLink: videoLink,
       rating: 0,
+      variants: variants,
       videoProvider: videoProvider,
       reviews: [],
       reviewCount: 0,
@@ -103,6 +111,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     ingredients,
     discount,
     price,
+    variants,
     howToUse,
     videoLink,
     videoProvider,
@@ -114,22 +123,14 @@ export const updateProduct = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Product id not provided." });
   }
 
-  if (
-    !name &&
-    !categoryId &&
-    !subCategoryId &&
-    !price &&
-    !description &&
-    !images &&
-    !ingredients &&
-    !discount &&
-    !howToUse &&
-    !videoLink &&
-    !videoProvider &&
-    !stock
-  ) {
-    return res.status(400).json({ error: "Enter all fields required." });
+
+  if (stock && stock.length !== variants.length) {
+    return res.status(400).json({ error: "Stock and variants do not match." });
   }
+  if (price && price.length !== variants.length) {
+    return res.status(400).json({ error: "Price and variants do not match." });
+  }
+
   const product = await prisma.product.update({
     where: {
       productId: productId
@@ -146,7 +147,8 @@ export const updateProduct = async (req: Request, res: Response) => {
       howToUse: howToUse,
       videoLink: videoLink,
       videoProvider: videoProvider,
-      stock: stock
+      stock: stock,
+      variants: variants
     },
   });
   return res.status(200).json(product);
@@ -154,9 +156,12 @@ export const updateProduct = async (req: Request, res: Response) => {
 }
 
 export const updateProductStock = async (req: Request, res: Response) => {
-  const { productId, stock } = req.body;
+  const { productId, stock, variant } = req.body;
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });
+  }
+  if (!variant) {
+    return res.status(400).json({ error: "Variant not provided." });
   }
   if (!stock || stock < 0) {
     return res.status(400).json({ error: "Invalid or no stock value provided." });
@@ -165,9 +170,12 @@ export const updateProductStock = async (req: Request, res: Response) => {
     const updatedProduct = await prisma.product.update({
       where: {
         productId: productId,
+        
       },
       data: {
-        stock: stock,
+        // stock: {
+        //   set: stock,
+        // },
       },
     });
     res.status(200).json(updatedProduct);

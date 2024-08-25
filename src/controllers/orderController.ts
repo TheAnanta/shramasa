@@ -8,20 +8,21 @@ export const instantiateOrder = async (req: Request, res: Response) => {
     try {
         const cartItems = (await Promise.all(((await prisma.cart.findUnique({
             where: {
-                cartId : cartId,
+                cartId: cartId,
             }
         })))!.items.map(async (i1) => {
-            const item = i1 as { productId: string; quantity: number };
+            const item = i1 as { productId: string; quantity: number; variant: number };
             const price = (await (prisma.product.findUnique({
                 where: {
                     productId: item.productId
                 }
-            })))?.price;
+            })))?.price[item.variant];
 
             return {
                 productId: item.productId,
                 quantity: item.quantity,
                 price: price,
+                variant: item.variant
             };
         }))).filter((i) => i !== undefined);
         if (cartItems.length === 0) {

@@ -5,53 +5,53 @@ async function main() {
 
 
     // Create a category
-    // const categoryHairCare = await prisma.category.create({
-    //     data: {
-    //         categoryId: "hair-care",
-    //         name: "Hair Care",
-    //         image: "/categories/hair-care.webp",
-    //     },
-    // });
-    // const categoryFaceCare = await prisma.category.create({
-    //     data: {
-    //         categoryId: "face-care",
-    //         name: "Face Care",
-    //         image: "/categories/face-care.webp",
-    //     },
-    // });
-    // const categorySkinCare = await prisma.category.create({
-    //     data: {
-    //         categoryId: "skin-care",
-    //         name: "Skin Care",
-    //         image: "/categories/skin-care.webp",
-    //     },
-    // });
-    // const categoryCreamsSerums = await prisma.category.create({
-    //     data: {
-    //         categoryId: "creams-serums",
-    //         name: "creams & serums",
-    //         image: "/categories/creams-serums.webp",
-    //     },
-    // });
-    // const categoryBodyCare = await prisma.category.create({
-    //     data: {
-    //         categoryId: "body-care",
-    //         name: "Body Care",
-    //         image: "/categories/body-care.webp",
-    //     },
-    // });
+    const categoryHairCare = await prisma.category.create({
+        data: {
+            categoryId: "hair-care",
+            name: "Hair Care",
+            image: "/categories/hair-care.webp",
+        },
+    });
+    const categoryFaceCare = await prisma.category.create({
+        data: {
+            categoryId: "face-care",
+            name: "Face Care",
+            image: "/categories/face-care.webp",
+        },
+    });
+    const categorySkinCare = await prisma.category.create({
+        data: {
+            categoryId: "skin-care",
+            name: "Skin Care",
+            image: "/categories/skin-care.webp",
+        },
+    });
+    const categoryCreamsSerums = await prisma.category.create({
+        data: {
+            categoryId: "creams-serums",
+            name: "creams & serums",
+            image: "/categories/creams-serums.webp",
+        },
+    });
+    const categoryBodyCare = await prisma.category.create({
+        data: {
+            categoryId: "body-care",
+            name: "Body Care",
+            image: "/categories/body-care.webp",
+        },
+    });
 
-    // // Create a subcategory
-    // const subCategory = await Promise.all(["hair-care", "body-care", "skin-care", "face-care", "creams-serums"].map(async (categoryId) => {
-    //     await prisma.subCategory.create({
-    //         data: {
-    //             subCategoryId: `all-${categoryId}`,
-    //             name: "All",
-    //             image: `/categories/${categoryId}.webp`,
-    //             categoryId: categoryId,
-    //         },
-    //     });
-    // }));
+    // Create a subcategory
+    const subCategory = await Promise.all(["hair-care", "body-care", "skin-care", "face-care", "creams-serums"].map(async (categoryId) => {
+        await prisma.subCategory.create({
+            data: {
+                subCategoryId: `all-${categoryId}`,
+                name: "All",
+                image: `/categories/${categoryId}.webp`,
+                categoryId: categoryId,
+            },
+        });
+    }));
 
     // Create a product
     const product = await prisma.product.create({
@@ -66,11 +66,13 @@ Choose our Soapnut Shampoo and experience the difference. This sustainable and e
             images: ["/products/hair-care/all-hair-care/soapnut-shampoo-1.png", "/products/hair-care/all-hair-care/soapnut-shampoo-2.png", "/products/hair-care/all-hair-care/soapnut-shampoo-3.png"],
             ingredients: [{ "name": "Soapnut", "quantity": "500mg" }, { "name": "Aloe Vera", "quantity": "200mg" }, { "name": "Coconut Oil", "quantity": "100mg" }],
             discount: 10.0,
-            price: 50.0,
+            price: [50.0],
+            variants: ["200ml"],
             howToUse: "1. Wet your hair thoroughly.\n2. Take a small amount of shampoo and massage it into your scalp.\n3. Rinse thoroughly with water.\n4. Repeat if necessary.",
             videoLink: "https://www.youtube.com/watch?v=dcUZ1T0VW98",
             rating: 4.5,
             reviewCount: 0,
+            stock: [10],
             videoProvider: "YouTube",
             reviews: [],
         },

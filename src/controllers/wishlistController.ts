@@ -82,3 +82,4 @@ export const modifyWishlist = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error. Couldn't add product to cart." })
     }
 };
+//TODO: Remove product from wishlist

@@ -2,15 +2,14 @@ import { Response, Request, request } from "express";
 import prisma from "../prismaClient";
 import { JsonValue } from "@prisma/client/runtime/library";
 import { Prisma } from "@prisma/client";
-import { error } from "console";
 
 export const addProductToCart = async (req: Request, res: Response) => {
-    const { productId, userId } = req.body;
+    const { productId, userId, variant } = req.body;
     if (!productId) {
-        res.status(400).json({ error: "Product id not provided." });
+        return res.status(400).json({ error: "Product id not provided." });
     }
     if (!userId) {
-        res.status(400).json({ error: "User Id not provided" });
+        return res.status(400).json({ error: "User Id not provided" });
     }
     try {
         const doesCartExistForUser = await prisma.cart.findMany({
@@ -18,14 +17,14 @@ export const addProductToCart = async (req: Request, res: Response) => {
                 userId: userId
             }
         });
-        if (!doesCartExistForUser) {
+        if (doesCartExistForUser.length <= 0) {
             const user = await prisma.user.findUnique({
                 where: {
                     userId: userId
                 }
             });
             if (!user) {
-                res.status(400).json({ error: "User doesn't exist." });
+                return res.status(400).json({ error: "User doesn't exist." });
             }
             const product = await prisma.product.findUnique({
                 where: {
@@ -33,21 +32,27 @@ export const addProductToCart = async (req: Request, res: Response) => {
                 }
             });
             if (!product) {
-                res.status(400).json({ error: "Product doesn't exist." });
+                return res.status(400).json({ error: "Product doesn't exist." });
             }
-            const cart = await prisma.cart.create({
-                data: {
-                    userId: userId,
-                    items: [
-                        {
-                            productId: productId,
-                            quantity: 1
-                        }
-                    ]
-                }
-            });
+            if (product.stock[variant] > 1) {
+                const cart = await prisma.cart.create({
+                    data: {
+                        userId: userId,
+                        items: [
+                            {
+                                productId: productId,
+                                quantity: 1,
+                                variant: variant
+                            }
+                        ]
+                    }
+                });
 
-            res.status(200).json(cart);
+                return res.status(200).json(cart);
+            } else {
+                return res.status(402).json({ error: "Product out of stock" });
+            }
+
         } else {
             const user = await prisma.user.findUnique({
                 where: {
@@ -55,7 +60,7 @@ export const addProductToCart = async (req: Request, res: Response) => {
                 }
             });
             if (!user) {
-                res.status(400).json({ error: "User doesn't exist." });
+                return res.status(400).json({ error: "User doesn't exist." });
             }
             const product = await prisma.product.findUnique({
                 where: {
@@ -63,9 +68,13 @@ export const addProductToCart = async (req: Request, res: Response) => {
                 }
             });
             if (!product) {
-                res.status(400).json({ error: "Product doesn't exist." });
+                return res.status(400).json({ error: "Product doesn't exist." });
             }
+            console.log(doesCartExistForUser);
             const userCurrentCart = doesCartExistForUser[0];
+            if (product.stock[variant] < 1) {
+                return res.status(402).json({ error: "Product out of stock" });
+            }
             const cart = await prisma.cart.update({
                 where: {
                     cartId: userCurrentCart.cartId
@@ -75,26 +84,27 @@ export const addProductToCart = async (req: Request, res: Response) => {
                     items: {
                         push: {
                             productId: productId,
-                            quantity: 1
+                            quantity: 1,
+                            variant: variant
                         }
                     }
                 }
             });
-            res.status(200).json(cart);
+            return res.status(200).json(cart);
         }
 
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error. Couldn't add product to cart." })
+    } catch (error: any) {
+        return res.status(500).json({ error: "Internal Server Error. Couldn't add product to cart. " + error.message })
     }
 };
 
 export const modifyCart = async (req: Request, res: Response) => {
-    const { productId, userId, quantity } = req.body;
+    const { productId, userId, quantity, variant } = req.body;
     if (!productId) {
-        res.status(400).json({ error: "Product id not provided." });
+        return res.status(400).json({ error: "Product id not provided." });
     }
     if (!userId) {
-        res.status(400).json({ error: "User Id not provided" });
+        return res.status(400).json({ error: "User Id not provided" });
     }
     try {
         const doesCartExistForUser = await prisma.cart.findMany({
@@ -109,7 +119,7 @@ export const modifyCart = async (req: Request, res: Response) => {
             }
         });
         if (!user) {
-            res.status(400).json({ error: "User doesn't exist." });
+            return res.status(400).json({ error: "User doesn't exist." });
         }
         const product = await prisma.product.findUnique({
             where: {
@@ -117,19 +127,24 @@ export const modifyCart = async (req: Request, res: Response) => {
             }
         });
         if (!product) {
-            res.status(400).json({ error: "Product doesn't exist." });
+            return res.status(400).json({ error: "Product doesn't exist." });
         }
-        if (product!.stock < quantity) {
-            res.status(402).json({ error: "Quantity not available. Try " + product!.stock + " items or less" });
+        if (product!.stock[variant] < quantity) {
+            return res.status(402).json({ error: "Quantity not available. Try " + product!.stock + " items or less" });
         }
         const userCurrentCart = doesCartExistForUser[0];
-        const newCartItems: JsonValue[] = [...userCurrentCart.items.filter((e) => {
-            const e1 = e as { productId: string; quantity: number };
-            return e1.productId != productId
+        const newCartItems: JsonValue[] = quantity > 0 ? [...userCurrentCart.items.filter((e) => {
+            const e1 = e as { productId: string; quantity: number; variant: number };
+            return e1.productId != productId && variant != e1.variant
         }), {
             productId: productId,
-            quantity: quantity
+            quantity: quantity,
+            variant: variant
         }
+        ] : [...userCurrentCart.items.filter((e) => {
+            const e1 = e as { productId: string; quantity: number; variant: number };
+            return e1.productId != productId && variant != e1.variant
+        }),
         ];
         const cart = await prisma.cart.update({
             where: {
@@ -140,17 +155,17 @@ export const modifyCart = async (req: Request, res: Response) => {
                 items: newCartItems as Prisma.InputJsonValue[],
             }
         });
-        res.status(200).json(cart);
+        return res.status(200).json(cart);
 
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error. Couldn't add product to cart." })
+        return res.status(500).json({ error: "Internal Server Error. Couldn't add product to cart." })
     }
 };
 
 export const fetchUserCart = async (req: Request, res: Response) => {
     const { userId } = req.body;
     if (!userId) {
-        res.status(400).json({ error: "Provide a userId to fetch the cart for." });
+        return res.status(400).json({ error: "Provide a userId to fetch the cart for." });
     }
     try {
         const cart = await prisma.cart.findMany({
@@ -158,23 +173,28 @@ export const fetchUserCart = async (req: Request, res: Response) => {
                 userId: userId
             }
         });
+        console.log(cart);
         const cartWithStatus = cart.map(async (c) => {
             const items = await Promise.all(c.items.map(async (i) => {
-                const item = i as { productId: string; quantity: number };
+                const item = i as { productId: string; quantity: number; variant: number };
                 const product = await prisma.product.findUnique({
                     where: {
                         productId: item.productId
                     }
                 });
                 return {
+                    variant: item.variant,
+                    variantName: product?.variants[item.variant],
                     productId: item.productId,
                     quantity: item.quantity,
-                    price: product?.price,
+                    price: product?.price[item.variant],
                     name: product?.name,
-                    stock: product?.stock ?? 0
+                    image: product?.images[0],
+                    category: product?.category,
+                    stock: product?.stock[item.variant] ?? 0
                 };
             }));
-
+            console.log("modified items", items);
             return {
                 cartId: c.cartId,
                 userId: c.userId,
@@ -182,10 +202,11 @@ export const fetchUserCart = async (req: Request, res: Response) => {
                 outOfStockItems: items.filter((i) => i.quantity > i.stock),
             };
         });
-        res.json(cartWithStatus[0]);
+        console.log("cWS", await Promise.all(cartWithStatus));
+        return res.json(await Promise.all(cartWithStatus));
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: "Internal server error" });
     }
 };
 
@@ -202,7 +223,7 @@ export const removeInvalidProductsFromCart = async (req: Request, res: Response)
             }
         }))[0];
         const cartWithStatus = (await Promise.all(cart.items.map(async (i) => {
-            const item = i as { productId: string; quantity: number };
+            const item = i as { productId: string; quantity: number; variant: number };
             const product = await prisma.product.findUnique({
                 where: {
                     productId: item.productId
@@ -210,7 +231,7 @@ export const removeInvalidProductsFromCart = async (req: Request, res: Response)
             });
             return {
                 productId: item.productId,
-                valid: item.quantity <= (product?.stock ?? 0),
+                valid: item.quantity <= (product?.stock[item.variant] ?? 0),
             };
         }))).filter((i) => !i.valid).map((i) => i.productId);
         const newCartItems: JsonValue[] = cart.items.filter((e) => {
