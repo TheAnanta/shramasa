@@ -15,7 +15,7 @@ export default function Explore() {
       );
       const data = await response.json();
       // console.log(data);
-      setProducts(data);
+      setProducts([...data, ...data, ...data, ...data]);
     }
     getData();
   }, []);
@@ -25,7 +25,7 @@ export default function Explore() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-start justify-between mx-[8.25%] pt-12">
+    <div className="flex flex-col lg:flex-row items-start justify-between mx-[8.25%] pb-12">
       <button
         className="lg:hidden mb-4 px-4 py-2 rounded-full border-[#46A627] border text-black"
         onClick={toggleDrawer}
@@ -33,45 +33,45 @@ export default function Explore() {
         {open ? "Hide Filters" : "Show Filters"}
       </button>
       <div
-        className={`${styles.drawer} pr-[4.46%] w-full lg:w-[30%] ${
+        className={`${styles.drawer} pr-4 w-full max-w-56 shrink-0 ${
           open ? "block" : "hidden"
         } lg:block`}
       >
         <div className="flex flex-col justify-between space-y-4 text-xl">
           <h2 className="text-2xl font-semibold hidden sm:flex">Filters</h2>
           <div className="flex flex-col space-y-4 lg:space-y-5 items-start justify-center lg:h-[60%] pb-12">
-            <p className="pb-0">Price</p>
-            <img src="/price.svg" alt="" className="pb-2" />
+            {/* <p className="pb-0">Price</p> */}
+            {/* <img src="/price.svg" alt="" className="pb-2" />
             <p>
               <span>+</span> Ingredient
-            </p>
+            </p> */}
             <p>+ Category</p>
-            <p>+ Occasion</p>
+            {/* <p>+ Occasion</p>
             <p>+ Formulation</p>
-            <p>+ Skin Tone</p>
+            <p>+ Skin Tone</p> */}
           </div>
         </div>
       </div>
-
       {/* Items Grid */}
       {products ? (
-        products.map((product: any, index: number) => {
-          return (
-            <div
-              key={product.name}
-              className="grid grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              <ExporeItem
-                productId={product?.productId}
-                name={product?.name}
-                description={product?.description}
-                price={product?.price}
-                image={product?.images[0]}
-                discount={product?.discount}
-              />
-            </div>
-          );
-        })
+        <div className="pl-8 border-l-[1px]">
+          <h2 className="text-2xl font-semibold">Explore</h2>
+          <p>Our wide range of products of over {products.length}+ products</p>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+            {products.map((product: any, index: number) => {
+              return (
+                <ExporeItem
+                  productId={product?.productId}
+                  name={product?.name}
+                  description={product?.description}
+                  price={product?.price}
+                  image={product?.images[0]}
+                  discount={product?.discount}
+                />
+              );
+            })}
+          </div>
+        </div>
       ) : (
         <div>Loading...</div>
       )}

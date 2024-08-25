@@ -56,13 +56,14 @@ export interface Product {
   images: string[];
   ingredients: any[];
   discount: number;
-  price: number;
+  price: number[];
   howToUse: string;
   videoLink: string;
   rating: number;
   videoProvider: string;
   reviews: any[]; // Using `any[]` for JSON fields
-  stock: number;
+  stock: number[];
+  variants: string[];
 }
 
 export interface Cart {

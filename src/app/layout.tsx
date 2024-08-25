@@ -3,6 +3,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
+import { AuthContextProvider } from "./context/AuthContext";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -29,9 +30,13 @@ export default function RootLayout({
       <body
         className={`${manrope.className} dark:bg-slate-950 dark:text-white`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <AuthContextProvider>
+          <>
+            <Navbar />
+            {children}
+            <Footer />
+          </>
+        </AuthContextProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 "use client";
+import { useAuthContext } from "@/app/context/AuthContext";
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/types/interfaces";
 import React from "react";
@@ -12,6 +13,85 @@ export default function ProductPage({
   const [readMore, setReadMore] = React.useState(false);
   const [product, setProduct] = React.useState<Product>();
   const [userRatingStar, setUserRatingStar] = React.useState(0);
+  const [cartItem, setCartItem] = React.useState(0);
+  const [isWishlisted, setIsWishlisted] = React.useState(false);
+  const user = useAuthContext();
+  const [selectedVariant, setSelectedVariant] = React.useState(0);
+  const updateCart = async (
+    quantity: number,
+    variant: number,
+    isIncreased: boolean
+  ) => {
+    fetch("http://localhost:3001/api/cart/modify-cart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: product?.productId,
+        userId: user?.uid,
+        quantity: quantity,
+        variant: variant,
+      }),
+    }).then(async (response) => {
+      if (response.status == 200) {
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            items:
+              quantity == 0
+                ? (
+                    JSON.parse(localStorage.getItem("cart") ?? "")[
+                      "items"
+                    ] as any[]
+                  ).filter(
+                    (item) =>
+                      item.productId !== product?.productId &&
+                      item.variant !== variant
+                  )
+                : [
+                    ...(
+                      JSON.parse(localStorage.getItem("cart") ?? "")[
+                        "items"
+                      ] as any[]
+                    ).filter((item) => item.productId !== product?.productId),
+                    {
+                      productId: product?.productId,
+                      quantity: quantity,
+                      variant: variant,
+                    },
+                  ],
+          })
+        );
+        setCartItem(quantity);
+      } else {
+        alert("Failed to update the cart. " + (await response.json())["error"]);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    const wishlistItems = JSON.parse(
+      localStorage.getItem("wishlist") ?? `{"wishlist": []}`
+    )["wishlist"];
+    const cartItems = JSON.parse(
+      localStorage.getItem("cart") ?? `{"items": []}`
+    )["items"];
+    setCartItem(
+      cartItems.filter(
+        (item: any) =>
+          item.productId === params.productId &&
+          item.variant === selectedVariant
+      ).length > 0
+        ? cartItems.filter(
+            (item: any) =>
+              item.productId === params.productId &&
+              item.variant === selectedVariant
+          )[0]["quantity"]
+        : 0
+    );
+    setIsWishlisted(wishlistItems.includes(params.productId));
+  }, [params.productId, selectedVariant]);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -116,22 +196,158 @@ export default function ProductPage({
               })}
             </div>
           </div>
+          <div>
+            {(product?.variants ?? []).map((variant, index) => {
+              return (
+                <button
+                  onClick={() => {
+                    setSelectedVariant(index);
+                  }}
+                  className={`px-5 py-1 mx-2 my-2 rounded-full inline-flex ${
+                    selectedVariant == index
+                      ? "bg-[#46A627] py-[6px] px-[22px]"
+                      : "outline"
+                  }`}
+                >
+                  {variant}
+                </button>
+              );
+            })}
+          </div>
           <div className="flex flex-col md:flex-row gap-4 md:gap-[unset] items-end justify-between w-full pt-8">
             <div className="flex items-end justify-start space-x-6">
-              <h3 className="font-semibold text-5xl">₹{product?.price}</h3>{" "}
+              <h3 className="font-semibold text-5xl">
+                ₹{product?.price[selectedVariant]!! - (product?.discount ?? 0)}
+              </h3>
               <p className="text-[#999999] line-through text-2xl">
-                ₹ {product?.price!! - (product?.discount ?? 0)}
+                ₹{product?.price[selectedVariant]}
               </p>
             </div>
             <div
               className="flex items-start
             gap-3"
             >
-              <button className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full">
-                Add to cart
-              </button>
-
-              <img src="/cart/save.svg" alt="addtocart" className="size-10" />
+              {cartItem <= 0 ? (
+                <button
+                  className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full"
+                  onClick={() => {
+                    fetch(
+                      "http://localhost:3001/api/cart/add-product-to-cart",
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          productId: product?.productId,
+                          userId: user?.uid,
+                          variant: selectedVariant,
+                        }),
+                      }
+                    ).then(async (response) => {
+                      if (response.status == 200) {
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify({
+                            items: [
+                              ...(JSON.parse(
+                                localStorage.getItem("cart") ?? ""
+                              )["items"] as any[]),
+                              {
+                                productId: product?.productId,
+                                quantity: 1,
+                                variant: selectedVariant,
+                              },
+                            ],
+                          })
+                        );
+                        setCartItem(1);
+                      } else {
+                        alert(
+                          "Failed to add to cart. " +
+                            (await response.json())["error"]
+                        );
+                      }
+                    });
+                  }}
+                >
+                  Add to cart
+                </button>
+              ) : (
+                <div className="flex gap-4 items-center">
+                  <div
+                    className="size-10 border rounded-lg flex py-auto justify-center items-center cursor-pointer hover:bg-green-100/20"
+                    onClick={() => {
+                      updateCart(cartItem + 1, selectedVariant, true);
+                    }}
+                  >
+                    <p>+</p>
+                  </div>
+                  <div>{cartItem}</div>
+                  <div
+                    className="size-10 border rounded-lg flex py-auto justify-center items-center cursor-pointer hover:bg-green-100/20"
+                    onClick={() => {
+                      updateCart(cartItem - 1, selectedVariant, false);
+                    }}
+                  >
+                    <p>-</p>
+                  </div>
+                </div>
+              )}
+              <div
+                className="size-10 flex items-center justify-center border rounded-xl cursor-pointer"
+                onClick={() => {
+                  fetch("http://localhost:3001/api/wishlist/modify-wishlist", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      productId: product?.productId,
+                      userId: user?.uid,
+                    }),
+                  }).then(async (response) => {
+                    if (response.status == 200) {
+                      localStorage.setItem(
+                        "wishlist",
+                        JSON.stringify({
+                          wishlist: isWishlisted
+                            ? [
+                                ...(
+                                  JSON.parse(
+                                    localStorage.getItem("wishlist") ?? ""
+                                  )["wishlist"] as any[]
+                                ).filter((item) => item !== product?.productId),
+                              ]
+                            : [
+                                ...(JSON.parse(
+                                  localStorage.getItem("wishlist") ??
+                                    `{"wishlist": []}`
+                                )["wishlist"] as any[]),
+                                product?.productId,
+                              ],
+                        })
+                      );
+                      setIsWishlisted(!isWishlisted);
+                    } else {
+                      alert(
+                        "Failed to add to wishlist. " +
+                          (await response.json())["error"]
+                      );
+                    }
+                  });
+                }}
+              >
+                {!isWishlisted ? (
+                  <span className="material-symbols-outlined dark:text-white">
+                    bookmark
+                  </span>
+                ) : (
+                  <span className="material-symbols-outlined dark:text-white">
+                    <span className="filled">bookmark</span>
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -153,107 +369,116 @@ export default function ProductPage({
         </div>
         <div className="w-[1.5px] h-[70vh] bg-neutral-200 lg:flex hidden"></div>
         <div>
-          <div className="flex gap-4 items-end">
-            <form>
-              <p className="text-sm my-2">Your review</p>
-              {(product?.reviews?.filter((review) => review.userId === "user")
-                .length ?? 0) > 0 ? (
-                <div className="flex gap-2">
-                  {Array(
-                    parseInt(
-                      product?.reviews?.filter(
-                        (review) => review.userId === "user"
-                      )[0]?.rating ?? "0"
-                    )
-                  )
-                    .fill(0)
-                    .map((_, index) => (
-                      <span className="material-symbols-outlined w-4">
-                        <span className="filled">kid_star</span>
-                      </span>
-                    ))}
-                  {Array(
-                    5 -
+          {user != null && (
+            <div className="flex gap-4 items-end">
+              <form>
+                <p className="text-sm my-2">Your review</p>
+                {(product?.reviews?.filter((review) => review.userId === "user")
+                  .length ?? 0) > 0 ? (
+                  <div className="flex gap-2">
+                    {Array(
                       parseInt(
                         product?.reviews?.filter(
-                          (review) => review.userId === "user"
+                          (review) => review.userId === user.uid
                         )[0]?.rating ?? "0"
                       )
-                  )
-                    .fill(0)
-                    .map((_, index) => (
-                      <span className="material-symbols-outlined w-4">
-                        kid_star
-                      </span>
-                    ))}
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  {Array(userRatingStar)
-                    .fill(0)
-                    .map((_, index) => (
-                      <span
-                        className="material-symbols-outlined w-4 cursor-pointer"
-                        onClick={() => {
-                          setUserRatingStar(index + 1);
-                        }}
-                      >
-                        <span className="filled">kid_star</span>
-                      </span>
-                    ))}
-                  {Array(5 - userRatingStar)
-                    .fill(0)
-                    .map((_, index) => (
-                      <span
-                        className="material-symbols-outlined w-4 cursor-pointer"
-                        onClick={() => {
-                          setUserRatingStar(index + 1 + userRatingStar);
-                        }}
-                      >
-                        kid_star
-                      </span>
-                    ))}
-                </div>
-              )}
-              <textarea
-                className="border rounded-xl w-full mt-3"
-                cols={40}
-                rows={4}
-                value={
-                  product?.reviews?.filter(
-                    (review) => review.userId === "user"
-                  )[0]?.review
-                }
-                name="review"
-              />
-              <button
-                formAction={async (formData) => {
-                  const body = {
-                    productId: params.productId,
-                    //TODO UPDATE USERID AND NAME
-                    review: {
-                      userId: "user",
-                      name: "lakshit",
-                      rating: userRatingStar,
-                      review: formData.get("review"),
-                    },
-                  };
+                    )
+                      .fill(0)
+                      .map((_, index) => (
+                        <span className="material-symbols-outlined w-4">
+                          <span className="filled">kid_star</span>
+                        </span>
+                      ))}
+                    {Array(
+                      5 -
+                        parseInt(
+                          product?.reviews?.filter(
+                            (review) => review.userId === user.uid
+                          )[0]?.rating ?? "0"
+                        )
+                    )
+                      .fill(0)
+                      .map((_, index) => (
+                        <span className="material-symbols-outlined w-4">
+                          kid_star
+                        </span>
+                      ))}
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    {Array(userRatingStar)
+                      .fill(0)
+                      .map((_, index) => (
+                        <span
+                          className="material-symbols-outlined w-4 cursor-pointer"
+                          onClick={() => {
+                            setUserRatingStar(index + 1);
+                          }}
+                        >
+                          <span className="filled">kid_star</span>
+                        </span>
+                      ))}
+                    {Array(5 - userRatingStar)
+                      .fill(0)
+                      .map((_, index) => (
+                        <span
+                          className="material-symbols-outlined w-4 cursor-pointer"
+                          onClick={() => {
+                            setUserRatingStar(index + 1 + userRatingStar);
+                          }}
+                        >
+                          kid_star
+                        </span>
+                      ))}
+                  </div>
+                )}
+                <textarea
+                  className="border rounded-xl w-full mt-3"
+                  cols={40}
+                  rows={4}
+                  value={
+                    product?.reviews?.filter(
+                      (review) => review.userId === user.uid
+                    )[0]?.review
+                  }
+                  name="review"
+                />
+                <button
+                  formAction={async (formData) => {
+                    const body = {
+                      productId: params.productId,
+                      review: {
+                        userId: user.uid,
+                        name: user.displayName,
+                        rating: userRatingStar,
+                        review: formData.get("review"),
+                      },
+                    };
 
-                  const response = await fetch(
-                    "http://localhost:3001/api/products/publish-product-review",
-                    {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(body),
+                    const response = await fetch(
+                      "http://localhost:3001/api/products/publish-product-review",
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body),
+                      }
+                    );
+                    if (response.status == 200) {
+                      alert("Review submitted successfully");
+                    } else {
+                      alert(
+                        "Failed to submit review. " +
+                          (await response.json())["message"]?.toString() ?? ""
+                      );
                     }
-                  );
-                }}
-                className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full mt-3"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
+                  }}
+                  className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full mt-3"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          )}
           <h3 className="font-semibold text-xl mt-4">Similar Catalogue</h3>
           <div className="flex space-x-4 pt-6">
             <ProductCard />
