@@ -57,7 +57,7 @@ export default function Page() {
   }, [userId]);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row items-start justify-between mx-[8.25%] my-12 md:space-x-12 ">
+    <div className="flex flex-col-reverse lg:flex-row items-start justify-between mx-[8.25%] my-12 lg:space-x-12 ">
       <div className="w-full">
         <h1 className="mb-8 text-4xl font-bold">Profile</h1>
         <div className="flex justify-between items-center py-8">
