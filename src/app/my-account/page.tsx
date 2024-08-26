@@ -2,10 +2,10 @@
 import React from "react";
 import { auth } from "@/lib/firebase/config";
 import { useSearchParams } from "next/navigation";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Page() {
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("userId");
+  const userId = useAuthContext()?.uid;
 
   const [user, setUser] = React.useState<any>();
   const [addressses, setAddresses] = React.useState<any>([
@@ -33,27 +33,29 @@ export default function Page() {
       const data = await response.json();
       setUser(data);
     };
-    fetchUser();
+    if (userId) {
+      fetchUser();
+    }
   }, [userId]);
 
   React.useEffect(() => {
     const fetchAddresses = async () => {
       const response = await fetch(
-        `http://localhost:3001/api/address/get-all-addresses-of-user`,
+        `http://localhost:3001/api/address/get-all-addresses-of-user?userId` +
+          userId,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            userId: userId,
-          }),
         }
       );
       const data = await response.json();
       setAddresses(data);
     };
-    fetchAddresses();
+    if (userId) {
+      fetchAddresses();
+    }
   }, [userId]);
 
   return (
@@ -124,7 +126,10 @@ export default function Page() {
             Your Addresses
           </h2>
           {addressses.map((address: any) => (
-            <div key={address.id} className="rounded-[28.38px] p-8 my-4 w-full flex items-start justify-between">
+            <div
+              key={address.id}
+              className="rounded-[28.38px] p-8 my-4 w-full flex items-start justify-between"
+            >
               <div>
                 <span className="material-symbols-outlined w-full">home</span>
               </div>
@@ -133,12 +138,20 @@ export default function Page() {
                   <p>Home</p>
                   <p className="py-2 px-4 bg-neutral-200 rounded-xl">Default</p>
                 </div>
-                <p className="text-lg font-semibold">House {address.houseNumber}</p>
+                <p className="text-lg font-semibold">
+                  House {address.houseNumber}
+                </p>
                 <p className="text-lg font-semibold">Floor {address.floor}</p>
-                <p className="text-lg font-semibold">Apartment {address.apartment}</p>
-                <p className="text-lg font-semibold">Landmark: {address.landmark}</p>
+                <p className="text-lg font-semibold">
+                  Apartment {address.apartment}
+                </p>
+                <p className="text-lg font-semibold">
+                  Landmark: {address.landmark}
+                </p>
                 <p className="text-lg font-semibold">{address.address}</p>
-                <p className="text-lg font-semibold">PINCODE- {address.pincode}</p>
+                <p className="text-lg font-semibold">
+                  PINCODE- {address.pincode}
+                </p>
               </div>
               <button className="text-black bg-white py-2 px-7 rounded-xl uppercase font-semibold mt-2">
                 Edit
