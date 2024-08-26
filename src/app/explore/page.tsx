@@ -20,7 +20,7 @@ export default function Explore() {
         "http://localhost:3001/api/products/get-all-products"
       );
       const data = await response.json();
-      setProducts([...data, ...data, ...data, ...data]);
+      setProducts(data);
     }
     getData();
   }, []);
@@ -49,10 +49,10 @@ export default function Explore() {
       >
         {open ? "Hide Filters" : "Show Filters"}
       </button>
-      
+
       {/* Category Filter */}
       <div
-        className={`${styles.drawer} pr-4 w-full max-w-56 grow-0 shrink-0 ${
+        className={`${styles.drawer} pr-4 w-full max-w-56  grow-0 shrink-0 ${
           open ? "block" : "hidden"
         } lg:block`}
       >
@@ -60,15 +60,35 @@ export default function Explore() {
           <h2 className="text-2xl font-semibold hidden sm:flex">Filters</h2>
           <div className="flex flex-col space-y-4 lg:space-y-5 items-start justify-center lg:h-[60%] pb-12">
             <div>
-              <label htmlFor="categoryFilter" className="block mb-2 text-[#46A627] font-bold">
+              <label
+                htmlFor="categoryFilter"
+                className="block mb-2 text-[#46A627] font-bold"
+              >
                 Category
               </label>
               <ul>
                 {categories.map((category: any) => {
                   return (
                     <li key={category.categoryId} className="my-3">
-                      <Link href={"/explore?categoryId=" + category.categoryId} className={`${category.categoryId === categoryId ? "text-[#46A627]" : "" }`}>
-                        {category.categoryId === categoryId ? "" : "+ " }{category.name}
+                      <Link
+                        href={
+                          category.categoryId == categoryId
+                            ? "/explore"
+                            : "/explore?categoryId=" + category.categoryId
+                        }
+                        className={`${
+                          (categoryId == null &&
+                            category.categoryId == "all") ||
+                          category.categoryId === categoryId
+                            ? "text-[#46A627]"
+                            : ""
+                        }`}
+                      >
+                        {(categoryId == null && category.categoryId == "all") ||
+                        category.categoryId === categoryId
+                          ? ""
+                          : "+ "}
+                        {category.name}
                       </Link>
                     </li>
                   );
@@ -81,13 +101,14 @@ export default function Explore() {
 
       {/* Items Grid */}
       {products.length > 0 ? (
-        <div className="pl-8 border-l-[1px] w-full">
+        <div className="pl-8 border-l-[1px] w-full h-full">
           <h2 className="text-2xl font-semibold">Explore</h2>
           <p>Our wide range of products of over {products.length}+ products</p>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
             {products
               .filter(
                 (filteredProduct) =>
+                  categoryId == null ||
                   filteredProduct.category.categoryId === categoryId
               )
               .map((product: Product, index: number) => (

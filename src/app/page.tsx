@@ -20,21 +20,38 @@ export default function Home() {
           <tbody>
             <tr>
               <td className="w-max">
-                <div className="p-14 shrink-0 bg-[#F2F2F2] rounded-3xl md:mr-3">
+                <div className="p-14 pb-6 shrink-0 bg-[#F2F2F2] rounded-3xl md:mr-3">
                   <p className="text-3xl md:text-5xl soyuz-grotesk md:w-[20ch]">
                     What makes us different?
                   </p>
-                  <ul className="grid md:grid-cols-2 pt-10 pb-8">
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
+                  <ul className="grid md:grid-cols-2 pt-10 pb-8 gap-y-3">
+                    {[
+                      "All Natural Products",
+                      "No Chemicals",
+                      "Smooth Texture",
+                      "Skin glows effectively",
+                      "Hair Enhanced",
+                      "Made in Bharat",
+                    ].map((e) => {
+                      return (
+                        <li key={e} className="flex items-center gap-3">
+                          <span className="material-symbols-outlined">
+                            check_circle
+                          </span>{" "}
+                          {e}
+                        </li>
+                      );
+                    })}
                   </ul>
-                  <button className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full">
-                    move on to know more
-                  </button>
+                  <div className="flex justify-between items-start">
+                    <button className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full h-max">
+                      move on to know more
+                    </button>
+                    <img
+                      src="/icons/arrow_down.svg"
+                      className="size-12 ml-auto"
+                    />
+                  </div>
                 </div>
               </td>
               <td className='w-full rounded-3xl bg-[url("/images/banners/organic-cosmetics.jpg")] hidden md:table-cell'></td>

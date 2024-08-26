@@ -8,6 +8,7 @@ import Address from "@/components/Address";
 
 export default function CartPage() {
   const [cart, setCart] = React.useState<any>(null);
+  const [isLoading, setLoader] = React.useState(true);
   const [productQuantities, setProductQuantities] = React.useState<any>({});
   const user = useAuthContext();
 
@@ -36,7 +37,7 @@ export default function CartPage() {
             items:
               quantity == 0
                 ? (
-                    JSON.parse(localStorage.getItem("cart") ?? "")[
+                    JSON.parse(localStorage.getItem("cart") ?? `{"items": []}`)[
                       "items"
                     ] as any[]
                   ).filter(
@@ -45,9 +46,9 @@ export default function CartPage() {
                   )
                 : [
                     ...(
-                      JSON.parse(localStorage.getItem("cart") ?? "")[
-                        "items"
-                      ] as any[]
+                      JSON.parse(
+                        localStorage.getItem("cart") ?? `{"items": []}`
+                      )["items"] as any[]
                     ).filter((item) => item.productId !== productId),
                     {
                       productId: productId,
@@ -57,10 +58,13 @@ export default function CartPage() {
                   ],
           })
         );
-        setProductQuantities({
+        const newProductQuantities: any = {
           ...productQuantities,
           [productId]: quantity,
-        });
+        };
+        setProductQuantities(newProductQuantities);
+
+        console.log(newProductQuantities);
         // setCartItemQuantity(quantity);
       } else {
         alert("Failed to update the cart. " + (await response.json())["error"]);
@@ -79,12 +83,14 @@ export default function CartPage() {
         }
       );
       const cartData = await response.json();
-      const quants = cartData[0].items.map((item: any) => {
-        return { [item.productId]: item.quantity };
-      });
+      const quants =
+        cartData[0]?.items.map((item: any) => {
+          return { [item.productId]: item.quantity };
+        }) ?? [];
       console.log(cartData);
       setCart(cartData[0]);
       setProductQuantities(Object.assign({}, ...quants));
+      setLoader(false);
     };
     getData();
   }, []);
@@ -125,104 +131,126 @@ export default function CartPage() {
               <div></div>
             )}
           </div>
-          <table id="cart" className="hidden md:table">
-            <thead className="font-bold">
-              <tr>
-                <td>Product</td>
-                <td>Quantity</td>
-                <td>Cost</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {cart ? (
-                cart.items.map((item: any) => (
-                  <CartItem
-                    productId={item.productId}
-                    key={item.productId}
-                    price={item.price}
-                    name={item.name}
-                    description={item.description}
-                    image={item.image}
-                    variantName={item.variantName}
-                    variant={item.variant}
-                    category={item.category}
-                    quantity={
-                      productQuantities[item.productId] || item.quantity
-                    }
-                    updateCart={updateCart}
-                  />
-                ))
-              ) : (
+          {(cart?.items?.length ?? 0) > 0 ? (
+            <table id="cart" className="hidden md:table">
+              <thead className="font-bold">
                 <tr>
-                  <td colSpan={4}>Loading...</td>
+                  <td>Product</td>
+                  <td>Quantity</td>
+                  <td>Cost</td>
+                  <td></td>
                 </tr>
-              )}
-              {cart && cart.outOfStockItems.length > 0 ? (
-                <tr>
-                  <td colSpan={4}>
-                    <p>Out of stock</p>
-                  </td>
-                  {cart.outOfStockItems.map((item: any) => (
+              </thead>
+              <tbody>
+                {cart ? (
+                  cart.items.map((item: any) => (
                     <CartItem
                       productId={item.productId}
                       key={item.productId}
                       price={item.price}
                       name={item.name}
                       description={item.description}
-                      category={item.category}
+                      image={item.image}
                       variantName={item.variantName}
                       variant={item.variant}
-                      image={item.image}
-                      quantity={
-                        productQuantities[item.productId] || item.quantity
-                      }
+                      category={item.category}
+                      quantity={productQuantities[item.productId] || 0}
                       updateCart={updateCart}
                     />
-                  ))}
-                </tr>
-              ) : cart?.outOfStockItems.length <= 0 ? (
-                <></>
-              ) : (
+                  ))
+                ) : isLoading ? (
+                  <tr>
+                    <td colSpan={4}>Loading...</td>
+                  </tr>
+                ) : (
+                  <></>
+                )}
+                {cart && cart.outOfStockItems.length > 0 ? (
+                  <tr>
+                    <td colSpan={4}>
+                      <p>Out of stock</p>
+                    </td>
+                    {cart.outOfStockItems.map((item: any) => (
+                      <CartItem
+                        productId={item.productId}
+                        key={item.productId}
+                        price={item.price}
+                        name={item.name}
+                        description={item.description}
+                        category={item.category}
+                        variantName={item.variantName}
+                        variant={item.variant}
+                        image={item.image}
+                        quantity={productQuantities[item.productId] || 0}
+                        updateCart={updateCart}
+                      />
+                    ))}
+                  </tr>
+                ) : cart?.outOfStockItems.length <= 0 || !isLoading ? (
+                  <></>
+                ) : (
+                  <tr>
+                    <td colSpan={4}>Loading...</td>
+                  </tr>
+                )}
                 <tr>
-                  <td colSpan={4}>Loading...</td>
+                  <td colSpan={4}>
+                    <input
+                      placeholder="Enter your promo code"
+                      className="border-b pb-1 text-sm dark:bg-gray-900"
+                    />
+                  </td>
                 </tr>
-              )}
-              <tr>
-                <td colSpan={4}>
-                  <input
-                    placeholder="Enter your promo code"
-                    className="border-b pb-1 text-sm dark:bg-gray-900"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan={4}>
-                  <div className="w-full px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-950 flex">
-                    <Link className="cursor-pointer flex" href={"/explore"}>
-                      <span className="material-symbols-outlined">
-                        chevron_left
-                      </span>{" "}
-                      Back to catalog
-                    </Link>
-                    <p className="font-bold ml-auto">
-                      Total cost:
-                      <span className="text-[#46A627]">
-                        {" "}
-                        ₹
-                        {cart?.items
-                          ?.map(
-                            (item: any) =>
-                              item.price * productQuantities[item.productId]
-                          )
-                          .reduce((a: number, b: number) => a + b, 0) || 0}
-                      </span>
-                    </p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td colSpan={4}>
+                    <div className="w-full px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-950 flex">
+                      <Link className="cursor-pointer flex" href={"/explore"}>
+                        <span className="material-symbols-outlined">
+                          chevron_left
+                        </span>{" "}
+                        Back to catalog
+                      </Link>
+                      <p className="font-bold ml-auto">
+                        Total cost:
+                        <span className="text-[#46A627]">
+                          {" "}
+                          ₹
+                          {cart?.items
+                            ?.map(
+                              (item: any) =>
+                                item.price * productQuantities[item.productId]
+                            )
+                            .reduce((a: number, b: number) => a + b, 0) || 0}
+                        </span>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            <div className="h-96 flex items-center justify-center flex-col">
+              <span className={"material-symbols-outlined mb-4"}>
+                shopping_bag
+              </span>
+              <p className="text-xl font-bold">Your cart is empty</p>
+              <p className="md:w-[65ch] mb-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
+                assumenda quibusdam nesciunt voluptatem officiis laborum
+                corrupti. Similique laborum dolorum adipisci dolorem? Illo
+                cumque, recusandae doloribus rem excepturi unde. Esse, alias.
+              </p>
+              <Link
+                href={"/explore"}
+                className="text-[#46A627] font-bold flex items-center gap-3"
+              >
+                Shop now{" "}
+                <span className="material-symbols-outlined text-[#46A627]">
+                  arrow_forward
+                </span>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       <Address />

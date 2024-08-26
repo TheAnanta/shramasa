@@ -20,7 +20,7 @@ export function CartItem(props: {
     isIncreased: boolean
   ) => void;
 }) {
-  return (
+  return props.quantity > 0 ? (
     <tr className="border-t">
       <td className="shink-0">
         <Link href={"/products/" + props.productId} className="flex gap-x-5">
@@ -86,5 +86,7 @@ export function CartItem(props: {
         </div>
       </td>
     </tr>
+  ) : (
+    <></>
   );
 }
