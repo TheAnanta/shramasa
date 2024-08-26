@@ -9,6 +9,7 @@ import wishlistRoutes from "./routes/wishlistRoute";
 import orderRoutes from "./routes/orderRoute";
 import couponRoutes from "./routes/couponRoute";
 import adminRoutes from "./routes/admin/adminRoute";
+import addressRouter from "./routes/addressRoute";
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/coupons", couponRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/address", addressRouter);
 
 app.listen(3001, () => {
   console.log("Server is running on http://localhost:3001");

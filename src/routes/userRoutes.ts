@@ -4,7 +4,7 @@ import { signup, getUser, updateUser, deleteUser } from "../controllers/userCont
 const router = Router();
 
 router.post("/signup", signup);
-router.get("/get-user", getUser);
+router.post("/get-user", getUser);
 router.put("/update-user", updateUser);
 router.delete("/delete-user", deleteUser);
 

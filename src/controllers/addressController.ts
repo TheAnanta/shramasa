@@ -1,7 +1,6 @@
 import { Response, Request } from "express";
 import prisma from "../prismaClient";
 import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
-// checkAuthorizedByAdmin
 
 export const createAddress = async (req: Request, res: Response) => {
   try {
@@ -34,7 +33,7 @@ export const createAddress = async (req: Request, res: Response) => {
 
 export const getAllAddressesOfUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.body;
+    const { userId } = req.body;
     const addresses = await prisma.address.findMany({
       where: {
         userId,
