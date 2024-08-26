@@ -51,8 +51,8 @@ export interface Product {
   productId: string;
   name: string;
   description: string;
-  category: string;
-  subCategory: string;
+  category: Category;
+  subCategory: SubCategory;
   images: string[];
   ingredients: any[];
   discount: number;

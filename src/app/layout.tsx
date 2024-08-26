@@ -4,15 +4,16 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
 import { AuthContextProvider } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-//   title: "Shramasa",
-//   description:
-//     "Shramasa is an organic mom's beauty brand that offers a wide range of natural beauty products for all the hard-working mothers out there.",
-//   keywords: ["organic", "beauty", "mom", "natural", "products", "shramasa"],
-// };
+export const metadata: Metadata = {
+  title: "Shramasa",
+  description:
+    "Shramasa is an organic mom's beauty brand that offers a wide range of natural beauty products for all the hard-working mothers out there.",
+  keywords: ["organic", "beauty", "mom", "natural", "products", "shramasa"],
+};
 
 export default function RootLayout({
   children,
@@ -33,6 +34,7 @@ export default function RootLayout({
         <AuthContextProvider>
           <>
             <Navbar />
+            <Toaster />
             {children}
             <Footer />
           </>

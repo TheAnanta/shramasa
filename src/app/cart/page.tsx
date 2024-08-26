@@ -4,6 +4,7 @@ import React from "react";
 import { CartItem } from "./components/CartItem";
 import { MobileCartItem } from "./components/MobileCartItem";
 import { useAuthContext } from "../context/AuthContext";
+import Address from "@/components/Address";
 
 export default function CartPage() {
   const [cart, setCart] = React.useState<any>(null);
@@ -146,7 +147,9 @@ export default function CartPage() {
                     variantName={item.variantName}
                     variant={item.variant}
                     category={item.category}
-                    quantity={productQuantities[item.productId] || item.quantity}
+                    quantity={
+                      productQuantities[item.productId] || item.quantity
+                    }
                     updateCart={updateCart}
                   />
                 ))
@@ -171,7 +174,9 @@ export default function CartPage() {
                       variantName={item.variantName}
                       variant={item.variant}
                       image={item.image}
-                      quantity={productQuantities[item.productId] || item.quantity}
+                      quantity={
+                        productQuantities[item.productId] || item.quantity
+                      }
                       updateCart={updateCart}
                     />
                   ))}
@@ -220,52 +225,7 @@ export default function CartPage() {
           </table>
         </div>
       </div>
-      <div className="lg:w-1/4 flex flex-col items-center gap-5 px-6 py-4 rounded-3xl shadow-sm bg-white dark:bg-gray-900">
-        <h3 className="text-2xl font-medium mb-2">Your details</h3>
-        <input
-          placeholder="Enter your name"
-          className="border-b pb-1 w-full text-base dark:bg-gray-900"
-        />
-        <input
-          placeholder="Enter phone number"
-          className="border-b pb-1 w-full text-base dark:bg-gray-900"
-        />
-        <div className="w-full flex gap-x-3 dark:bg-gray-900">
-          <input title="delivery" type="radio" name="delivery" />
-          <p>Express Delivery</p>
-        </div>
-        <div className="w-full flex gap-x-3 dark:bg-gray-900">
-          <input title="delivery" type="radio" name="delivery" />
-          <p>Standard Delivery</p>
-        </div>
-        <div className="flex gap-x-2 text-sm">
-          <input
-            placeholder="Home"
-            className="border-b pb-1 w-full dark:bg-gray-900"
-          />
-          <input
-            placeholder="Approach"
-            className="border-b pb-1 w-full dark:bg-gray-900"
-          />
-          <input
-            placeholder="Floor"
-            className="border-b pb-1 w-full dark:bg-gray-900"
-          />
-          <input
-            placeholder="Apartment"
-            className="border-b pb-1 w-full dark:bg-gray-900"
-          />
-        </div>
-        <input
-          placeholder="Enter shipping address"
-          className="border-b pb-1 w-full dark:bg-gray-900"
-        />
-        <Link href={"/cart/review"} className="mt-auto mb-4">
-          <button className="py-2 px-7 font-semibold bg-[#46A627] text-[0.95rem] text-white rounded-full">
-            Review your cart
-          </button>
-        </Link>
-      </div>
+      <Address />
     </div>
   );
 }

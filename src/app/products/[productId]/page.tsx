@@ -251,7 +251,8 @@ export default function ProductPage({
                           JSON.stringify({
                             items: [
                               ...(JSON.parse(
-                                localStorage.getItem("cart") ?? ""
+                                localStorage.getItem("cart") ??
+                                  `{"items":[]}`
                               )["items"] as any[]),
                               {
                                 productId: product?.productId,
@@ -433,6 +434,7 @@ export default function ProductPage({
                   </div>
                 )}
                 <textarea
+                  title="review"
                   className="border rounded-xl w-full mt-3"
                   cols={40}
                   rows={4}
