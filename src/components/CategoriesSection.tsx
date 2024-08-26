@@ -16,14 +16,15 @@ export default function CategoriesSection() {
     <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:justify-between md:items-center w-full gap-8 md:gap-x-6 pt-12">
       {categories.map((c) => {
         return (
-          <div key={c.categoryId} className="flex flex-col">
+          <a href={"/explore?category="+c.categoryId} key={c.categoryId} className="flex flex-col">
             <img
-              src={c.image}
+              src={"/images/products/mockup.png"}
               alt="petal"
               className="w-full h-[128px] object-cover rounded-2xl"
             />
+            hi there
             <p className="p-1 lowercase mx-auto">{c.name}</p>
-          </div>
+          </a>
         );
       })}
     </div>

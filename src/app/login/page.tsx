@@ -15,6 +15,8 @@ export default function Page() {
           />
           <input
             name="password"
+            required={true}
+            type="password"
             placeholder="password"
             className="border border-black px-6 py-2 rounded-lg"
           />

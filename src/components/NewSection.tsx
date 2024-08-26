@@ -46,9 +46,6 @@ export default function NewSection() {
         {/* <Item />
         <Item /> */}
       </div>
-
-      {/* New Section Below */}
-      <CategoriesSection />
     </div>
   );
 }
