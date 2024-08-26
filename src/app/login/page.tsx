@@ -1,31 +1,43 @@
+"use client";
+
 import { login } from "@/lib/login_validations";
+import { useState } from "react";
+
+type AuthType = "login" | "signup";
 
 export default function Page() {
+
+  const [authType, setAuthType] = useState<AuthType>("login");
+  const currentPageInfo = PageInfo[authType];
+
+
   return (
-    <main className="h-screen w-screen flex">
-      <div className="w-max h-max my-auto mx-auto">
-        <form className="p-8 flex flex-col gap-2">
-          <h2>Login</h2>
-          <input
-            name="username"
-            placeholder="username"
-            required={true}
-            type="email"
-            className="border border-black px-6 py-2 rounded-lg"
+    <main className="md:h-screen h-auto w-screen flex">
+      <div className="w-full h-max my-auto mx-auto flex flex-col justify-center items-center md:flex-row md:justify-around md:items-center">
+        <img src="./images/products/hair-shampoo-banner.png" alt="shampoo showcase" className="w-[400px]" />
+        <form className="p-8 flex flex-col gap-2 mb-6">
+          <img
+            src="/navbar/logo.svg"
+            alt="close"
+            className="mb-6"
           />
-          <input
-            name="password"
-            required={true}
-            type="password"
-            placeholder="password"
-            className="border border-black px-6 py-2 rounded-lg"
-          />
-          <div className="flex flex-row-reverse">
+          <h2 className="font-bold text-2xl tracking-tighter text-left mb-4">{currentPageInfo?.title}</h2>
+          {currentPageInfo.fields.map((item) => (
+            <input
+              key={item.id}
+              name={item.name}
+              placeholder={item.name}
+              required={true}
+              type={item.type}
+              className="bg-gray-300/50 border border-gray-500/30 px-6 py-2 mb-2 rounded-3xl"
+            />
+          ))}
+          <div className="w-full flex flex-row">
             <button
               formAction={login}
-              className="bg-black text-white w-max px-6 py-2 rounded-xl"
+              className="bg-black text-white w-full px-6 py-2 my-4 rounded-3xl"
             >
-              Login
+              {currentPageInfo?.btnTxt}
             </button>
             {/* <button
               formAction={forgotPassword}
@@ -34,8 +46,88 @@ export default function Page() {
               Forgot Password
             </button> */}
           </div>
+
+          <div className="flex justify-center items-center gap-2">
+            <div className="w-1/2 h-0.5 bg-gray-300"></div>
+            <p className="text-sm text-gray-400 font-semibold">or</p>
+            <div className="w-1/2 h-0.5 bg-gray-300"></div>
+          </div>
+
+          <div className="flex justify-center items-center rounded-3xl space-x-3 bg-white px-7 py-3 my-4 w-full text-center border border-gray-500/50 cursor-pointer transition-all duration-500 hover:scale-105">
+            <img src={"/icons/google.png"} alt="pGoogle logo" className="w-6 h-6 sm:w-4 sm:h-4" />
+            <p className="text-black font-medium text-sm sm:text-xs">{currentPageInfo.oAuthTxt}</p>
+          </div>
+
+          <p onClick={() => setAuthType(currentPageInfo?.changeStateOption)} className="text-sm text-center space-x-4 cursor-pointer">{currentPageInfo.alternative.parent} <span className="underline text-[#46A627] font-medium">{currentPageInfo.alternative.child}</span></p>
         </form>
       </div>
     </main>
   );
+}
+
+
+const PageInfo: Record<string, {
+
+  title: string;
+  fields: { name: string, type: string, id: number }[];
+  oAuthTxt: string;
+  btnTxt: string;
+  alternative: { parent: string, child: string };
+  changeStateOption: AuthType
+}> = {
+  "login": {
+    'title': 'Login to Sharamasa',
+    'fields': [
+      {
+        'name': 'username',
+        'type': 'text',
+        'id': 1
+      },
+      {
+        'name': 'password',
+        'type': 'password',
+        'id': 2
+      },
+    ],
+    'oAuthTxt': 'Login With Google',
+    'btnTxt' : 'Login',
+    'alternative': {
+      'parent': "Don't have an account?",
+      'child': 'Signup'
+    },
+    'changeStateOption': 'signup'
+  },
+  "signup": {
+    'title': 'Signup to Sharamasa',
+    'fields': [
+      {
+        'name': 'name',
+        'type': 'text',
+        id: 1
+      },
+      {
+        'name': 'email',
+        'type': 'text',
+        id: 2
+      },
+      {
+        'name': 'phone number',
+        'type': 'text',
+        id: 3
+      },
+      {
+        'name': 'password',
+        'type': 'password',
+        id: 4
+      },
+    ],
+    'oAuthTxt': 'Sigup With Google',
+    'btnTxt' : 'Signup',
+    'alternative': {
+      'parent': "Already a user?",
+      'child': 'Login'
+    },
+    'changeStateOption': 'login'
+  },
+
 }
