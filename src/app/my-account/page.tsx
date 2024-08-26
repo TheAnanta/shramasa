@@ -57,7 +57,7 @@ export default function Page() {
   }, [userId]);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row items-start justify-between mx-[8.25%] my-12 md:space-x-12 h-screen">
+    <div className="flex flex-col-reverse md:flex-row items-start justify-between mx-[8.25%] my-12 md:space-x-12 ">
       <div className="w-full">
         <h1 className="mb-8 text-4xl font-bold">Profile</h1>
         <div className="flex justify-between items-center py-8">
@@ -97,7 +97,7 @@ export default function Page() {
         </div>
       </div>
       <div className="w-full h-fit">
-        <div className="bg-[#7FD264] rounded-[28.38px] px-12 py-8 flex justify-between">
+        <div className="bg-[#7FD264] rounded-[28.38px] px-12 py-8 flex justify-between sm:flex-row flex-col-reverse">
           <div>
             <p className="text-4xl text-white soyuz-grotesk">{user?.name}</p>
             <p className="text-lg font-medium text-white">{user?.email}</p>
@@ -115,7 +115,7 @@ export default function Page() {
             <img
               src="https://github.com/ManasMalla.png"
               alt=""
-              className="border-[16px] border-[#56AB3A] rounded-full w-36 h-36 object-cover"
+              className="border-[16px] border-[#56AB3A] rounded-full w-36 h-36 object-cover sm:mb-0 mb-4"
             />
           </div>
         </div>
