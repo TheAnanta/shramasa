@@ -4,7 +4,10 @@ import styles from "./address.module.css";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 
-export default function Address() {
+export default function Address(props: {
+  canReviewCart: boolean;
+  onReviewCart: (address: number, deliveryMode: number) => void;
+}) {
   const [userAddresses, setUserAddresses] = useState<any[]>([]);
   const [deliveryMode, setDeliverMode] = useState(0);
   const [userSelectedAddress, setUserSelectedAddress] = useState(0);
@@ -29,6 +32,8 @@ export default function Address() {
   const handleSubmit = async (formData: any) => {
     formData.preventDefault();
     console.log(formData);
+    //TODO Create address
+    props.onReviewCart(userSelectedAddress, deliveryMode);
     // try {
     //   const response = await fetch(
     //     "http://localhost:3001/api/address/create-address",
@@ -189,8 +194,22 @@ export default function Address() {
         />
         <p>Standard Delivery</p>
       </div>
-      <button className="mt-auto mb-4">
-        <button className={styles.reviewButton}>Review your cart</button>
+      <button className="mt-auto mb-4" disabled={!props.canReviewCart}>
+        <button
+          disabled={!props.canReviewCart}
+          className={`${styles.reviewButton} disabled:bg-neutral-400`}
+          onClick={
+            props.canReviewCart
+              ? () => {
+                  props.onReviewCart(userSelectedAddress, deliveryMode);
+                }
+              : () => {
+                  alert("Add items first.");
+                }
+          }
+        >
+          Review your cart
+        </button>
       </button>
     </form>
   );

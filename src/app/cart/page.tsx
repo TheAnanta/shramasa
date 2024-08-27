@@ -1,15 +1,18 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { CartItem } from "./components/CartItem";
 import { MobileCartItem } from "./components/MobileCartItem";
 import { useAuthContext } from "../context/AuthContext";
 import Address from "@/components/Address";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const [cart, setCart] = React.useState<any>(null);
   const [isLoading, setLoader] = React.useState(true);
   const [productQuantities, setProductQuantities] = React.useState<any>({});
+  const [coupon, setCoupon] = useState("");
+  const router = useRouter();
   const user = useAuthContext();
 
   const updateCart = async (
@@ -154,6 +157,7 @@ export default function CartPage() {
                       variantName={item.variantName}
                       variant={item.variant}
                       category={item.category}
+                      discount={item.discount}
                       quantity={productQuantities[item.productId] || 0}
                       updateCart={updateCart}
                     />
@@ -181,6 +185,7 @@ export default function CartPage() {
                         variantName={item.variantName}
                         variant={item.variant}
                         image={item.image}
+                        discount={item.discount}
                         quantity={productQuantities[item.productId] || 0}
                         updateCart={updateCart}
                       />
@@ -196,6 +201,10 @@ export default function CartPage() {
                 <tr>
                   <td colSpan={4}>
                     <input
+                      value={coupon}
+                      onChange={(e) => {
+                        setCoupon(e.target.value);
+                      }}
                       placeholder="Enter your promo code"
                       className="border-b pb-1 text-sm dark:bg-gray-900"
                     />
@@ -218,7 +227,8 @@ export default function CartPage() {
                           {cart?.items
                             ?.map(
                               (item: any) =>
-                                item.price * productQuantities[item.productId]
+                                (item.price - item.discount) *
+                                productQuantities[item.productId]
                             )
                             .reduce((a: number, b: number) => a + b, 0) || 0}
                         </span>
@@ -253,7 +263,18 @@ export default function CartPage() {
           )}
         </div>
       </div>
-      <Address />
+      <Address
+        canReviewCart={(cart?.items?.length ?? 0) > 0}
+        onReviewCart={(address, deliveryMode) => {
+          router.push(
+            "/cart/review?address=" +
+              address +
+              "&deliveryMode=" +
+              deliveryMode +
+              (coupon && "&coupon=" + coupon)
+          );
+        }}
+      />
     </div>
   );
 }

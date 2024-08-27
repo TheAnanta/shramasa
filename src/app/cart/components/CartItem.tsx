@@ -13,6 +13,7 @@ export function CartItem(props: {
   variant: number;
   variantName: string;
   quantity: number;
+  discount: number;
   updateCart: (
     productId: string,
     quantity: number,
@@ -74,7 +75,9 @@ export function CartItem(props: {
           </div>
         </div>
       </td>
-      <td className="font-semibold">₹{props.price * props.quantity}</td>
+      <td className="font-semibold shrink-0 w-32">
+        ₹{(props.price - props.discount) * props.quantity}
+      </td>
       <td className="!mr-0">
         <div
           className="p-2 size-10 bg-gray-100 dark:bg-gray-950 rounded-xl cursor-pointer"
