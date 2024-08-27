@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
 import { auth } from "@/lib/firebase/config";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthContext } from "../context/AuthContext";
+import Link from "next/link";
 
 export default function Page() {
+  const router = useRouter();
   const userId = useAuthContext()?.uid;
 
   const [user, setUser] = React.useState<any>();
@@ -41,7 +43,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchAddresses = async () => {
       const response = await fetch(
-        `http://localhost:3001/api/address/get-all-addresses-of-user?userId` +
+        `http://localhost:3001/api/address/get-all-addresses-of-user?userId=` +
           userId,
         {
           method: "GET",
@@ -60,43 +62,22 @@ export default function Page() {
 
   return (
     <div className="flex flex-col-reverse lg:flex-row items-start justify-between mx-[8.25%] my-12 lg:space-x-12 ">
-      <div className="w-full">
+      <div className="w-[40%]">
         <h1 className="mb-8 text-4xl font-bold">Profile</h1>
-        <div className="flex justify-between items-center py-8">
+        <Link href={'/wishlist'} className="flex justify-between items-center py-8">
           <span className="material-symbols-outlined text-[#7FD264]">
             person
           </span>
-          <p className="text-2xl">List Item</p>
+          <p className="text-2xl">Wishlist</p>
           <span className="material-symbols-outlined">arrow_right</span>
-        </div>
-        <div className="flex justify-between items-center py-8">
+        </Link>
+        <Link href={'/orders'}  className="flex justify-between items-center py-8">
           <span className="material-symbols-outlined text-[#7FD264]">
             person
           </span>
-          <p className="text-2xl">List Item</p>
+          <p className="text-2xl">Orders</p>
           <span className="material-symbols-outlined">arrow_right</span>
-        </div>
-        <div className="flex justify-between items-center py-8">
-          <span className="material-symbols-outlined text-[#7FD264]">
-            person
-          </span>
-          <p className="text-2xl">List Item</p>
-          <span className="material-symbols-outlined">arrow_right</span>
-        </div>
-        <div className="flex justify-between items-center py-8">
-          <span className="material-symbols-outlined text-[#7FD264]">
-            person
-          </span>
-          <p className="text-2xl">List Item</p>
-          <span className="material-symbols-outlined">arrow_right</span>
-        </div>
-        <div className="flex justify-between items-center py-8">
-          <span className="material-symbols-outlined text-[#7FD264]">
-            person
-          </span>
-          <p className="text-2xl">List Item</p>
-          <span className="material-symbols-outlined">arrow_right</span>
-        </div>
+        </Link>
       </div>
       <div className="w-full h-fit">
         <div className="bg-[#7FD264] rounded-[28.38px] px-12 py-8 flex justify-between sm:flex-row flex-col-reverse">
@@ -107,6 +88,7 @@ export default function Page() {
             <button
               onClick={function () {
                 auth.signOut();
+                router.push("/");
               }}
               className="text-black bg-white py-2 px-7 rounded-xl uppercase font-semibold mt-2"
             >
