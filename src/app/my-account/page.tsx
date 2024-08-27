@@ -3,6 +3,7 @@ import React from "react";
 import { auth } from "@/lib/firebase/config";
 import { useSearchParams } from "next/navigation";
 import { useAuthContext } from "../context/AuthContext";
+import Link from "next/link";
 
 export default function Page() {
   const userId = useAuthContext()?.uid;
@@ -130,9 +131,14 @@ export default function Page() {
           </div>
         </div>
         <div className="my-8 sm:my-12">
-          <h2 className="soyuz-grotesk text-2xl font-semibold mb-8">
-            your addresses
-          </h2>
+          <div className="w-full flex justify-between items-center">
+            <h2 className="soyuz-grotesk text-2xl font-semibold mb-8">
+              your addresses
+            </h2>
+            <Link href={"/my-account/addresses"} className="text-[#46A627]">
+              view all
+            </Link>
+          </div>
           {addressses.map((address: any) => (
             <>
               <div
