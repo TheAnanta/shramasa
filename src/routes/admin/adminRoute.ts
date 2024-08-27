@@ -3,6 +3,6 @@ import { getAllUserOrders } from "../../controllers/admin/adminOrderController";
 
 const router = Router();
 
-router.post("/get-all-user-orders", getAllUserOrders);
+router.get("/get-all-user-orders", getAllUserOrders);
 
 export default router;

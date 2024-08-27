@@ -33,7 +33,7 @@ export const createAddress = async (req: Request, res: Response) => {
 
 export const getAllAddressesOfUser = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.params;
     const addresses = await prisma.address.findMany({
       where: {
         userId,

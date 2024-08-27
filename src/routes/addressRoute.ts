@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.post("/create-address", createAddress);
-router.post("/get-all-addresses-of-user", getAllAddressesOfUser);
+router.get("/get-all-addresses-of-user", getAllAddressesOfUser);
 router.get("/get-address-by-id/", getAddressById);
 router.put("/update-address-by-id", updateAddressById);
 router.delete("/delete-address-by-id", deleteAddressById);

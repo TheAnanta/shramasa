@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { instantiateOrder } from "../controllers/orderController";
+import { getOrder,  instantiateOrder } from "../controllers/orderController";
 
 
 const router = Router();
 
 router.post("/instantiate-order", instantiateOrder);
-// router.get("/modify-order-status", );
+router.get("/get-orders", getOrder);
 
 export default router;
