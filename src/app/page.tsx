@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Order } from "@/types/interfaces";
+import { Order } from "@/type/interfaces";
 
 export default function Page() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -8,7 +8,7 @@ export default function Page() {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await fetch("/api/admin/get-all-user-orders");
+        const response = await fetch("http://localhost:3001/api/admin/get-all-user-orders");
         const data: Order[] = await response.json();
         setOrders(data);
       } catch (error) {
