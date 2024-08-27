@@ -5,7 +5,7 @@ import { FirebaseError } from "firebase/app";
 import { doc, getDoc } from "firebase/firestore";
 import { redirect } from "next/navigation";
 
-const login = async (formData) => {
+const login = async (formData: any) => {
     // "use server";
     if (!formData.get("password")) {
         alert("Password is required");
