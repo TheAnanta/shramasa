@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { auth } from "@/lib/firebase/config";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthContext } from "../context/AuthContext";
 import Link from "next/link";
 
 export default function Page() {
+  const router = useRouter();
   const userId = useAuthContext()?.uid;
 
   const [user, setUser] = React.useState<any>();
