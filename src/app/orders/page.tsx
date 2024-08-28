@@ -23,5 +23,5 @@ export default function Page() {
     fetchDetails();
   }, []);
 
-  return <div></div>;
+  return <OrdersTable orders={orders} />;
 }

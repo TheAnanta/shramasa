@@ -5,16 +5,16 @@ import OrdersTable from "@/components/OrdersTable";
 import Link from "next/link";
 
 export default function Page() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/admin/get-all-user-orders"
+          "http://localhost:3001/api/products/get-all-products"
         );
-        const data: Order[] = await response.json();
-        setOrders([...data]);
+        const data = await response.json();
+        setCategories(data);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -23,5 +23,11 @@ export default function Page() {
     fetchDetails();
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      {categories.map((category) => {
+        return <p>{category.name}</p>;
+      })}
+    </div>
+  );
 }
