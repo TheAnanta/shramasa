@@ -191,6 +191,7 @@ export const fetchUserCart = async (req: Request, res: Response) => {
                     name: product?.name,
                     image: product?.images[0],
                     category: product?.category,
+                    discount: product?.discount,
                     stock: product?.stock[item.variant] ?? 0
                 };
             }));

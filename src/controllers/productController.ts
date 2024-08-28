@@ -160,22 +160,30 @@ export const updateProductStock = async (req: Request, res: Response) => {
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });
   }
-  if (!variant) {
+  if (variant == null) {
     return res.status(400).json({ error: "Variant not provided." });
   }
-  if (!stock || stock < 0) {
+  if (stock == null || stock < 0) {
     return res.status(400).json({ error: "Invalid or no stock value provided." });
   }
+  const product = await prisma.product.findFirst({
+    where: {
+      productId: productId
+    }
+  });
+  const stockValues = product?.stock;
+  if (stockValues == null) {
+    return res.status(400).json({ error: "Product not found." });
+  }
+  stockValues[variant] = stock;
   try {
     const updatedProduct = await prisma.product.update({
       where: {
         productId: productId,
-        
+
       },
       data: {
-        // stock: {
-        //   set: stock,
-        // },
+        stock: stockValues,
       },
     });
     res.status(200).json(updatedProduct);

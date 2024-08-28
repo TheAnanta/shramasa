@@ -5,6 +5,7 @@ import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 export const createAddress = async (req: Request, res: Response) => {
   try {
     const {
+      name,
       userId,
       houseNumber,
       floor,
@@ -13,8 +14,15 @@ export const createAddress = async (req: Request, res: Response) => {
       address,
       pincode,
     } = req.body;
+    const userAddressLength = await prisma.address.count({
+      where: {
+        userId: userId
+      }
+    })
     const addressData = await prisma.address.create({
       data: {
+        name: name,
+        isDefault: userAddressLength === 0,
         addressId: `${userId}-${houseNumber}-${floor}-${apartment}`,
         userId,
         houseNumber,
@@ -61,20 +69,33 @@ export const getAddressById = async (req: Request, res: Response) => {
 
 export const updateAddressById = async (req: Request, res: Response) => {
   try {
-    const addressId = req.body;
-    const { houseNumber, floor, apartment, landmark, address, pincode } =
+    const { addressId, name, setDefault, houseNumber, floor, apartment, landmark, address, pincode } =
       req.body;
+    if (setDefault == 1) {
+      await prisma.address.updateMany({
+        where: {
+          userId: req.body.userId,
+          isDefault: true
+        },
+        data: {
+          isDefault: false
+        }
+      });
+    }
     const addressData = await prisma.address.update({
       where: {
         addressId,
       },
       data: {
-        houseNumber,
-        floor,
-        apartment,
-        landmark,
-        address,
-        pincode,
+        addressId: addressId,
+        name: name,
+        isDefault: setDefault == 1,
+        houseNumber: houseNumber,
+        floor: floor,
+        apartment: apartment,
+        landmark: landmark,
+        address: address,
+        pincode: pincode,
       },
     });
     res.status(200).json(addressData);
@@ -91,6 +112,23 @@ export const deleteAddressById = async (req: Request, res: Response) => {
         addressId,
       },
     });
+    if (addressData.isDefault) {
+      const newDefaultAddress = await prisma.address.findFirst({
+        where: {
+          userId: addressData.userId
+        }
+      });
+      if (newDefaultAddress) {
+        await prisma.address.update({
+          where: {
+            addressId: newDefaultAddress.addressId
+          },
+          data: {
+            isDefault: true
+          }
+        });
+      }
+    }
     res.status(200).json(addressData);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
