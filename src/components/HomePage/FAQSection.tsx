@@ -1,6 +1,6 @@
 export function FaqSection() {
   return (
-    <div className="md:w-1/2 bg-[#F2F2F2] p-12 flex-col flex rounded-3xl">
+    <div className="md:w-1/2 dark:bg-neutral-800 bg-[#F2F2F2] p-12 flex-col flex rounded-3xl">
       {/* FAQ */}
       <p className="text-3xl md:text-5xl soyuz-grotesk">
         Frequently Asked Questions

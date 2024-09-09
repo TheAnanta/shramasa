@@ -20,7 +20,7 @@ export default function Home() {
           <tbody>
             <tr>
               <td className="w-max">
-                <div className="p-14 pb-6 shrink-0 bg-[#F2F2F2] rounded-3xl md:mr-3">
+                <div className="p-14 pb-6 shrink-0 dark:bg-neutral-800 bg-[#F2F2F2] rounded-3xl md:mr-3">
                   <p className="text-3xl md:text-5xl soyuz-grotesk md:w-[20ch]">
                     What makes us different?
                   </p>

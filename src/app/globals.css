@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  color: #202124;
+  color: #171717;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -62,9 +62,9 @@ table#cart td {
 
 
 .name .phone {
-  @apply border-b pb-1 w-full text-base dark:bg-gray-900
+  @apply border-b pb-1 w-full text-base dark:bg-neutral-900
 }
 
 .input {
-  @apply border-b pb-1 w-full dark:bg-gray-900
+  @apply border-b pb-1 w-full dark:bg-neutral-900
 }

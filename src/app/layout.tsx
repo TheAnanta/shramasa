@@ -29,7 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.className} dark:bg-slate-950 dark:text-white`}
+        className={`${manrope.className} dark:bg-neutral-900 dark:text-white`}
       >
         <AuthContextProvider>
           <>
