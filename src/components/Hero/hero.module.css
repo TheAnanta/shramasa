@@ -36,7 +36,7 @@
 
 @media (prefers-color-scheme: dark){
     .hero .card{
-        background-color: #111827;
+        background-color: #262626;
         padding: 24px 20px;
     }
 }
