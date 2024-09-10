@@ -20,7 +20,7 @@ export default function Explore() {
         "http://localhost:3001/api/products/get-all-products"
       );
       const data = await response.json();
-      setProducts([...data, ...data, ...data, ...data]);
+      setProducts(data);
     }
     getData();
   }, []);
