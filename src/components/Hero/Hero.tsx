@@ -34,9 +34,9 @@ export default function Hero() {
                 <p className="w-[28ch] mb-6 md:text-base text-sm">
                   choose care from Shramasa BioPr. Organic and Biotherm.
                 </p>
-                <button className="px-6 py-3 bg-[#46A627] rounded-full text-sm text-white">
+                <a href="/about" className="px-6 py-3 bg-[#46A627] rounded-full text-sm text-white">
                   move on to know more
-                </button>
+                </a>
               </div>
             </div>
           </HeroCard>

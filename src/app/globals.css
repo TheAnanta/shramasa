@@ -68,3 +68,7 @@ table#cart td {
 .input {
   @apply border-b pb-1 w-full dark:bg-neutral-900
 }
+
+.about p {
+  @apply opacity-70 font-medium 
+}
