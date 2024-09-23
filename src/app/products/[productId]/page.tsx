@@ -251,8 +251,7 @@ export default function ProductPage({
                           JSON.stringify({
                             items: [
                               ...(JSON.parse(
-                                localStorage.getItem("cart") ??
-                                  `{"items":[]}`
+                                localStorage.getItem("cart") ?? `{"items":[]}`
                               )["items"] as any[]),
                               {
                                 productId: product?.productId,
@@ -468,10 +467,8 @@ export default function ProductPage({
                     if (response.status == 200) {
                       alert("Review submitted successfully");
                     } else {
-                      alert(
-                        "Failed to submit review. " +
-                          (await response.json())["message"]?.toString() ?? ""
-                      );
+                      alert("Failed to submit review. ");
+                      // (await response.json())["message"]?.toString() ?? "");
                     }
                   }}
                   className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full mt-3"
