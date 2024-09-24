@@ -3,6 +3,7 @@ import { useAuthContext } from "@/app/context/AuthContext";
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/types/interfaces";
 import React from "react";
+import Catalogue from "./Catalogue";
 
 export default function ProductPage({
   params,
@@ -136,7 +137,7 @@ export default function ProductPage({
           <div className="flex pt-4 pb-4 gap-x-2 justify-between items-start w-full">
             <div>
               <h3 className="text-xl font-medium opacity-50 leading-4">
-                hair care
+                {product?.category.name}
               </h3>
               <h2 className="text-4xl font-bold">{product?.name}</h2>
             </div>
@@ -482,6 +483,7 @@ export default function ProductPage({
           <div className="flex space-x-4 pt-6">
             <ProductCard />
             <ProductCard />
+            <Catalogue categoryId={product?.category.categoryId!} />
           </div>
         </div>
       </div>
