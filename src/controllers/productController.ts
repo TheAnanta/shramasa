@@ -3,21 +3,19 @@ import prisma from "../prismaClient";
 import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 // checkAuthorizedByAdmin
 
-
 export const getLatestProducts = async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany({
       orderBy: {
-        dateAdded: "desc"
+        dateAdded: "desc",
       },
-      take: 5
+      take: 5,
     });
     res.status(200).json(products);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 export const addProduct = async (req: Request, res: Response) => {
   const {
@@ -33,7 +31,7 @@ export const addProduct = async (req: Request, res: Response) => {
     howToUse,
     videoLink,
     videoProvider,
-    stock
+    stock,
   } = req.body;
 
   if (
@@ -47,7 +45,9 @@ export const addProduct = async (req: Request, res: Response) => {
     !discount ||
     !howToUse ||
     !videoLink ||
-    !videoProvider || !stock || !variants
+    !videoProvider ||
+    !stock ||
+    !variants
   ) {
     return res.status(400).json({ error: "Enter all fields required." });
   }
@@ -94,7 +94,7 @@ export const addProduct = async (req: Request, res: Response) => {
       videoProvider: videoProvider,
       reviews: [],
       reviewCount: 0,
-      stock: stock
+      stock: stock,
     },
   });
 
@@ -116,13 +116,12 @@ export const updateProduct = async (req: Request, res: Response) => {
     videoLink,
     videoProvider,
     stock,
-    productId
+    productId,
   } = req.body;
 
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });
   }
-
 
   if (stock && stock.length !== variants.length) {
     return res.status(400).json({ error: "Stock and variants do not match." });
@@ -133,7 +132,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   const product = await prisma.product.update({
     where: {
-      productId: productId
+      productId: productId,
     },
     data: {
       name: name,
@@ -148,12 +147,11 @@ export const updateProduct = async (req: Request, res: Response) => {
       videoLink: videoLink,
       videoProvider: videoProvider,
       stock: stock,
-      variants: variants
+      variants: variants,
     },
   });
   return res.status(200).json(product);
-
-}
+};
 
 export const updateProductStock = async (req: Request, res: Response) => {
   const { productId, stock, variant } = req.body;
@@ -164,12 +162,14 @@ export const updateProductStock = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Variant not provided." });
   }
   if (stock == null || stock < 0) {
-    return res.status(400).json({ error: "Invalid or no stock value provided." });
+    return res
+      .status(400)
+      .json({ error: "Invalid or no stock value provided." });
   }
   const product = await prisma.product.findFirst({
     where: {
-      productId: productId
-    }
+      productId: productId,
+    },
   });
   const stockValues = product?.stock;
   if (stockValues == null) {
@@ -180,7 +180,6 @@ export const updateProductStock = async (req: Request, res: Response) => {
     const updatedProduct = await prisma.product.update({
       where: {
         productId: productId,
-
       },
       data: {
         stock: stockValues,
@@ -226,7 +225,7 @@ export const publishProductReview = async (req: Request, res: Response) => {
         },
         reviewCount: {
           increment: 1,
-        }
+        },
       },
     });
     const data = [updatedProductWithReview];
@@ -369,22 +368,42 @@ export const getProductById = async (req: Request, res: Response) => {
     if (product === null) {
       return res.status(404).json({ error: "Product not found." });
     }
-    const productWithRating = ([product].map((e: any) => {
+    const productWithRating = [product].map((e: any) => {
       return {
         ...e,
-        "rating": (e.reviews.length > 0 ? (
-          e["reviews"]
-            .map((e: any) => e["rating"])
-            .reduce((acc: any, value: any) => acc + value, 0) /
-          e["reviews"].length
-        ).toFixed(2) : 0),
-        "customerRatingCount": e.reviews.length,
-      }
-    })[0]);
+        rating:
+          e.reviews.length > 0
+            ? (
+                e["reviews"]
+                  .map((e: any) => e["rating"])
+                  .reduce((acc: any, value: any) => acc + value, 0) /
+                e["reviews"].length
+              ).toFixed(2)
+            : 0,
+        customerRatingCount: e.reviews.length,
+      };
+    })[0];
     console.log(productWithRating);
     res.status(200).json(productWithRating);
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
+
+export const getSimilarCatalogue = async (req: Request, res: Response) => {
+  try {
+    const { category } = req.body;
+
+    const items = await prisma.product.findMany({
+      where: {
+        category: category,
+      },
+      take: 4,
+    });
+
+    return res.status(200).json(items);
+  } catch (error: any) {
+    console.log("Error: " + error.message);
+  }
+};
