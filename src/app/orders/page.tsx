@@ -9,7 +9,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchOrders = async () => {
       const response = await fetch(
-        `http://localhost:3001/api/orders/get-orders?userId=${uid}`,
+        `http://localhost:3001/api/orders/get-orders/${uid}`,
         {
           method: "GET",
           headers: {
@@ -17,10 +17,10 @@ export default function Page() {
           },
         }
       );
-      //   const data = await response.json();
-      console.log(response);
+      const data = await response.json();
+      console.log(data);
 
-      //   setOrders(data);
+      setOrders(data);
     };
     fetchOrders();
   }, []);

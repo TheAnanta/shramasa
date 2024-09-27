@@ -37,7 +37,8 @@ export default function ReviewCartPage() {
   }, []);
   useEffect(() => {
     fetch(
-      "http://localhost:3001/api/address/get-all-addresses-of-user?userId=050wBNZ2VFSBK4sMKTGzkh2c9cK2",
+      "http://localhost:3001/api/address/get-all-addresses-of-user/" +
+        user?.uid,
       {
         method: "GET",
         headers: {
