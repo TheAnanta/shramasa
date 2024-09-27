@@ -125,7 +125,9 @@ export default function Explore() {
           </div>
         </div>
       ) : (
-        <div>Loading...</div>
+        <div className="bg-gray-700/10">
+          <img src="/loading.gif" className="w-1/2" />
+        </div>
       )}
     </div>
   );

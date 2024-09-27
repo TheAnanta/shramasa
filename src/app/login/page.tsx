@@ -1,7 +1,7 @@
 "use client";
 
 import { auth } from "@/lib/firebase/config";
-import { login } from "@/lib/login_validations";
+import { login, signup } from "@/lib/login_validations";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { redirect } from "next/navigation";
 import { useState } from "react";
@@ -37,17 +37,13 @@ export default function Page() {
           ))}
           <div className="w-full flex flex-row">
             <button
-              formAction={login}
+              formAction={
+                currentPageInfo.changeStateOption != "login" ? login : signup
+              }
               className="bg-black text-white w-full px-6 py-2 my-4 rounded-3xl"
             >
               {currentPageInfo?.btnTxt}
             </button>
-            {/* <button
-              formAction={forgotPassword}
-              className="w-max px-6 py-2 rounded-xl"
-            >
-              Forgot Password
-            </button> */}
           </div>
 
           <div className="flex justify-center items-center gap-2">
@@ -117,7 +113,7 @@ const PageInfo: Record<
     title: "Login to Sharamasa",
     fields: [
       {
-        name: "username",
+        name: "email",
         type: "text",
         id: 1,
       },

@@ -3,17 +3,20 @@ import { ChangeEvent, useState, useEffect } from "react";
 import styles from "./address.module.css";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { auth } from "@/lib/firebase/config";
+import { useAuthContext } from "@/app/context/AuthContext";
 
 export default function Address(props: {
   canReviewCart: boolean;
   onReviewCart: (address: number, deliveryMode: number) => void;
 }) {
+  const userId = useAuthContext()?.uid;
   const [userAddresses, setUserAddresses] = useState<any[]>([]);
   const [deliveryMode, setDeliverMode] = useState(0);
   const [userSelectedAddress, setUserSelectedAddress] = useState(0);
   useEffect(() => {
     fetch(
-      "http://localhost:3001/api/address/get-all-addresses-of-user?userId=050wBNZ2VFSBK4sMKTGzkh2c9cK2",
+      "http://localhost:3001/api/address/get-all-addresses-of-user/" + userId,
       {
         method: "GET",
         headers: {

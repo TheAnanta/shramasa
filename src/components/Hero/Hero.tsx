@@ -26,7 +26,7 @@ export default function Hero() {
                 Completely <span>bio-</span>
               </h1>
               <h1
-                className={`${styles.soyuzgrotesk} text-3xl md:text-6xl -translate-y-10`}
+                className={`${styles.soyuzgrotesk} text-3xl md:text-6xl -translate-y-2 md:-translate-y-10`}
               >
                 Organic
               </h1>
