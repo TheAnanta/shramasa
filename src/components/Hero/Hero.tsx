@@ -34,9 +34,12 @@ export default function Hero() {
                 <p className="w-[28ch] mb-6 md:text-base text-sm">
                   choose care from Shramasa BioPr. Organic and Biotherm.
                 </p>
-                <button className="px-6 py-3 bg-[#46A627] rounded-full text-sm text-white">
+                <a
+                  href="/about"
+                  className="px-6 py-3 bg-[#46A627] rounded-full text-sm text-white"
+                >
                   move on to know more
-                </button>
+                </a>
               </div>
             </div>
           </HeroCard>
@@ -46,29 +49,29 @@ export default function Hero() {
           />
         </div>
         <div className="flex gap-3 grow h-full">
-          <HeroCard className={"flex flex-col !py-4"}>
-            <div>
-              <img
-                src="/icons/arrow_down.svg"
-                className="size-8 md:hidden ml-auto -rotate-90"
-              />
-              <img
-                src="/images/products/mockup.png"
-                className="h-[12vh] object-contain md:h-[15vh]"
-              />
-              <div className="flex justify-between items-end">
-                <p className="md:w-[15ch] text-sm">
-                  choose care for your purified face FACE 48H
-                </p>
+            <HeroCard className={"flex flex-col !py-4"}>
+              <a href="/explore?category=skin-care">
                 <img
                   src="/icons/arrow_down.svg"
-                  className="size-12 hidden md:flex"
+                  className="size-8 md:hidden ml-auto -rotate-90"
                 />
-              </div>
-            </div>
-          </HeroCard>
+                <img
+                  src="/images/products/mockup.png"
+                  className="h-[12vh] object-contain md:h-[15vh]"
+                />
+                <div className="flex justify-between items-end">
+                  <p className="md:w-[15ch] text-sm">
+                    choose care for your purified face FACE 48H
+                  </p>
+                  <img
+                    src="/icons/arrow_down.svg"
+                    className="size-12 hidden md:flex"
+                  />
+                </div>
+              </a>
+            </HeroCard>
           <HeroCard className={"flex flex-col !py-4"}>
-            <div>
+          <a href="/explore?category=hair-care">
               <img
                 src="/icons/arrow_down.svg"
                 className="size-8 md:hidden ml-auto -rotate-90"
@@ -86,7 +89,7 @@ export default function Hero() {
                   className="size-12 hidden md:flex"
                 />
               </div>
-            </div>
+            </a>
           </HeroCard>
         </div>
       </div>

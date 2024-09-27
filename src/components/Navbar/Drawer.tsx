@@ -19,18 +19,18 @@ export default function Drawer({ isOpen, toggle }: NavbarProps) {
         <img
           src="/navbar/logo.svg"
           alt=""
-          className="absolute left-[34px] pb-[13.33%]"
+          className="absolute pointer-events-none left-[34px] pb-[13.33%]"
         />
         <div className="drawer-list space-y-[5.70%] flex flex-col items-start justify-center h-[60%] pt-[13.33%] pb-[41.20%]">
-          <p>Hair Care</p>
-          <p>Skin Care</p>
-          <p>Body Care</p>
-          <p>Naturals</p>
-          <p>Formulations</p>
+          <a href={`/explore?categoryId=hair-care`}>Hair Care</a>
+          <a href={`/explore?categoryId=skin-care`}>Skin Care</a>
+          <a href={`/explore?categoryId=body-care`}>Body Care</a>
+          <a href={`/explore?categoryId=naturals`}>Naturals</a>
+          <a href={`/explore?categoryId=formulations`}>Formulations</a>
         </div>
-        <div className="space-y-[5.70%]">
-          <p>Blogs</p>
-          <p>Contact Us</p>
+        <div className="flex flex-col items-start justify-start space-y-[5.70%]">
+          <a href="/blogs">Blogs</a>
+          <a href="/contact-us">Contact Us</a>
         </div>
       </div>
     </div>
