@@ -21,7 +21,7 @@ export function FixedCartItem(props: {
         <Link href={"/products/" + props.productId} className="flex gap-x-5">
           <img
             src={"/images/" + props.image}
-            className="w-[125px] h-[125px] rounded-2xl bg-gray-100 object-cover dark:bg-gray-950"
+            className="w-[125px] h-[125px] rounded-2xl bg-neutral-100 object-cover dark:bg-neutral-950"
           />
           <div className="flex flex-col">
             <p className="text-[0.65rem] font-medium uppercase opacity-65">
@@ -37,7 +37,7 @@ export function FixedCartItem(props: {
         </Link>
       </td>
       <td>
-        <div className="flex gap-x-[18px] items-center rounded-2xl bg-gray-100/20">
+        <div className="flex gap-x-[18px] items-center rounded-2xl bg-neutral-100/20">
           <p>{props.quantity} Nos</p>
         </div>
       </td>

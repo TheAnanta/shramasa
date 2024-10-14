@@ -16,7 +16,7 @@ export function MobileCartItem(props: {
       <div className="flex gap-x-5">
         <img
           src={props.image}
-          className="w-[125px] h-[125px] rounded-2xl bg-gray-100 dark:bg-gray-950 object-cover"
+          className="w-[125px] h-[125px] rounded-2xl bg-neutral-100 dark:bg-neutral-950 object-cover"
         />
         <div className="flex flex-col">
           <p className="text-[0.65rem] font-medium uppercase opacity-65"></p>
@@ -29,16 +29,16 @@ export function MobileCartItem(props: {
       </div>
       <div className="ml-auto">
         <div className="flex gap-4 pt-2">
-          <div className="flex gap-x-[18px] items-center rounded-2xl bg-gray-50 dark:bg-gray-950/50">
-            <div className="p-2 bg-gray-100 dark:bg-gray-950">
+          <div className="flex gap-x-[18px] items-center rounded-2xl bg-neutral-50 dark:bg-neutral-950/50">
+            <div className="p-2 bg-neutral-100 dark:bg-neutral-950">
               <img src="/icons/minus.svg" className="size-4" />
             </div>
             <p>{props.quantity}</p>
-            <div className="p-2 bg-gray-100 dark:bg-gray-950">
+            <div className="p-2 bg-neutral-100 dark:bg-neutral-950">
               <img src="/icons/plus.svg" className="size-4" />
             </div>
           </div>
-          <div className="p-2 bg-gray-100 dark:bg-gray-950">
+          <div className="p-2 bg-neutral-100 dark:bg-neutral-950">
             <img src="/icons/delete.svg" className="size-6" />
           </div>
         </div>

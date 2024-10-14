@@ -33,7 +33,7 @@ export default function Page() {
               placeholder={item.name}
               required={true}
               type={item.type}
-              className="bg-gray-300/50 border border-gray-500/30 px-6 py-2 mb-2 rounded-3xl"
+              className="bg-neutral-300/50 border border-neutral-500/30 px-6 py-2 mb-2 rounded-3xl"
             />
           ))}
           <div className="w-full flex flex-row">
@@ -48,9 +48,9 @@ export default function Page() {
           </div>
 
           <div className="flex justify-center items-center gap-2">
-            <div className="w-1/2 h-0.5 bg-gray-300"></div>
-            <p className="text-sm text-gray-400 font-semibold">or</p>
-            <div className="w-1/2 h-0.5 bg-gray-300"></div>
+            <div className="w-1/2 h-0.5 bg-neutral-300"></div>
+            <p className="text-sm text-neutral-400 font-semibold">or</p>
+            <div className="w-1/2 h-0.5 bg-neutral-300"></div>
           </div>
 
           <div
@@ -71,7 +71,7 @@ export default function Page() {
               //   alert(error.message);
               // });
             }}
-            className="flex justify-center items-center rounded-3xl space-x-3 bg-white px-7 py-3 my-4 w-full text-center border border-gray-500/50 cursor-pointer transition-all duration-500 hover:scale-105"
+            className="flex justify-center items-center rounded-3xl space-x-3 bg-white px-7 py-3 my-4 w-full text-center border border-neutral-500/50 cursor-pointer transition-all duration-500 hover:scale-105"
           >
             <img
               src={"/icons/google.png"}
