@@ -1,23 +1,11 @@
-import { Carousel } from "./Carousel";
 import HeroCard from "./hero-card";
 import styles from "./hero.module.css";
-import Link from "next/link";
+import SlideCarousal from "./SlideCarousal";
 
 export default function Hero() {
   return (
     <div className={`${styles.hero} flex flex-col w-full gap-3`}>
-      <Carousel
-        carouselItems={[
-          {
-            image: "/images/products/hair-shampoo-banner.png",
-            productId: "soapnut-shampoo",
-          },
-          {
-            image: "/images/banners/mireender-keer.jpg",
-            productId: "abc",
-          },
-        ]}
-      />
+      <SlideCarousal />
       <div className="grow gap-3 flex flex-col">
         <div className="h-[64%] shrink-0 relative">
           <HeroCard className={`${styles.organic}`}>
@@ -49,29 +37,29 @@ export default function Hero() {
           />
         </div>
         <div className="flex gap-3 grow h-full">
-            <HeroCard className={"flex flex-col !py-4"}>
-              <a href="/explore?category=skin-care">
+          <HeroCard className={"flex flex-col !py-4"}>
+            <a href="/explore?category=skin-care">
+              <img
+                src="/icons/arrow_down.svg"
+                className="size-8 md:hidden ml-auto -rotate-90"
+              />
+              <img
+                src="/images/products/mockup.png"
+                className="h-[12vh] object-contain md:h-[15vh]"
+              />
+              <div className="flex justify-between items-end">
+                <p className="md:w-[15ch] text-sm">
+                  choose care for your purified face FACE 48H
+                </p>
                 <img
                   src="/icons/arrow_down.svg"
-                  className="size-8 md:hidden ml-auto -rotate-90"
+                  className="size-12 hidden md:flex"
                 />
-                <img
-                  src="/images/products/mockup.png"
-                  className="h-[12vh] object-contain md:h-[15vh]"
-                />
-                <div className="flex justify-between items-end">
-                  <p className="md:w-[15ch] text-sm">
-                    choose care for your purified face FACE 48H
-                  </p>
-                  <img
-                    src="/icons/arrow_down.svg"
-                    className="size-12 hidden md:flex"
-                  />
-                </div>
-              </a>
-            </HeroCard>
+              </div>
+            </a>
+          </HeroCard>
           <HeroCard className={"flex flex-col !py-4"}>
-          <a href="/explore?category=hair-care">
+            <a href="/explore?category=hair-care">
               <img
                 src="/icons/arrow_down.svg"
                 className="size-8 md:hidden ml-auto -rotate-90"

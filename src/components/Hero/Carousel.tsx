@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import styles from "./hero.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function Carousel(props: { carouselItems: CarouselItem[] }) {
   const [carouselIndex, setCarouselIndex] = useState(0);

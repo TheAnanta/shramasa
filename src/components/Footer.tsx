@@ -15,8 +15,8 @@ export default function Footer() {
       <div className="flex flex-col items-center sm:items-end justify-between h-8 sm:h-[20vh]">
         <img src="/footer/footer-socials.svg" alt="socials" className="pb-4" />
         <div className="flex space-x-4 font-semibold">
-          <p>Terms of Use</p>
-          <p>Privacy Policy</p>
+          <a href="/terms-of-service" target="_blank">Terms of Use</a>
+          <a href="/privacy-policy" target="_blank">Privacy Policy</a>
         </div>
       </div>
     </div>
