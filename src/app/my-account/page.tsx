@@ -64,7 +64,7 @@ export default function Page() {
       <div className="w-[40%]">
         <h1 className="mb-8 text-4xl font-bold">Profile</h1>
         <Link
-          href={"/wishlist"}
+          href={"/my-account/wishlist"}
           className="flex justify-between items-center py-8"
         >
           <span className="material-symbols-outlined text-[#7FD264]">
@@ -74,7 +74,7 @@ export default function Page() {
           <span className="material-symbols-outlined">arrow_right</span>
         </Link>
         <Link
-          href={"/orders"}
+          href={"/my-account/orders"}
           className="flex justify-between items-center py-8"
         >
           <span className="material-symbols-outlined text-[#7FD264]">

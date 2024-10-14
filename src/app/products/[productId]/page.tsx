@@ -481,8 +481,8 @@ export default function ProductPage({
           )}
           <h3 className="font-semibold text-xl mt-4">Similar Catalogue</h3>
           <div className="flex space-x-4 pt-6">
-            <ProductCard />
-            <ProductCard />
+            {/* <ProductCard />
+            <ProductCard /> */}
             <Catalogue categoryId={product?.category.categoryId!} />
           </div>
         </div>

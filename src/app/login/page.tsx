@@ -3,7 +3,7 @@
 import { auth } from "@/lib/firebase/config";
 import { login, signup } from "@/lib/login_validations";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 
 type AuthType = "login" | "signup";
@@ -11,6 +11,7 @@ type AuthType = "login" | "signup";
 export default function Page() {
   const [authType, setAuthType] = useState<AuthType>("login");
   const currentPageInfo = PageInfo[authType];
+  const router = useRouter();
 
   return (
     <main className="md:h-screen h-auto w-screen flex">
@@ -54,22 +55,21 @@ export default function Page() {
 
           <div
             onClick={() => {
-              signInWithPopup(auth, new GoogleAuthProvider())
-                .then((result) => {
-                  // This gives you a Google Access Token. You can use it to access the Google API.
-                  const credential =
-                    GoogleAuthProvider.credentialFromResult(result);
-                  const token = credential?.accessToken;
-                  // The signed-in user info.
-                  const user = result.user;
-                  console.log(user);
-                  if (auth.currentUser) {
-                    redirect("/");
-                  }
-                })
-                .catch((error) => {
-                  alert(error.message);
-                });
+              signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential =
+                  GoogleAuthProvider.credentialFromResult(result);
+                const token = credential?.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log(user);
+                if (auth.currentUser) {
+                  router.push("/");
+                }
+              });
+              // .catch((error) => {
+              //   alert(error.message);
+              // });
             }}
             className="flex justify-center items-center rounded-3xl space-x-3 bg-white px-7 py-3 my-4 w-full text-center border border-gray-500/50 cursor-pointer transition-all duration-500 hover:scale-105"
           >

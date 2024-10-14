@@ -1,5 +1,5 @@
 "use client";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase/config";
 import { FirebaseError } from "firebase/app";
 import { doc, getDoc } from "firebase/firestore";
@@ -16,7 +16,7 @@ const signup = async (formData: any) => {
     const password = formData.get("password").replaceAll(" ", "");
     const phoneNumber = formData.get("phone number").replaceAll(" ", "");
     const email = formData.get("email").replaceAll(" ", "");
-    await signInWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log("User signed up");
         })
@@ -30,15 +30,24 @@ const signup = async (formData: any) => {
                 }
             }
         });
+
     if (auth.currentUser) {
-        const request = await fetch("http://localhost:3001/api/signup", {
-            body: JSON.stringify({
-                userId: auth.currentUser.uid, name: username, email: email, phone: phoneNumber,
-            }),
+        const body = JSON.stringify({
+            userId: auth.currentUser.uid, name: username, email: email, phone: phoneNumber,
+        });
+        console.log(body);
+        const request = await fetch("http://localhost:3001/api/users/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body,
         });
         const response = await request.json();
         if (request.status === 200) {
             redirect("/");
+        } else {
+            alert("Error: " + response.error);
         }
     }
 }
