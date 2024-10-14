@@ -3,7 +3,7 @@ import React from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import Loader from "./Loading";
-
+ 
 export const AuthContext = React.createContext<User | null>(null);
 
 export const useAuthContext = () => React.useContext(AuthContext);

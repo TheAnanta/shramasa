@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 export default function Catalogue({ categoryId }: { categoryId: string }) {
-  const [products, setProducts] = useState<any>();
+  const [products, setProducts] = useState<any>([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -24,16 +24,18 @@ export default function Catalogue({ categoryId }: { categoryId: string }) {
   return (
     <div>
       <div>
-        {products.map((product: any)=>{
-             <div>
-             <img src="/cart/similar.svg" alt="" />
-             <p className="text-[0.7rem] mt-4">{product.name}</p>
-             <p className="text-sm py-[2px] font-medium">{product.description}</p>
-             <div className="flex items-end justify-start space-x-4 pb-6">
-               <h3 className="font-medium">₹{product.price}</h3>{" "}
-               <p className="opacity-50 line-through">₹{product.price + 10}</p>
-             </div>
-           </div>
+        {products.map((product: any) => {
+          <div>
+            <img src="/cart/similar.svg" alt="" />
+            <p className="text-[0.7rem] mt-4">{product.name}</p>
+            <p className="text-sm py-[2px] font-medium">
+              {product.description}
+            </p>
+            <div className="flex items-end justify-start space-x-4 pb-6">
+              <h3 className="font-medium">₹{product.price}</h3>{" "}
+              <p className="opacity-50 line-through">₹{product.price + 10}</p>
+            </div>
+          </div>;
         })}
       </div>
     </div>
