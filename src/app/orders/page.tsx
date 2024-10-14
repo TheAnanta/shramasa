@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useAuthContext } from "../context/AuthContext";
+import { FixedCartItem } from "../cart/components/FixedCartItem";
 
 export default function Page() {
   const uid = useAuthContext()?.uid;
@@ -26,12 +27,12 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-gray-50 dark:bg-gray-950 gap-4">
+    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-neutral-50 dark:bg-neutral-950 gap-4">
       <div className="">
         <h2 className="text-4xl font-semibold mb-8 soyuz-grotesk">
           Your Orders
         </h2>
-        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white dark:bg-gray-900">
+        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white dark:bg-neutral-900">
           {
             <table id="cart" className="hidden md:table">
               <thead className="font-bold">
@@ -41,8 +42,8 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody>
-                {/* {cart && (
-                  cart.items.map((item: any) => (
+                {orders &&
+                  orders.items.map((item: any) => (
                     <FixedCartItem
                       productId={item.productId}
                       key={item.productId}
@@ -56,17 +57,11 @@ export default function Page() {
                       quantity={item.quantity}
                       discount={item.discount}
                     />
-                  ))
-                )} */}
+                  ))}
               </tbody>
             </table>
           }
         </div>
-      </div>
-      <div className="grow flex flex-col gap-4">
-        {/* <button className="py-4 w-full bg-[#46A627] rounded-xl text-white font-bold">
-          Place order
-        </button> */}
       </div>
     </div>
   );

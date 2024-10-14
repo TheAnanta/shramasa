@@ -1,7 +1,7 @@
 /* Address.module.css */
 
 .addressContainer {
-  @apply lg:w-1/4 flex flex-col items-center gap-5 px-6 py-4 rounded-3xl shadow-sm bg-white dark:bg-gray-900;
+  @apply lg:w-1/4 flex flex-col items-center gap-5 px-6 py-4 rounded-3xl shadow-sm bg-white dark:bg-neutral-900;
 }
 
 .header {
@@ -9,15 +9,15 @@
 }
 
 .inputField {
-  @apply border-b pb-1 w-full text-base dark:bg-gray-900 p-1;
+  @apply border-b pb-1 w-full text-base dark:bg-neutral-900 p-1;
 }
 
 .deliveryOption {
-  @apply w-full flex gap-x-3 dark:bg-gray-900;
+  @apply w-full flex gap-x-3 dark:bg-neutral-900;
 }
 
 .smallInput {
-  @apply border-b pb-1 w-full dark:bg-gray-900;
+  @apply border-b pb-1 w-full dark:bg-neutral-900;
 }
 
 .reviewButton {

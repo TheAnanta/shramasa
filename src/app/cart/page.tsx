@@ -112,10 +112,10 @@ export default function CartPage() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-gray-50 dark:bg-gray-950 gap-4">
+    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-neutral-50 dark:bg-neutral-950 gap-4">
       <div className="grow">
         <h2 className="text-4xl font-semibold mb-8 soyuz-grotesk">Your cart</h2>
-        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white dark:bg-gray-900">
+        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white dark:bg-neutral-900">
           <div className="md:hidden">
             {cart != null ? (
               cart.items?.map((item: any, index: number) => (
@@ -206,13 +206,13 @@ export default function CartPage() {
                         setCoupon(e.target.value);
                       }}
                       placeholder="Enter your promo code"
-                      className="border-b pb-1 text-sm dark:bg-gray-900"
+                      className="border-b pb-1 text-sm dark:bg-neutral-900"
                     />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={4}>
-                    <div className="w-full px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-950 flex">
+                    <div className="w-full px-6 py-3 rounded-xl bg-neutral-100 dark:bg-neutral-950 flex">
                       <Link className="cursor-pointer flex" href={"/explore"}>
                         <span className="material-symbols-outlined">
                           chevron_left

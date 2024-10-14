@@ -27,7 +27,7 @@ export function CartItem(props: {
         <Link href={"/products/" + props.productId} className="flex gap-x-5">
           <img
             src={"/images/" + props.image}
-            className="w-[125px] h-[125px] rounded-2xl bg-gray-100 object-cover dark:bg-gray-950"
+            className="w-[125px] h-[125px] rounded-2xl bg-neutral-100 object-cover dark:bg-neutral-950"
           />
           <div className="flex flex-col">
             <p className="text-[0.65rem] font-medium uppercase opacity-65">
@@ -43,7 +43,7 @@ export function CartItem(props: {
         </Link>
       </td>
       <td>
-        <div className="flex gap-x-[18px] items-center rounded-2xl bg-gray-100/20">
+        <div className="flex gap-x-[18px] items-center rounded-2xl bg-neutral-100/20">
           <div
             className="size-10 p-2 aspect-square flex items-center justify-center cursor-pointer"
             onClick={() => {
@@ -80,7 +80,7 @@ export function CartItem(props: {
       </td>
       <td className="!mr-0">
         <div
-          className="p-2 size-10 bg-gray-100 dark:bg-gray-950 rounded-xl cursor-pointer"
+          className="p-2 size-10 bg-neutral-100 dark:bg-neutral-950 rounded-xl cursor-pointer"
           onClick={() => {
             props.updateCart(props.productId, 0, props.variant, false);
           }}

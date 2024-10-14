@@ -97,10 +97,10 @@ export default function ReviewCartPage() {
   }, [couponId, cart]);
 
   return (
-    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-gray-50 dark:bg-gray-950 gap-4">
+    <div className="flex flex-col lg:flex-row py-8 px-[8.25%] bg-neutral-50 dark:bg-neutral-950 gap-4">
       <div className="">
         <h2 className="text-4xl font-semibold mb-8 soyuz-grotesk">Review</h2>
-        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white dark:bg-gray-900">
+        <div className="px-4 md:px-8 rounded-2xl md:rounded-3xl shadow-sm bg-white dark:bg-neutral-900">
           <div className="md:hidden">
             {cart != null ? (
               cart.items?.map((item: any, index: number) => (
@@ -227,7 +227,7 @@ export default function ReviewCartPage() {
 
                 <tr>
                   <td colSpan={4}>
-                    <div className="w-full px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-950 flex">
+                    <div className="w-full px-6 py-3 rounded-xl bg-neutral-100 dark:bg-neutral-950 flex">
                       <Link className="cursor-pointer flex" href={"/cart"}>
                         <span className="material-symbols-outlined">
                           chevron_left
@@ -294,7 +294,7 @@ export default function ReviewCartPage() {
         </div>
       </div>
       <div className="grow flex flex-col gap-4">
-        <div className="grow flex flex-col gap-5 px-6 py-6 rounded-3xl shadow-sm bg-white dark:bg-gray-900">
+        <div className="grow flex flex-col gap-5 px-6 py-6 rounded-3xl shadow-sm bg-white dark:bg-neutral-900">
           <p>Delivery information</p>
           {userAddresses[userSelectedAddress || 0] && (
             <div className={`shrink-0 rounded-xl text-sm w-full`}>
