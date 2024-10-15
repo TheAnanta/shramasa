@@ -60,7 +60,7 @@ export const modifyWishlist = async (req: Request, res: Response) => {
           items: [productId],
         },
       });
-      res.status(200).json(wishlist);
+      return res.status(200).json(wishlist);
     } else {
       var updatedWishlist = userWishlist.items;
       if (updatedWishlist.includes(productId)) {

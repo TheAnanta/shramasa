@@ -38,10 +38,10 @@ export const getUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -62,17 +62,17 @@ export const updateUser = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
   try {
     const user = await prisma.user.update({
       where: { userId: userId.toString() },
       data: { name, email, phone },
     });
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -97,16 +97,16 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
   try {
     await prisma.user.delete({
       where: { userId: userId.toString() },
     });
 
-    res.status(201).json({ message: "User deleted successfully" });
+    return res.status(201).json({ message: "User deleted successfully" });
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };

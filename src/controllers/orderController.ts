@@ -86,9 +86,9 @@ export const instantiateOrder = async (req: Request, res: Response) => {
         paymentId: payment.paymentId,
       },
     });
-    res.status(201).json(order);
+    return res.status(201).json(order);
   } catch (error) {
-    res.status(400).json({ error: error });
+    return res.status(400).json({ error: error });
   }
 };
 
@@ -135,9 +135,9 @@ export const addPaymentInfoFromRazorpay = async (
         paymentDetails: paymentMethodDetails,
       },
     });
-    res.status(200).json(order);
+    return res.status(200).json(order);
   } catch (error) {
-    res.status(400).json({ error: error });
+    return res.status(400).json({ error: error });
   }
 };
 
@@ -155,9 +155,9 @@ export const updateOrder = async (
       data: data,
     });
     await callback(order.paymentId);
-    res.status(200).json(order);
+    return res.status(200).json(order);
   } catch (error) {
-    res.status(400).json({ error: error });
+    return res.status(400).json({ error: error });
   }
 };
 

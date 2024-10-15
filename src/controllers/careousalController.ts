@@ -10,8 +10,8 @@ export const getCarousal = async (req: Request, res: Response) => {
     });
     carousal.slice(0, 5);
 
-    res.status(200).json(carousal);
+    return res.status(200).json(carousal);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };

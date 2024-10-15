@@ -11,9 +11,9 @@ export const getLatestProducts = async (req: Request, res: Response) => {
       },
       take: 5,
     });
-    res.status(200).json(products);
+    return res.status(200).json(products);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 

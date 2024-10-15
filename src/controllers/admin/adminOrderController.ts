@@ -6,34 +6,37 @@ export const getAllUserOrders = async (req: Request, res: Response) => {
 
   try {
     const orders = await prisma.order.findMany();
-    const ordersWithUsers = await Promise.all(orders.map(async (order) => {
-      return await prisma.user.findUnique({
-        where: {
-          userId: order.userId
-        }
-      }).then((user) => {
-        return {
-          ...order,
-          user
-        }
-      });
-    }))
+    const ordersWithUsers = await Promise.all(
+      orders.map(async (order) => {
+        return await prisma.user
+          .findUnique({
+            where: {
+              userId: order.userId,
+            },
+          })
+          .then((user) => {
+            return {
+              ...order,
+              user,
+            };
+          });
+      })
+    );
     console.log(ordersWithUsers);
 
-    res.status(200).json(ordersWithUsers);
+    return res.status(200).json(ordersWithUsers);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
-
 
 export const getAllCoupons = async (req: Request, res: Response) => {
   console.log("Get all user coupons");
 
   try {
     const coupons = await prisma.coupon.findMany();
-    res.status(200).json(coupons);
+    return res.status(200).json(coupons);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };

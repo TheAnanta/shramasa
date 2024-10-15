@@ -52,9 +52,9 @@ export const getAllAddressesOfUser = async (req: Request, res: Response) => {
         userId,
       },
     });
-    res.status(200).json(addresses);
+    return res.status(200).json(addresses);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
@@ -66,9 +66,9 @@ export const getAddressById = async (req: Request, res: Response) => {
         addressId,
       },
     });
-    res.status(200).json(address);
+    return res.status(200).json(address);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 

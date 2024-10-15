@@ -9,7 +9,7 @@ export const getAllSubCategories = async (req: Request, res: Response) => {
     res.json(subcategories);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" + error.name });
+    return res.status(500).json({ error: "Internal server error" + error.name });
   }
 };
 
@@ -19,7 +19,7 @@ export const getSubCategoriesByCategory = async (
 ) => {
   const { categoryId } = req.query;
   if (!categoryId) {
-    res.status(400).json({ error: "Category ID not provided" });
+    return res.status(400).json({ error: "Category ID not provided" });
   }
   try {
     const subcategories = await prisma.subCategory.findMany({
@@ -35,7 +35,7 @@ export const getSubCategoriesByCategory = async (
     res.json(subcategories);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" + error.name });
+    return res.status(500).json({ error: "Internal server error" + error.name });
   }
 };
 
@@ -43,12 +43,12 @@ export const addSubCategory = async (req: Request, res: Response) => {
   const { subcategoryName, subcategoryImage, categoryId } = req.body;
   const subcategoryId = subcategoryName.replace(/ /g, "-");
   if (!categoryId) {
-    res.status(400).json({ error: "categoryId expected. Found null." });
+    return res.status(400).json({ error: "categoryId expected. Found null." });
   }
   if (!subcategoryName) {
-    res.status(400).json({ error: "subcategoryName not provided." });
+    return res.status(400).json({ error: "subcategoryName not provided." });
   } else if (!subcategoryImage) {
-    res.status(400).json({ error: "subcategoryImage not provided." });
+    return res.status(400).json({ error: "subcategoryImage not provided." });
   }
   try {
     const doesCategoryExist =
@@ -74,7 +74,7 @@ export const addSubCategory = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Couldn't add subcategory: " + error.name });
+    return res.status(500).json({ error: "Couldn't add subcategory: " + error.name });
   }
 };
 
@@ -82,13 +82,13 @@ export const updateSubCategory = async (req: Request, res: Response) => {
   const { subcategoryName, subcategoryImage, categoryId, subcategoryId } =
     req.body;
   if (!subcategoryId) {
-    res.status(400).json({ error: "subcategoryId expected. Found null." });
+    return res.status(400).json({ error: "subcategoryId expected. Found null." });
   }
   if (!categoryId) {
-    res.status(400).json({ error: "categoryId expected. Found null." });
+    return res.status(400).json({ error: "categoryId expected. Found null." });
   }
   if (!subcategoryName && !subcategoryImage) {
-    res.status(400).json({ error: "Updatable fields not provided." });
+    return res.status(400).json({ error: "Updatable fields not provided." });
   }
   try {
     const doesCategoryExist =

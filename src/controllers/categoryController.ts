@@ -7,10 +7,10 @@ import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 export const getAllCategories = async (_: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany();
-    res.json(categories);
+    return res.json(categories);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -30,10 +30,10 @@ export const addCategory = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(200).json(category);
+    return res.status(200).json(category);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -55,17 +55,17 @@ export const updateCategory = async (req: Request, res: Response) => {
         image: image,
       },
     });
-    res.status(200).json(updatedCategory);
+    return res.status(200).json(updatedCategory);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
 export const deleteCategory = async (req: Request, res: Response) => {
   const { categoryId } = req.body;
   if (!categoryId) {
-    res.status(400).json({ error: "Category id not provided." });
+    return res.status(400).json({ error: "Category id not provided." });
   }
   try {
     const response = await prisma.category.delete({
@@ -74,9 +74,9 @@ export const deleteCategory = async (req: Request, res: Response) => {
       },
     });
     console.log("Category deleted successfully");
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error: " + error });
+    return res.status(500).json({ error: "Internal server error: " + error });
   }
 };
