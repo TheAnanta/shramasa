@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, FormEvent } from "react";
 import styles from "./address.module.css";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
@@ -32,43 +32,65 @@ export default function Address(props: {
     });
   }, []);
 
-  const handleSubmit = async (formData: any) => {
-    formData.preventDefault();
-    console.log(formData);
-    //TODO Create address
-    props.onReviewCart(userSelectedAddress, deliveryMode);
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:3001/api/address/create-address",
-    //     {
-    //       // Adjust this URL as needed
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         userId: "050wBNZ2VFSBK4sMKTGzkh2c9cK2",
-    //         houseNumber: formData.houseNumber,
-    //         floor: formData.floor,
-    //         apartment: formData.apartment,
-    //         landmark: formData.landmark,
-    //         address: formData.address,
-    //         pincode: formData.pincode,
-    //       }),
-    //     }
-    //   );
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData: any = new FormData(e.target as HTMLFormElement);
+    console.log(e.target);
+    console.log(formData.get("houseNumber")?.toString());
+    const name = formData.get("name")?.toString();
+    const houseNumber = formData.get("houseNumber")?.toString();
+    const floor = formData.get("floor")?.toString();
+    const apartment = formData.get("apartment")?.toString();
+    const landmark = formData.get("landmark")?.toString();
+    const address = formData.get("address")?.toString();
+    const phoneNumber = formData.get("address")?.toString();
+    const pincode = formData.get("pincode")?.toString();
 
-    //   if (!response.ok) {
-    //     throw new Error("Failed to add address");
-    //   }
+    if (houseNumber != null && houseNumber != undefined && houseNumber != "") {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/address/create-address",
+          {
+            // Adjust this URL as needed
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name,
+              userId: auth.currentUser?.uid,
+              houseNumber: houseNumber,
+              floor: floor,
+              apartment: apartment,
+              landmark: landmark,
+              address: address,
+              phoneNumber: phoneNumber,
+              pincode: pincode,
+            }),
+          }
+        );
 
-    //   const result = await response.json();
-    //   toast.success("Address added successfully");
-    //   console.log("Address added successfully:", result);
-    // } catch (error) {
-    //   toast.error("Error adding address");
-    //   console.log("Error adding address:", error);
-    // }
+        if (!response.ok) {
+          throw new Error("Failed to add address");
+        }
+
+        const result = await response.json();
+        toast.success("Address added successfully");
+        console.log("Address added successfully:", result);
+      } catch (error) {
+        toast.error("Error adding address");
+        console.log("Error adding address:", error);
+      }
+    }
+    console.log(props.canReviewCart);
+    props.canReviewCart
+      ? props.onReviewCart(
+          userSelectedAddress == -1
+            ? userAddresses.length
+            : userSelectedAddress,
+          deliveryMode
+        )
+      : alert("Add items first.");
   };
 
   return (
@@ -80,7 +102,7 @@ export default function Address(props: {
           setUserSelectedAddress(-1);
         }
       }}
-      action={handleSubmit}
+      onSubmit={handleSubmit}
       className={styles.addressContainer}
     >
       <h3 className={styles.header}>Your details</h3>
@@ -129,14 +151,16 @@ export default function Address(props: {
           );
         })}
       </div>
-      <div className="w-full flex px-3 items-center">
-        <div className="flex grow h-[1px] bg-neutral-200"></div>
-        <p className="text-sm shrink-0 px-2">or, Add an address</p>
-        <div className="flex grow h-[1px] bg-neutral-200"></div>
-      </div>
+      {userAddresses.length > 0 && (
+        <div className="w-full flex px-3 items-center">
+          <div className="flex grow h-[1px] bg-neutral-200"></div>
+          <p className="text-sm shrink-0 px-2">or, Add an address</p>
+          <div className="flex grow h-[1px] bg-neutral-200"></div>
+        </div>
+      )}
       <input
         name="name"
-        placeholder="Enter your name"
+        placeholder="What's this place?"
         className={styles.inputField}
       />
       <input
@@ -197,22 +221,12 @@ export default function Address(props: {
         />
         <p>Standard Delivery</p>
       </div>
-      <button className="mt-auto mb-4" disabled={!props.canReviewCart}>
-        <button
-          disabled={!props.canReviewCart}
-          className={`${styles.reviewButton} disabled:bg-neutral-400`}
-          onClick={
-            props.canReviewCart
-              ? () => {
-                  props.onReviewCart(userSelectedAddress, deliveryMode);
-                }
-              : () => {
-                  alert("Add items first.");
-                }
-          }
-        >
-          Review your cart
-        </button>
+
+      <button
+        disabled={!props.canReviewCart}
+        className={`${styles.reviewButton} mt-auto mb-4 disabled:bg-neutral-400`}
+      >
+        Review your cart
       </button>
     </form>
   );

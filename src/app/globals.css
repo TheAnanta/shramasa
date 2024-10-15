@@ -72,3 +72,19 @@ table#cart td {
 .about p {
   @apply opacity-70 font-medium 
 }
+
+a:hover{
+  background: color-mix(in srgb, rgba(24,24,24,0.01), #46a627 8%);
+  border-radius: 99999px;
+  /* padding: 6px 12px; */
+}
+
+a:active{
+  background: color-mix(in srgb, rgba(24,24,24,0.05), #46a627 20%);
+  border-radius: 99999px;
+  /* padding: 6px 12px; */
+}
+
+a{
+  /* padding: 6px 12px; */
+}

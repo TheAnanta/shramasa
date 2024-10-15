@@ -4,7 +4,7 @@ import SlideCarousal from "./SlideCarousal";
 
 export default function Hero() {
   return (
-    <div className={`${styles.hero} flex flex-col w-full gap-3`}>
+    <div className={`${styles.hero} flex flex-col w-full gap-3 pb-4`}>
       <SlideCarousal />
       <div className="grow gap-3 flex flex-col">
         <div className="h-[64%] shrink-0 relative">
@@ -38,7 +38,7 @@ export default function Hero() {
         </div>
         <div className="flex gap-3 grow h-full">
           <HeroCard className={"flex flex-col !py-4"}>
-            <a href="/explore?category=skin-care">
+            <a href="/explore?categoryId=skin-care">
               <img
                 src="/icons/arrow_down.svg"
                 className="size-8 md:hidden ml-auto -rotate-90"
@@ -59,7 +59,7 @@ export default function Hero() {
             </a>
           </HeroCard>
           <HeroCard className={"flex flex-col !py-4"}>
-            <a href="/explore?category=hair-care">
+            <a href="/explore?categoryId=hair-care">
               <img
                 src="/icons/arrow_down.svg"
                 className="size-8 md:hidden ml-auto -rotate-90"

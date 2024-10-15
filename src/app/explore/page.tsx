@@ -74,7 +74,7 @@ export default function Explore() {
                         href={
                           category.categoryId == categoryId
                             ? "/explore"
-                            : "/explore?category=" + category.categoryId
+                            : "/explore?categoryId=" + category.categoryId
                         }
                         className={`${
                           (categoryId == null &&

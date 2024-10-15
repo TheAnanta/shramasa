@@ -55,18 +55,52 @@ export default function Page() {
 
           <div
             onClick={() => {
-              signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential =
-                  GoogleAuthProvider.credentialFromResult(result);
-                const token = credential?.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                console.log(user);
-                if (auth.currentUser) {
-                  router.push("/");
+              signInWithPopup(auth, new GoogleAuthProvider()).then(
+                async (result) => {
+                  // This gives you a Google Access Token. You can use it to access the Google API.
+                  const credential =
+                    GoogleAuthProvider.credentialFromResult(result);
+                  const token = credential?.accessToken;
+                  // The signed-in user info.
+                  const user = result.user;
+                  console.log(user);
+
+                  if (auth.currentUser) {
+                    if (authType == "signup") {
+                      setTimeout(async () => {
+                        const phoneNumber = prompt("Enter your phone number");
+                        console.log("Hello");
+
+                        const body = JSON.stringify({
+                          userId: auth.currentUser!.uid,
+                          name: auth.currentUser!.displayName,
+                          email: auth.currentUser!.email,
+                          phone: phoneNumber,
+                        });
+                        console.log(body);
+                        const request = await fetch(
+                          "http://localhost:3001/api/users/signup",
+                          {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: body,
+                          }
+                        );
+                        const response = await request.json();
+                        if (request.status === 200) {
+                          router.push("/");
+                        } else {
+                          alert("Error: " + response.error);
+                        }
+                      }, 1000);
+                    } else {
+                      router.push("/");
+                    }
+                  }
                 }
-              });
+              );
               // .catch((error) => {
               //   alert(error.message);
               // });
