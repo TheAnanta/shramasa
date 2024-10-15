@@ -13,6 +13,13 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      scrollbarHide: {
+        '-ms-overflow-style': 'none', /* Internet Explorer 10+ */
+        'scrollbar-width': 'none', /* Firefox */
+        '&::-webkit-scrollbar': {
+          display: 'none', /* Safari and Chrome */
+        },
+      },
     },
   },
   plugins: [],

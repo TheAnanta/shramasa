@@ -88,3 +88,14 @@ a:active{
 a{
   /* padding: 6px 12px; */
 }
+
+
+/* Custom class to hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
