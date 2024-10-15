@@ -36,7 +36,8 @@ export default function SlideCarousal() {
   const images = [
     "/images/products/hair-care/all-hair-care/flawless-finish-hair-removal-cream.jpg",
     "/images/products/hair-care/all-hair-care/pro-kera-ultimate-repair-shampoo.jpg",
-    "/images/products/hair-care/all-hair-care/soapnut-shampoo-1.png",
+    // "/images/products/hair-care/all-hair-care/soapnut-shampoo-1.png",
+    "https://blog.smytten.com/wp-content/uploads/2022/10/feature-1-1900x1069.jpg",
   ];
 
   return (
