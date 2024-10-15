@@ -185,10 +185,10 @@ export const updateProductStock = async (req: Request, res: Response) => {
         stock: stockValues,
       },
     });
-    res.status(200).json(updatedProduct);
+    return res.status(200).json(updatedProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -199,17 +199,17 @@ export const publishProductReview = async (req: Request, res: Response) => {
   const { review, productId } = req.body;
 
   if (!productId) {
-    res
+    return res
       .status(400)
       .json({ error: "Unable to provide rating. Product doesn't exist." });
   }
   if (!review.name) {
-    res.status(400).json({
+    return res.status(400).json({
       error:
         "Name not provided along with the review. The user isn't logged in.",
     });
   } else if (!review.rating) {
-    res
+    return res
       .status(400)
       .json({ error: "Please provide a rating from 1 to 5 stars." });
   }
@@ -252,10 +252,10 @@ export const publishProductReview = async (req: Request, res: Response) => {
       (e["customerRatingCount"] = e.reviews.length), console.log(e);
       return e;
     })[0];
-    res.json(productJson);
+    return res.json(productJson);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error: " + error });
+    return res.status(500).json({ error: "Internal server error: " + error });
   }
 };
 
@@ -289,17 +289,17 @@ export const getAllProducts = async (req: Request, res: Response) => {
         return e;
       })
     );
-    res.json(products);
+    return res.json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
 export const deleteProductById = async (req: Request, res: Response) => {
   const { productId } = req.body;
   if (!productId) {
-    res.status(400).json({ error: "Product id not provided." });
+    return res.status(400).json({ error: "Product id not provided." });
   }
   try {
     const response = await prisma.product.delete({
@@ -308,10 +308,10 @@ export const deleteProductById = async (req: Request, res: Response) => {
       },
     });
     console.log("Product deleted successfully");
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error: " + error });
+    return res.status(500).json({ error: "Internal server error: " + error });
   }
 };
 
@@ -348,16 +348,16 @@ export const getHeroProducts = async (req: Request, res: Response) => {
 
     const filteredProducts = heroProducts.filter((product) => product !== null);
 
-    res.status(200).json(filteredProducts);
+    return res.status(200).json(filteredProducts);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 
 export const getProductById = async (req: Request, res: Response) => {
   const { productId } = req.query;
   if (!productId) {
-    res.status(400).json({ error: "Product id not provided." });
+    return res.status(400).json({ error: "Product id not provided." });
   }
   try {
     const product = await prisma.product.findUnique({
@@ -374,20 +374,20 @@ export const getProductById = async (req: Request, res: Response) => {
         rating:
           e.reviews.length > 0
             ? (
-                e["reviews"]
-                  .map((e: any) => e["rating"])
-                  .reduce((acc: any, value: any) => acc + value, 0) /
-                e["reviews"].length
-              ).toFixed(2)
+              e["reviews"]
+                .map((e: any) => e["rating"])
+                .reduce((acc: any, value: any) => acc + value, 0) /
+              e["reviews"].length
+            ).toFixed(2)
             : 0,
         customerRatingCount: e.reviews.length,
       };
     })[0];
     console.log(productWithRating);
-    res.status(200).json(productWithRating);
+    return res.status(200).json(productWithRating);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 

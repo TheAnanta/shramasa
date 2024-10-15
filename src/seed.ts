@@ -97,38 +97,38 @@
 //     },
 //   });
 
-//   // Create an order
-//   const order = await prisma.order.create({
-//     data: {
-//       orderId: "order1",
-//       userId: "user1",
-//       items: [{ productId: "prod1", quantity: 1 }],
-//       status: "INPROGRESS",
-//       totalAmount: 899.99, // Price after discount
-//       paymentMethod: "COD",
-//       paymentStatus: "PENDING",
-//       paymentDetails: {},
-//       deliveryAddress: "123 Main St",
-//       deliveryDate: new Date("2024-08-01"),
-//       orderDate: new Date(),
-//       couponCode: "DISCOUNT10",
-//       discount: 100.0,
-//       discountType: "AMOUNT",
-//     },
-//   });
+//   // // Create an order
+//   // const order = await prisma.order.create({
+//   //   data: {
+//   //     orderId: "order1",
+//   //     userId: "user1",
+//   //     items: [{ productId: "prod1", quantity: 1 }],
+//   //     status: "INPROGRESS",
+//   //     totalAmount: 899.99, // Price after discount
+//   //     paymentMethod: "COD",
+//   //     paymentStatus: "PENDING",
+//   //     paymentDetails: {},
+//   //     deliveryAddress: "123 Main St",
+//   //     deliveryDate: new Date("2024-08-01"),
+//   //     orderDate: new Date(),
+//   //     couponCode: "DISCOUNT10",
+//   //     discount: 100.0,
+//   //     discountType: "AMOUNT",
+//   //   },
+//   // });
 
-//   const coupon = await prisma.coupon.create({
-//     data: {
-//       couponId: "DISCOUNT10",
-//       code: "SHRAMASAONE",
-//       discount: 10.0,
-//       type: "PERCENTAGE",
-//       maxDiscount: 100.0,
-//       minCartValue: 500,
-//       validTill: new Date("2025-08-01"),
-//       isActive: true,
-//     },
-//   });
+//   // const coupon = await prisma.coupon.create({
+//   //   data: {
+//   //     couponId: "DISCOUNT10",
+//   //     code: "SHRAMASAONE",
+//   //     discount: 10.0,
+//   //     type: "PERCENTAGE",
+//   //     maxDiscount: 100.0,
+//   //     minCartValue: 500,
+//   //     validTill: new Date("2025-08-01"),
+//   //     isActive: true,
+//   //   },
+//   // });
 //   console.log("Seeding finished.");
 // }
 

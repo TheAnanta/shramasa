@@ -3,6 +3,8 @@ import prisma from "../prismaClient";
 
 export const signup = async (req: Request, res: Response) => {
   const { userId, name, email, phone } = req.body;
+  console.log(req.body);
+  console.log(userId, name, email, phone);
   if (!userId || !name || !email || !phone) {
     return res.status(400).json({ error: "Enter all fields required." });
   }
@@ -14,13 +16,13 @@ export const signup = async (req: Request, res: Response) => {
       const user = await prisma.user.create({
         data: { userId, name, email, phone, role: "USER" },
       });
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } else {
-      res.status(400).json({ error: "User already exists" });
+      return res.status(400).json({ error: "User already exists" });
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 

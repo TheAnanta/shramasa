@@ -94,7 +94,7 @@ export const instantiateOrder = async (req: Request, res: Response) => {
 
 export const getOrder = async (req: Request, res: Response) => {
   try {
-    const userId = req.params;
+    const { userId } = req.params;
     console.log(userId);
 
     if (!userId) return res.status(404).json({ error: "user not found" });
@@ -177,7 +177,7 @@ export const confirmOrder = async (req: Request, res: Response) => {
     },
     status: OrderStatus.CONFIRMED,
   };
-  updateOrder(orderId, updatedData, async () => {}, res);
+  updateOrder(orderId, updatedData, async () => { }, res);
 };
 
 //user cancelled the order
@@ -211,7 +211,7 @@ export const processOrder = async (req: Request, res: Response) => {
     status: OrderStatus.PROCESSING,
   };
 
-  updateOrder(orderId, updatedData, async (paymentId) => {}, res);
+  updateOrder(orderId, updatedData, async (paymentId) => { }, res);
 };
 
 //the order was dispatched by the delivery partner
@@ -226,7 +226,7 @@ export const dispatchOrder = async (req: Request, res: Response) => {
     status: OrderStatus.DISPATCHED,
   };
 
-  updateOrder(orderId, updatedData, async (paymentId) => {}, res);
+  updateOrder(orderId, updatedData, async (paymentId) => { }, res);
 };
 
 //the order was delivered to the customer
@@ -236,5 +236,5 @@ export const deliverOrder = async (req: Request, res: Response) => {
     status: OrderStatus.DELIVERED,
   };
 
-  updateOrder(orderId, updatedData, async (paymentId) => {}, res);
+  updateOrder(orderId, updatedData, async (paymentId) => { }, res);
 };

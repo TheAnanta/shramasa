@@ -46,6 +46,7 @@ model Address {
   landmark    String
   address     String
   pincode     Int
+  phoneNumber String  @default("")
   user        User    @relation(fields: [userId], references: [userId])
 }
 

@@ -9,16 +9,19 @@ export const createAddress = async (req: Request, res: Response) => {
       userId,
       houseNumber,
       floor,
+      phoneNumber,
       apartment,
       landmark,
       address,
       pincode,
     } = req.body;
+    console.log(req.body);
     const userAddressLength = await prisma.address.count({
       where: {
         userId: userId
       }
     })
+    const pincodeInt = parseInt(pincode);
     const addressData = await prisma.address.create({
       data: {
         name: name,
@@ -30,12 +33,14 @@ export const createAddress = async (req: Request, res: Response) => {
         apartment,
         landmark,
         address,
-        pincode,
+        pincode: pincodeInt,
+        phoneNumber,
       },
     });
-    res.status(201).json(addressData);
+    return res.status(201).json(addressData);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    console.log(error);
+    return res.status(500).json({ error: error });
   }
 };
 
@@ -49,7 +54,7 @@ export const getAllAddressesOfUser = async (req: Request, res: Response) => {
     });
     res.status(200).json(addresses);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -69,8 +74,12 @@ export const getAddressById = async (req: Request, res: Response) => {
 
 export const updateAddressById = async (req: Request, res: Response) => {
   try {
-    const { addressId, name, setDefault, houseNumber, floor, apartment, landmark, address, pincode } =
+    const { addressId, name, setDefault, houseNumber, floor, apartment, landmark, address, pincode,
+      phoneNumber } =
       req.body;
+    
+      console.log(req.body);
+      
     if (setDefault == 1) {
       await prisma.address.updateMany({
         where: {
@@ -95,18 +104,23 @@ export const updateAddressById = async (req: Request, res: Response) => {
         apartment: apartment,
         landmark: landmark,
         address: address,
-        pincode: pincode,
+        pincode: parseInt(pincode),
+        phoneNumber: phoneNumber,
       },
     });
-    res.status(200).json(addressData);
+    return res.status(200).json(addressData);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    console.log(error);
+    
+    return res.status(500).json({ error: error.message });
   }
 };
 
 export const deleteAddressById = async (req: Request, res: Response) => {
+
   try {
-    const addressId = req.body;
+    const { addressId } = req.body;
+    console.log(addressId);
     const addressData = await prisma.address.delete({
       where: {
         addressId,
@@ -129,8 +143,8 @@ export const deleteAddressById = async (req: Request, res: Response) => {
         });
       }
     }
-    res.status(200).json(addressData);
+    return res.status(200).json(addressData);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
