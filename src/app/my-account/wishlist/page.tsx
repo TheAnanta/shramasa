@@ -54,16 +54,16 @@ export default function Page() {
       <div className="flex flex-col gap-4 my-4">
         {wishlist.map((item: any) => (
           <WishlistCard
-            productId={item.productId}
+            productId={item?.productId}
             uid={userId || ""}
-            key={item.productId}
-            price={item.price}
-            name={item.name}
-            category={item.category}
-            description={item.description}
-            image={item.images[0]}
-            variantName={item.variants[0]}
-            variant={item.variants[0]}
+            key={item?.productId}
+            price={item?.price}
+            name={item?.name}
+            category={item?.category}
+            description={item?.description}
+            image={item?.images[0]}
+            variantName={item?.variants[0]}
+            variant={item?.variants[0]}
             onRemove={(productId: string) => {
               setWishlist(
                 wishlist.filter((item: any) => item.productId !== productId)

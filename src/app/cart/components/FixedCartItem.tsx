@@ -20,7 +20,7 @@ export function FixedCartItem(props: {
       <td className="shink-0">
         <Link href={"/products/" + props.productId} className="flex gap-x-5">
           <img
-            src={"/images/" + props.image}
+            src={props.image}
             className="w-[125px] h-[125px] rounded-2xl bg-neutral-100 object-cover dark:bg-neutral-950"
           />
           <div className="flex flex-col">
