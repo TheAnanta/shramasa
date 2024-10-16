@@ -6,48 +6,32 @@ export function FaqSection() {
         Frequently Asked Questions
       </p>
       <div className="my-auto space-y-8 mt-8">
-        <div className="flex">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            ultrices rutrum ante, vel volutpat mi.
-          </p>
-          <img className="ml-6 size-8 shrink-0" />
+        <div className="flex items-start justify-between">
+          <p>What are the benefits of using sulfate-free shampoo?</p>
+          <span className="material-symbols-outlined">keyboard_arrow_down</span>
+        </div>
+        <div className="flex items-start justify-between">
+          <p>How often should I use a hair mask?</p>
+          <span className="material-symbols-outlined">keyboard_arrow_down</span>
         </div>
         <div className="flex">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            ultrices rutrum ante, vel volutpat mi.
+            What is the diff items-start justify-betweenerence between conditioner and leave-in conditioner?
           </p>
-          <img className="ml-6 size-8 shrink-0" />
+          <span className="material-symbols-outlined">keyboard_arrow_down</span>
         </div>
-        <div className="flex">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            ultrices rutrum ante, vel volutpat mi.
-          </p>
-          <img className="ml-6 size-8 shrink-0" />
-        </div>
-        <div className="flex">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            ultrices rutrum ante, vel volutpat mi.
-          </p>
-          <img className="ml-6 size-8 shrink-0" />
+        <div className="flex items-start justify-between">
+          <p>Can I use hair oil on all hair types?</p>
+          <span className="material-symbols-outlined">keyboard_arrow_down</span>
         </div>
 
-        <div className="flex">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            ultrices rutrum ante, vel volutpat mi.
-          </p>
-          <img className="ml-6 size-8 shrink-0" />
+        <div className="flex items-start justify-between">
+          <p>How can I prevent hair frizz?</p>
+          <span className="material-symbols-outlined">keyboard_arrow_down</span>
         </div>
-        <div className="flex">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            ultrices rutrum ante, vel volutpat mi.
-          </p>
-          <img className="ml-6 size-8 shrink-0" />
+        <div className="flex items-start justify-between">
+          <p>Is it bad to wash my hair every day?</p>
+          <span className="material-symbols-outlined">keyboard_arrow_down</span>
         </div>
       </div>
     </div>
