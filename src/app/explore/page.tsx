@@ -85,7 +85,7 @@ export default function Explore() {
                         }`}
                       >
                         {(categoryId == null && category.categoryId == "all") ||
-                        category.categoryId === categoryId
+                        category?.categoryId === categoryId
                           ? ""
                           : "+ "}
                         {category.name}
@@ -109,7 +109,7 @@ export default function Explore() {
               .filter(
                 (filteredProduct) =>
                   categoryId == null ||
-                  filteredProduct.category.categoryId === categoryId
+                  filteredProduct.category?.categoryId === categoryId
               )
               .map((product: Product, index: number) => (
                 <ExploreItem

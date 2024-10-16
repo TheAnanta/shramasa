@@ -7,6 +7,69 @@ import { CartItem } from "../components/CartItem";
 import { FixedCartItem } from "../components/FixedCartItem";
 import { useSearchParams } from "next/navigation";
 
+const initializeRazorpay = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+
+    document.body.appendChild(script);
+  });
+};
+
+const makePayment = async (amount: number) => {
+  const res = await initializeRazorpay();
+
+  if (!res) {
+    alert("Razorpay SDK Failed to load");
+    return;
+  }
+
+  // Make API call to the serverless API
+  const data = await fetch("/api/razorpay", {
+    method: "POST",
+    body: JSON.stringify({ amount: amount }),
+  }).then((t) => t.json());
+  console.log(data);
+  var options = {
+    key: process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+    name: "Shramasa | #Order",
+    currency: data.currency,
+    amount: data.amount,
+    order_id: data.id,
+    description:
+      "Thank you for your purchasing from Shramasa. We'll reach back to you with organics soon.",
+    // image:
+    //   "https://lh3.googleusercontent.com/9v_pYj1CXETeu4G_id_-dP7b_q8Ys_Ga05S01yvU0aKxRWkzkxJGa2qWXrkWXtYzVsFV4Tuj1aQE6d-KsJGD8fTFJQFrGTLofjL_IknxGreQXGelhAg4",
+    handler: function (response: any) {
+      // TODO Validate payment at server - using webhooks is a better idea.
+      //assign paymentSuccessful to firebase
+      // addData("registrations", user?.uid, {
+      //   payment_state: 1,
+      //   paymentId: response.razorpay_payment_id,
+      //   orderId: response.razorpay_order_id,
+      //   signature: response.razorpay_signature,
+      // }).then((_) => {
+      //   setRegistrationStatus(true);
+      //   console.log(response);
+      // });
+    },
+    // prefill: {
+    //   name: formState.firstName + " " + formState.lastName,
+    //   email: formState.email,
+    // },
+  };
+
+  const paymentObject = new (window as any).Razorpay(options);
+  paymentObject.open();
+};
+
 export default function ReviewCartPage() {
   const searchParams = useSearchParams();
   const [cart, setCart] = React.useState<any>(null);
@@ -330,7 +393,52 @@ export default function ReviewCartPage() {
               <p>Pay now</p>
             </div>
           </div>
-          <button className="py-2 px-6 bg-[#46A627] rounded-full text-white font-bold">
+          <button
+            onClick={() => {
+              makePayment(
+                parseInt(
+                  (
+                    (cart?.items
+                      ?.map(
+                        (item: any) =>
+                          (item.price - item.discount) * item.quantity
+                      )
+                      .reduce((a: number, b: number) => a + b, 0) || 0) +
+                    (cart?.items
+                      ?.map(
+                        (item: any) =>
+                          (item.price - item.discount) * item.quantity
+                      )
+                      .reduce((a: number, b: number) => a + b, 0) || 0) *
+                      0.18 -
+                    (coupon &&
+                      Math.min(
+                        coupon.type == "PERCENTAGE"
+                          ? ((cart?.items
+                              ?.map(
+                                (item: any) =>
+                                  (item.price - item.discount) * item.quantity
+                              )
+                              .reduce((a: number, b: number) => a + b, 0) ||
+                              0) *
+                              coupon.discount) /
+                              100
+                          : (cart?.items
+                              ?.map(
+                                (item: any) =>
+                                  (item.price - item.discount) * item.quantity
+                              )
+                              .reduce((a: number, b: number) => a + b, 0) ||
+                              0) - coupon.discount,
+                        coupon.maxDiscount
+                      ))
+                  ).toFixed(2)
+                )
+              );
+              localStorage.setItem("hasRegistered", "paymentPending");
+            }}
+            className="py-2 px-6 bg-[#46A627] rounded-full text-white font-bold"
+          >
             Place order
           </button>
         </div>
