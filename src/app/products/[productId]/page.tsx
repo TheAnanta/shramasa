@@ -129,9 +129,9 @@ export default function ProductPage({
     lg:flex-row items-center lg:items-start justify-center flex-col"
       >
         <img
-          src="/images/products/hair-shampoo-banner.png"
+          src={product?.images[0]}
           alt="product_image"
-          className="rounded-xl pb-12 lg:pb-0 object-cover md:aspect-[0.85]"
+          className="rounded-xl w-[600px] pb-12 lg:pb-0 object-cover md:aspect-[0.85]"
         />
         <div className="flex flex-col items-start justify-start lg:w-1/2 xl:w-auto">
           <div className="flex pt-4 pb-4 gap-x-2 justify-between items-start w-full">
@@ -183,9 +183,10 @@ export default function ProductPage({
           <h2 className="font-semibold py-3">Ingredients</h2>
           <div className="pl-5 flex items-start justify-start space-x-12 pb-6">
             <ul className="list-decimal">
-              {product?.ingredients.map((ingredient) => {
+              {product?.ingredients.slice(0, 5).map((ingredient) => {
                 return <li>{ingredient.name}</li>;
               })}
+              <li>...</li>
             </ul>
             <div>
               {product?.ingredients.map((ingredient) => {

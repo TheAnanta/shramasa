@@ -10,7 +10,7 @@ const AboutUs = () => {
         <div className="text-lg about leading-10">
           <div className="flex md:flex-row flex-col justify-between items-center gap-x-12">
             <img
-              src="https://framerusercontent.com/images/Zfnas1cM52U6Txl1kRVl4DmW8Ao.png"
+              src="https://sercontent.com/images/Zfnas1cM52U6Txl1kRVl4DmW8Ao.png"
               alt="our story"
               className="md:w-1/2 h-1/2 object-cover w-full"
             />
