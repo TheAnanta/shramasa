@@ -17,7 +17,7 @@ export default function ExploreItem(props: {
       href={"/products/" + props.productId}
     >
       <img
-        src={"/images" + props.image}
+        src={props.image}
         alt={props.image}
         className="w-full aspect-[1.2] rounded-md object-cover bg-[#F2F2F2] border"
       />
