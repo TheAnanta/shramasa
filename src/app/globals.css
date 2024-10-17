@@ -8,11 +8,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark){
+/* @media (prefers-color-scheme: dark){
   *{
     color: white;
   }
-}
+} */
 
 @layer utilities {
   .text-balance {

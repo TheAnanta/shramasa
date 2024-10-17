@@ -34,12 +34,12 @@
     padding: 24px 20px;
 }
 
-@media (prefers-color-scheme: dark){
+/* @media (prefers-color-scheme: dark){
     .hero .card{
         background-color: #262626;
         padding: 24px 20px;
     }
-}
+} */
 
 @media screen and (min-width: 480px) {
     .hero .organic{
