@@ -357,7 +357,9 @@ export default function ProductPage({
       <div className="flex flex-col lg:flex-row justify-center lg:items-start lg:justify-start lg:space-x-16 pt-8 md:pt-20">
         <div className="lg:w-1/2 pb-8 md:pb-20 lg:pb-0 shrink-0">
           <h2 className="font-semibold text-2xl">How to use?</h2>
-          <p className="pt-4 pb-8 whitespace-pre-line">{product?.howToUse}</p>
+          <p className="pt-4 pb-8 whitespace-pre-line">
+            {product?.howToUse.split(/\s(?=\d\.)/).join("\n")}
+          </p>
           <iframe
             width="560"
             height="315"
@@ -375,8 +377,9 @@ export default function ProductPage({
             <div className="flex gap-4 items-end">
               <form>
                 <p className="text-sm my-2">Your review</p>
-                {(product?.reviews?.filter((review) => review.userId === "user")
-                  .length ?? 0) > 0 ? (
+                {(product?.reviews?.filter(
+                  (review) => review.userId === user.uid
+                ).length ?? 0) > 0 ? (
                   <div className="flex gap-2">
                     {Array(
                       parseInt(
@@ -439,6 +442,11 @@ export default function ProductPage({
                   className="border rounded-xl w-full mt-3"
                   cols={40}
                   rows={4}
+                  disabled={
+                    (product?.reviews?.filter(
+                      (review) => review.userId === user.uid
+                    ).length || 0) > 0
+                  }
                   value={
                     product?.reviews?.filter(
                       (review) => review.userId === user.uid
@@ -452,7 +460,7 @@ export default function ProductPage({
                       productId: params.productId,
                       review: {
                         userId: user.uid,
-                        name: user.displayName,
+                        name: user.displayName ?? "Anonymous User",
                         rating: userRatingStar,
                         review: formData.get("review"),
                       },
@@ -480,6 +488,48 @@ export default function ProductPage({
               </form>
             </div>
           )}
+          <h3 className="font-semibold text-xl mt-4">Reviews</h3>
+          <div className="my-4">
+            {product?.reviews.slice(0, 5).map((e) => {
+              return (
+                <div className="flex gap-4 py-4 border-b">
+                  <p className="bg-[#46A627] aspect-square rounded-full size-8 flex items-center justify-center text-white">
+                    {e.name.slice(0, 1).toUpperCase()}
+                  </p>
+                  <div>
+                    <div className="flex gap-1 items-start">
+                      {Array(parseInt(e.rating ?? "0"))
+                        .fill(0)
+                        .map((_, index) => (
+                          <span
+                            className="material-symbols-outlined"
+                            style={{
+                              fontSize: "16px",
+                            }}
+                          >
+                            <span className="filled">kid_star</span>
+                          </span>
+                        ))}
+                      {Array(5 - parseInt(e?.rating ?? "0"))
+                        .fill(0)
+                        .map((_, index) => (
+                          <span
+                            style={{
+                              fontSize: "16px",
+                            }}
+                            className="material-symbols-outlined"
+                          >
+                            kid_star
+                          </span>
+                        ))}
+                    </div>
+                    <p className="font-medium mt-1">{e.name}</p>
+                    <p className="text-sm opacity-60">{e.review}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
           <h3 className="font-semibold text-xl mt-4">Similar Catalogue</h3>
           <div className="flex space-x-4 pt-6">
             {/* <ProductCard />
