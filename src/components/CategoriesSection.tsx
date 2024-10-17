@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 export default function CategoriesSection() {
   const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
-    fetch("http://localhost:3001/api/categories/get-all-categories").then(
-      async (res) => {
-        const data = await res.json();
-        setCategories(data);
-      }
-    );
+    fetch(
+      "https://shramasa-server.onrender.com/api/categories/get-all-categories"
+    ).then(async (res) => {
+      const data = await res.json();
+      setCategories(data);
+    });
   }, []);
   return (
     <div className="flex items-center w-full gap-12">

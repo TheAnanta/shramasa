@@ -26,15 +26,18 @@ export default function Page() {
 
   React.useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`http://localhost:3001/api/users/get-user`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-        }),
-      });
+      const response = await fetch(
+        `https://shramasa-server.onrender.com/api/users/get-user`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+          }),
+        }
+      );
       const data = await response.json();
       setUser(data);
     };
@@ -46,7 +49,8 @@ export default function Page() {
   React.useEffect(() => {
     const fetchAddresses = async () => {
       const response = await fetch(
-        `http://localhost:3001/api/address/get-all-addresses-of-user/` + userId,
+        `https://shramasa-server.onrender.com/api/address/get-all-addresses-of-user/` +
+          userId,
         {
           method: "GET",
           headers: {
@@ -167,7 +171,7 @@ export default function Page() {
                         onClick={() => {
                           showEditAddressSheet(addressIndex);
                           // fetch(
-                          //   "http://localhost:3001/api/address/delete-address-by-id",
+                          //   "https://shramasa-server.onrender.com/api/address/delete-address-by-id",
                           //   {
                           //     body: JSON.stringify({
                           //       addressId: address.id,
@@ -190,7 +194,7 @@ export default function Page() {
                         onClick={() => {
                           console.log(address.addressId);
                           fetch(
-                            "http://localhost:3001/api/address/delete-address-by-id",
+                            "https://shramasa-server.onrender.com/api/address/delete-address-by-id",
                             {
                               body: JSON.stringify({
                                 addressId: address.addressId,
@@ -262,7 +266,7 @@ export default function Page() {
                 ) {
                   try {
                     const response = await fetch(
-                      "http://localhost:3001/api/address/update-address-by-id",
+                      "https://shramasa-server.onrender.com/api/address/update-address-by-id",
                       {
                         method: "PUT",
                         headers: {

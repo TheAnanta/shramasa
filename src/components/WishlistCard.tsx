@@ -42,16 +42,19 @@ export function WishlistCard(props: {
           className="p-2 size-10 bg-gray-100 dark:bg-gray-950 rounded-xl cursor-pointer"
           onClick={() => {
             // props.updateCart(props.productId, 0, props.variant, false);
-            fetch("http://localhost:3001/api/wishlist/modify-wishlist", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                productId: props?.productId,
-                userId: props?.uid,
-              }),
-            }).then(async (response) => {
+            fetch(
+              "https://shramasa-server.onrender.com/api/wishlist/modify-wishlist",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  productId: props?.productId,
+                  userId: props?.uid,
+                }),
+              }
+            ).then(async (response) => {
               if (response.status == 200) {
                 localStorage.setItem(
                   "wishlist",

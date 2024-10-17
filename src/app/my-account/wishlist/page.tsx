@@ -9,7 +9,8 @@ export default function Page() {
   const [wishlist, setWishlist] = useState<any>([]);
   useEffect(() => {
     fetch(
-      "http://localhost:3001/api/wishlist/get-user-wishlist/" + userId
+      "https://shramasa-server.onrender.com/api/wishlist/get-user-wishlist/" +
+        userId
     ).then(async (request) => {
       if (request.status === 200) {
         const pr = (await request.json())
@@ -19,7 +20,7 @@ export default function Page() {
             if (e === "") return;
             try {
               const response = await fetch(
-                "http://localhost:3001/api/products/get-product-by-id?productId=" +
+                "https://shramasa-server.onrender.com/api/products/get-product-by-id?productId=" +
                   e,
                 {
                   // Update with the correct endpoint

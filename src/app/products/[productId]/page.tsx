@@ -23,7 +23,7 @@ export default function ProductPage({
     variant: number,
     isIncreased: boolean
   ) => {
-    fetch("http://localhost:3001/api/cart/modify-cart", {
+    fetch("https://shramasa-server.onrender.com/api/cart/modify-cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export default function ProductPage({
     const getData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/products/get-product-by-id?productId=" +
+          "https://shramasa-server.onrender.com/api/products/get-product-by-id?productId=" +
             params.productId,
           {
             // Update with the correct endpoint
@@ -234,7 +234,7 @@ export default function ProductPage({
                   className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full"
                   onClick={() => {
                     fetch(
-                      "http://localhost:3001/api/cart/add-product-to-cart",
+                      "https://shramasa-server.onrender.com/api/cart/add-product-to-cart",
                       {
                         method: "POST",
                         headers: {
@@ -299,16 +299,19 @@ export default function ProductPage({
               <div
                 className="size-10 flex items-center justify-center border rounded-xl cursor-pointer"
                 onClick={() => {
-                  fetch("http://localhost:3001/api/wishlist/modify-wishlist", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      productId: product?.productId,
-                      userId: user?.uid,
-                    }),
-                  }).then(async (response) => {
+                  fetch(
+                    "https://shramasa-server.onrender.com/api/wishlist/modify-wishlist",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        productId: product?.productId,
+                        userId: user?.uid,
+                      }),
+                    }
+                  ).then(async (response) => {
                     if (response.status == 200) {
                       localStorage.setItem(
                         "wishlist",
@@ -467,7 +470,7 @@ export default function ProductPage({
                     };
 
                     const response = await fetch(
-                      "http://localhost:3001/api/products/publish-product-review",
+                      "https://shramasa-server.onrender.com/api/products/publish-product-review",
                       {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },

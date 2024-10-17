@@ -79,7 +79,7 @@ export default function Page() {
                         });
                         console.log(body);
                         const request = await fetch(
-                          "http://localhost:3001/api/users/signup",
+                          "https://shramasa-server.onrender.com/api/users/signup",
                           {
                             method: "POST",
                             headers: {

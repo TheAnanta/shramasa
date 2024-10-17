@@ -85,7 +85,7 @@ export default function ReviewCartPage() {
   React.useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        "http://localhost:3001/api/cart/get-user-cart",
+        "https://shramasa-server.onrender.com/api/cart/get-user-cart",
         {
           method: "POST",
           headers: { "content-type": "application/json" },
@@ -100,7 +100,7 @@ export default function ReviewCartPage() {
   }, []);
   useEffect(() => {
     fetch(
-      "http://localhost:3001/api/address/get-all-addresses-of-user/" +
+      "https://shramasa-server.onrender.com/api/address/get-all-addresses-of-user/" +
         user?.uid,
       {
         method: "GET",
@@ -116,15 +116,18 @@ export default function ReviewCartPage() {
 
   useEffect(() => {
     if (couponId && cart) {
-      fetch("http://localhost:3001/api/coupons/validate-coupon", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          couponCode: couponId,
-        }),
-      })
+      fetch(
+        "https://shramasa-server.onrender.com/api/coupons/validate-coupon",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            couponCode: couponId,
+          }),
+        }
+      )
         .then(async (response) => {
           if (response.status != 200) {
             alert("Error applying coupon.");

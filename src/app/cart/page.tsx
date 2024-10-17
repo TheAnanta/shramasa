@@ -21,7 +21,7 @@ export default function CartPage() {
     variant: number,
     isIncreased: boolean
   ) => {
-    fetch("http://localhost:3001/api/cart/modify-cart", {
+    fetch("https://shramasa-server.onrender.com/api/cart/modify-cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export default function CartPage() {
   React.useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        "http://localhost:3001/api/cart/get-user-cart",
+        "https://shramasa-server.onrender.com/api/cart/get-user-cart",
         {
           method: "POST",
           headers: { "content-type": "application/json" },
@@ -100,7 +100,7 @@ export default function CartPage() {
 
   const handleRemoveItem = async (productId: string) => {
     const response = await fetch(
-      "http://localhost:3001/api/cart/remove-item-from-cart",
+      "https://shramasa-server.onrender.com/api/cart/remove-item-from-cart",
       {
         method: "POST",
         headers: { "content-type": "application/json" },

@@ -6,7 +6,7 @@ export default function Catalogue({ categoryId }: { categoryId: string }) {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "http://localhost:3001/api/products/get-similar-catalogue",
+        "https://shramasa-server.onrender.com/api/products/get-similar-catalogue",
         {
           method: "POST",
           headers: {

@@ -36,7 +36,7 @@ const signup = async (formData: any) => {
             userId: auth.currentUser.uid, name: username, email: email, phone: phoneNumber,
         });
         console.log(body);
-        const request = await fetch("http://localhost:3001/api/users/signup", {
+        const request = await fetch("https://shramasa-server.onrender.com/api/users/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -17,7 +17,7 @@ export default function Explore() {
   React.useEffect(() => {
     async function getData() {
       const response = await fetch(
-        "http://localhost:3001/api/products/get-all-products"
+        "https://shramasa-server.onrender.com/api/products/get-all-products"
       );
       const data = await response.json();
       setProducts(data);
@@ -28,7 +28,7 @@ export default function Explore() {
   React.useEffect(() => {
     async function getAllCategories() {
       const response = await fetch(
-        "http://localhost:3001/api/categories/get-all-categories"
+        "https://shramasa-server.onrender.com/api/categories/get-all-categories"
       );
       const categories = await response.json();
       setCategories(categories);
