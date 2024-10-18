@@ -6,7 +6,7 @@ export default function CategoriesSection() {
   const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
     fetch(
-      "https://shramasa-server.onrender.com/api/categories/get-all-categories"
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/categories/get-all-categories"
     ).then(async (res) => {
       const data = await res.json();
       setCategories(data);

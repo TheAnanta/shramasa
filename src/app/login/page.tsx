@@ -79,7 +79,7 @@ export default function Page() {
                         });
                         console.log(body);
                         const request = await fetch(
-                          "https://shramasa-server.onrender.com/api/users/signup",
+                          "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/users/signup",
                           {
                             method: "POST",
                             headers: {

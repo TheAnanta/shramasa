@@ -43,7 +43,7 @@ export function WishlistCard(props: {
           onClick={() => {
             // props.updateCart(props.productId, 0, props.variant, false);
             fetch(
-              "https://shramasa-server.onrender.com/api/wishlist/modify-wishlist",
+              "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/wishlist/modify-wishlist",
               {
                 method: "POST",
                 headers: {

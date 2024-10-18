@@ -10,7 +10,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchOrders = async () => {
       const response = await fetch(
-        `https://shramasa-server.onrender.com/api/orders/get-orders/${uid}`,
+        `https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/orders/get-orders/${uid}`,
         {
           method: "GET",
           headers: {

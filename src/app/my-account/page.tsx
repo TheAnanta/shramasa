@@ -27,7 +27,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchUser = async () => {
       const response = await fetch(
-        `https://shramasa-server.onrender.com/api/users/get-user`,
+        `https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/users/get-user`,
         {
           method: "POST",
           headers: {
@@ -49,7 +49,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchAddresses = async () => {
       const response = await fetch(
-        `https://shramasa-server.onrender.com/api/address/get-all-addresses-of-user/` +
+        `https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/get-all-addresses-of-user/` +
           userId,
         {
           method: "GET",
@@ -171,7 +171,7 @@ export default function Page() {
                         onClick={() => {
                           showEditAddressSheet(addressIndex);
                           // fetch(
-                          //   "https://shramasa-server.onrender.com/api/address/delete-address-by-id",
+                          //   "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/delete-address-by-id",
                           //   {
                           //     body: JSON.stringify({
                           //       addressId: address.id,
@@ -194,7 +194,7 @@ export default function Page() {
                         onClick={() => {
                           console.log(address.addressId);
                           fetch(
-                            "https://shramasa-server.onrender.com/api/address/delete-address-by-id",
+                            "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/delete-address-by-id",
                             {
                               body: JSON.stringify({
                                 addressId: address.addressId,
@@ -266,7 +266,7 @@ export default function Page() {
                 ) {
                   try {
                     const response = await fetch(
-                      "https://shramasa-server.onrender.com/api/address/update-address-by-id",
+                      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/update-address-by-id",
                       {
                         method: "PUT",
                         headers: {

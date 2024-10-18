@@ -23,18 +23,21 @@ export default function ProductPage({
     variant: number,
     isIncreased: boolean
   ) => {
-    fetch("https://shramasa-server.onrender.com/api/cart/modify-cart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: product?.productId,
-        userId: user?.uid,
-        quantity: quantity,
-        variant: variant,
-      }),
-    }).then(async (response) => {
+    fetch(
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/modify-cart",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: product?.productId,
+          userId: user?.uid,
+          quantity: quantity,
+          variant: variant,
+        }),
+      }
+    ).then(async (response) => {
       if (response.status == 200) {
         localStorage.setItem(
           "cart",
@@ -98,7 +101,7 @@ export default function ProductPage({
     const getData = async () => {
       try {
         const response = await fetch(
-          "https://shramasa-server.onrender.com/api/products/get-product-by-id?productId=" +
+          "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/products/get-product-by-id?productId=" +
             params.productId,
           {
             // Update with the correct endpoint
@@ -234,7 +237,7 @@ export default function ProductPage({
                   className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full"
                   onClick={() => {
                     fetch(
-                      "https://shramasa-server.onrender.com/api/cart/add-product-to-cart",
+                      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/add-product-to-cart",
                       {
                         method: "POST",
                         headers: {
@@ -300,7 +303,7 @@ export default function ProductPage({
                 className="size-10 flex items-center justify-center border rounded-xl cursor-pointer"
                 onClick={() => {
                   fetch(
-                    "https://shramasa-server.onrender.com/api/wishlist/modify-wishlist",
+                    "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/wishlist/modify-wishlist",
                     {
                       method: "POST",
                       headers: {
@@ -470,7 +473,7 @@ export default function ProductPage({
                     };
 
                     const response = await fetch(
-                      "https://shramasa-server.onrender.com/api/products/publish-product-review",
+                      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/products/publish-product-review",
                       {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
