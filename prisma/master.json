@@ -3,9 +3,11 @@
     "productId": "shramasa-blemish-banish-solution",
     "name": "Shramasa Blemish Banish Solution Serum",
     "description": "Shramasa Blemish Banish Solution Serum is a serum infused lotion that helps to control blemish and reveal your skin. It is enriched with ingredients like Aqua, Avocado Oil, Jojoba Oil, Olive Squalane, Grapeseed Oil, Olivem 1000, Cq-10, Licorice Extract, Saffron Extract, Mix Fruit Extract, Neem Extract, Glycerine, Panthionol, Sodium Gluconate, Erythlite, Trehalose, Sepi Max Zen, Niacinamide, Tranzamic Acid, Melazero, Melavoid, Sepi White, Gega White Alpha Arbutin, Kojic Dipalmitate, Vetiver Essential Oil, Preservative. The serum is suitable for all skin types and is safe for use during pregnancy or breastfeeding.  It is recommended to use within the recommended expiration date for optimal efficacy. Apply a small amount of the serum to your face and massage gently. Follow up with sunscreen during the day for best results.",
-    "category": "Skincare",
-    "subCategory": "Face",
-    "images": ["https://i.imgur.com/y6mG2iY.jpg"],
+    "category": "skin-care",
+    "subCategory": "face-care",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fblemish-banish-solution.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -117,7 +119,7 @@
       }
     ],
     "discount": null,
-    "price": [599.0],
+    "price": [599],
     "variants": [],
     "howToUse": "1. Cleanse your face. 2. Dispense a small amount of the serum-infused lotion. 3. Dot it onto your skin. 4. Spread evenly. 5. Massage gently. 6. Let it absorb. 7. Finish with sunscreen during the day, reapply sunscreen after three hours for best results.",
     "videoLink": null,
@@ -131,9 +133,11 @@
     "productId": "shramasa-break-out-blocker-cleanser",
     "name": "Shramasa Break Out Blocker Cleanser",
     "description": "Shramasa Break Out Blocker Cleanser is a gentle cleanser that helps to treat acne and reduce inflammation. It is formulated with ingredients like Aqua, Sodium Gluconate, Propylene Glycol, Xanthan Gum, Sodium Cocoyl Isethionate, Decyl Glucoside, Cocamidopropyl Betaine, Peg 150, Tea Tree Essential Oil, Salicylic Acid, Ethyl Zinc Pca, Aloe Vera Extract, Ama Extract, Licorice Extract, Dark Spot Corrector Blend, Hibiscus Extract, Preservative. The cleanser is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Apply a small amount of the cleanser to your face and massage gently. Rinse with water.",
-    "category": "Skincare",
-    "subCategory": "Face",
-    "images": ["https://i.imgur.com/Z0h710F.jpg"],
+    "category": "skin-care",
+    "subCategory": "face-care",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fbreak-out-blocker-cleanser.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -205,7 +209,7 @@
       }
     ],
     "discount": null,
-    "price": [299.0],
+    "price": [299],
     "variants": [],
     "howToUse": "1. Cleanse your face. 2. Dispense a small amount on fingertips or a cotton pad. 3. Massage gently onto face. 4. Leave on as directed to absorb or rinse/rinse: Leave on. 5. Moisturize: Apply a moisturizer. 6. Sun Protection: Use sunscreen if applying in the morning.",
     "videoLink": null,
@@ -219,9 +223,11 @@
     "productId": "shramasa-dandruff-detox-shampoo",
     "name": "Shramasa Dandruff Detox Shampoo",
     "description": "Shramasa Dandruff Detox Shampoo is a sulfate and paraben free shampoo that helps to remove dandruff flakes effectively, cleanses the scalp deeply, and targets dandruff-causing fungi. It is formulated with key ingredients like Aqua, Polyquaternium 10, Propanediol, D Panthenol, Sodium Lauroyl Sarcosinate, Ammonium Poly Acrylate, Zpto, Zinc Pca, Niacinamide, Cola Lapid C, Wheat Protein, Keratin Protein, Polyquaternium 7, Polyquaternium 8, Xylisine, Neem Extract, Hibiscus Extract, Tulsi Extract, Bhringraj Extract, Bharani Extract, Amla Extract, Cola Moist, Phenoxithol, Fragrance. The shampoo is suitable for all hair types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wet hair completely. Apply shampoo to scalp, massage. Rinse out shampoo. Apply Ultra Pro Hair Cream to ends, leave for a few minutes. Rinse it off properly. Gently towel dry hair. Detangle with wide-tooth comb. Apply hair care products, if desired. Air dry or style as usual.",
-    "category": "Haircare",
-    "subCategory": "Shampoo",
-    "images": ["https://i.imgur.com/T3jP68j.jpg"],
+    "category": "hair-care",
+    "subCategory": "shampoo",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fdandruff-detox-shampoo.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -321,7 +327,7 @@
       }
     ],
     "discount": null,
-    "price": [499.0],
+    "price": [499],
     "variants": [],
     "howToUse": "1. Apply to clean, damp hair. 2. Focus on mid-length to ends. 3. Leave on for atleast 40 minutes (wrap with cling film wrap) for best result. 4. Rinse thoroughly with water. \n\n1. Wet hair completely. 2. Apply shampoo to scalp, massage. 3. Rinse out shampoo. 4. Apply Ultra Pro Hair Cream to ends, leave for a few minutes. 5. Rinse it off properly. 6. Gently towel dry hair. 7. Detangle with wide-tooth comb. 8. Apply hair care products, if desired. 9. Air dry or style as usual.",
     "videoLink": null,
@@ -335,9 +341,11 @@
     "productId": "shramasa-morning-glow-day-time-serum",
     "name": "Shramasa Morning Glow Day Time Serum",
     "description": "Shramasa Morning Glow Day Time Serum is an oil-free and lightweight serum that helps to awaken your radiance every morning. It is formulated with key ingredients like Aqua, Aloevera 200x, Sodium Gluconate, Emt 10, Erythlite, Trehalose, Hydroxy Ethyl Urea, Sepi Max Zen, Sun Booster, Suncat De, Titanium Di Oxide, Niacinamide, Kojic Dipalmitate, Alpha Arbutin, Nona Peptide, Snail Musine, Bifida Fermant, Hibiscus Extract, Neem Extract, Licorice Extract, Calendula Extract, Frangi Pani Extract, Jasmine Fragrance, Preservative. The serum is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Cleanse your face with a gentle face wash. Tone (Optional) Apply toner if used. Apply dots on forehead, cheeks, nose, and chin. Gently massage in upward circular motions. Apply to neck and décolletage. Let it fully absorb. Apply a broad-spectrum sunscreen as the final step in your morning routine, and reapply after three hours of application for best result and complete protection.",
-    "category": "Skincare",
-    "subCategory": "Face",
-    "images": ["https://i.imgur.com/L8X4V7S.jpg"],
+    "category": "skin-care",
+    "subCategory": "face-care",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fmorning-glow-day-time.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -437,7 +445,7 @@
       }
     ],
     "discount": null,
-    "price": [599.0],
+    "price": [599],
     "variants": [],
     "howToUse": "1. Cleanse: Wash your face with a gentle face wash. 2. Tone (Optional): Apply toner if used. 3. Apply Serum-Infused Lotion: Dispense: Take a small amount of lotion. Dot: Apply dots on forehead, cheeks, nose, and chin. Massage: Gently massage in upward circular motions. Neck: Apply to neck and décolletage. Absorb: Let it fully absorb. 4. Sunscreen: Apply a broad-spectrum sunscreen as the final step in your morning routine, and reapply after three hours of application for best result and complete protection.",
     "videoLink": null,
@@ -451,9 +459,11 @@
     "productId": "shramasa-pro-kera-ultimate-repair-shampoo",
     "name": "Shramasa Pro Kera Ultimate Repair Shampoo",
     "description": "Shramasa Pro Kera Ultimate Repair Shampoo is a sulfate and paraben free shampoo that helps to strengthen hair, repair damage, and enhance natural hair shine. It is formulated with key ingredients like Aqua, Polyquaternium 10, Propanediol, D Panthenol, Sodium Lauroyl Sarcosinate, Ammonium Poly Acrylate, Niacinamide, Cola Lapid C, Wheat Protein, Keratin Protein, Polyquaternium 7, Polyquaternium 88, Xylisine, Neem Extract, Hibiscus Extract, Tulsi Extract, Bhringraj Extract, Bharani Extract, Amla Extract, Cola Moist, Phenoxithol, Fragrance. The shampoo is suitable for all hair types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wet hair completely. Apply shampoo to scalp, massage. Rinse out shampoo. Apply Ultra Pro Hair Cream to ends, leave for a few minutes. Rinse it off properly. Gently towel dry hair. Detangle with wide-tooth comb. Apply hair care products, if desired. Air dry or style as usual.",
-    "category": "Haircare",
-    "subCategory": "Shampoo",
-    "images": ["https://i.imgur.com/kL59Y1c.jpg"],
+    "category": "hair-care",
+    "subCategory": "shampoo",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fpro-kera-ultimate-repair-shampoo.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -545,7 +555,7 @@
       }
     ],
     "discount": null,
-    "price": [499.0],
+    "price": [499],
     "variants": [],
     "howToUse": "1. Apply to clean, damp hair. 2. Focus on mid-length to ends. 3. Leave on for atleast 40 minutes (wrap with cling film wrap) for best result. 4. Rinse thoroughly with water. \n\n1. Wet hair completely. 2. Apply shampoo to scalp, massage. 3. Rinse out shampoo. 4. Apply Ultra Pro Hair Cream to ends, leave for a few minutes. 5. Rinse it off properly. 6. Gently towel dry hair. 7. Detangle with wide-tooth comb. 8. Apply hair care products, if desired. 9. Air dry or style as usual.",
     "videoLink": null,
@@ -559,9 +569,11 @@
     "productId": "shramasa-saffron-glow-cleanser",
     "name": "Shramasa Saffron Glow Cleanser",
     "description": "Shramasa Saffron Glow Cleanser is a brightening cleanser that helps to reduce tan and pigmentation, controls excess oil, soothes and calms skin, improves skin texture, and promotes a natural glow. It is formulated with key ingredients like Aqua, Sodium Gluconate, Propylene Glycol, Xanthan Gum, Sodium Cocoyl Isethionate, Decyl Gluconate, Coco Betaine, Peg 150, Essential Oil, Saffron, Licorice Extract, Saffron Extract mix, Fruit Extract, Alovera 200 X, Dark Spot Corrector Blend, Niacinamide, Mulaithi, Neem Extract Hibiscus Extract, preservative. The cleanser is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wash your face. Apply a small amount on fingertips or a cotton pad. Massage gently onto face. Leave on as directed. Leave to absorb or rinse off as directed. Apply a moisturizer. Apply a sunscreen if applying in the morning.",
-    "category": "Skincare",
-    "subCategory": "Face",
-    "images": ["https://i.imgur.com/R8l9o9C.jpg"],
+    "category": "skin-care",
+    "subCategory": "face-care",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fsaffron-glow-cleanser.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -645,7 +657,7 @@
       }
     ],
     "discount": null,
-    "price": [299.0],
+    "price": [299],
     "variants": [],
     "howToUse": "1. Cleanse: Wash your face. 2. Dispense: Apply a small amount on fingertips or a cotton pad. 3. Apply: Massage gently onto face. 4. Leave on/Rinse: Leave to absorb or rinse off as directed. 5. Moisturize: Apply a moisturizer. 6. Sun Protection: Use sunscreen if applying in the morning.",
     "videoLink": null,
@@ -659,9 +671,11 @@
     "productId": "shramasa-sun-spot-savior-spf-50",
     "name": "Shramasa Sun Spot Savior SPF 50",
     "description": "Shramasa Sun Spot Savior SPF 50 is a non-sticky, non-grasy sunscreen that helps to protect your skin against harmful UV rays. It is formulated with key ingredients like AQUA, ALOEVERA 200X, SODIUM GLUCONATE, EMT 10, HYDROXY ETHYL UREA, SEPI MAX ZEN, SEPI LITE NUDE, VITAMIN E, SUN BOOSTER, D PANTHINOL, TITANIUM DI OXIDE NIACINAMIDE, ISCAGUARD PEGH, ERILITE, TREHALOSE, FRAGRANCE, SUNCAT DE. ETC. The sunscreen is suitable for normal, dry, combination skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Apply sunscreen every day, regardless of the weather. Put it on about 15 min before going outside. Reapply every two hours, or more often if swimming or sweating heavily.",
-    "category": "Skincare",
-    "subCategory": "Sunscreen",
-    "images": ["https://i.imgur.com/843M99B.jpg"],
+    "category": "skin-care",
+    "subCategory": "sunscreen",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fsun-spot-savior.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "AQUA",
@@ -737,7 +751,7 @@
       }
     ],
     "discount": null,
-    "price": [599.0],
+    "price": [599],
     "variants": [],
     "howToUse": "Apply sunscreen every day, regardless of the weather. Put it on about 15 min before going outside. Reapply every two hours, or more often if swimming or sweating heavily.",
     "videoLink": null,
@@ -751,9 +765,11 @@
     "productId": "shramasa-suntan-control-mask",
     "name": "Shramasa Sun Tan Control Mask",
     "description": "Shramasa Sun Tan Control Mask is a face mask that helps to exfoliate, brighten, moisturize, protect, and soothe your skin. It is formulated with key ingredients like Aqua, Lactic Acid, Kojic Dipalmitate, Stearic Acid, Cetyla Alcohol, Almond Oil, Emulsifierwax, Glycerine, thanaka, daitam, Niacinamide, Alpha Arbutin, Sodium Benzoate, Pgenoxitonal, Citric Acid, Sodium Gluconate, Licorice Extract, Neem Extract, mix Fruit Extract, Zinc Oxide, Titanium Di Oxide, Mendalic Acid. Essential Oil, Vitamin E. The mask is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Cleanse your face. Apply a small amount and massage gently. Avoid the eye area. Leave it on for approx 20minutes, message it for 10minutes in circular direction and rinse it off, followed by moisturiser. 5. Use sunscreen during the day. 6. Repeat regularly for best results.",
-    "category": "Skincare",
-    "subCategory": "Face",
-    "images": ["https://i.imgur.com/KzQp3lZ.jpg"],
+    "category": "skin-care",
+    "subCategory": "face-care",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fsun-tan-control-mask.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -853,7 +869,7 @@
       }
     ],
     "discount": null,
-    "price": [499.0],
+    "price": [499],
     "variants": [],
     "howToUse": "1. Cleanse your face. 2. Apply a small amount and massage gently. 3. Avoid the eye area. 4. Leave it on for approx 20minutes, message it for 10minutes in circular direction and rinse it off, followed by moisturiser. 5. Use sunscreen during the day. 6. Repeat regularly for best results.",
     "videoLink": null,
@@ -867,9 +883,11 @@
     "productId": "shramasa-root-repair-activator-serum",
     "name": "Shramasa Root Repair Activator Serum",
     "description": "Shramasa Root Repair Activator Serum is an advance hair regrowth serum that stimulates hair growth, increases hair density, and reduces hair loss. It is formulated with key ingredients like Glycerin, Aqua, Glycine Soja Germ Extract, Triticum Vulgare Germ Extract, Scutellaria Baicalensis Root Extract, Larix Europaea Wood Extract, Sodium Metabisulfite, Sodium Benzoate, Potassium Sorbate, Citric Acid, Fullusans, Copper Tripeptide, Solvut Richter, Plant Based Extracts, Proteins, Vitamin B5, Lactic Acid, Polysorbate 80, Iscaguard PEHG Essential oil Blends. The serum is suitable for all hair types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wash hair and towel dry. Apply serum to damp scalp. Massage in gently. Style as usual. Use regularly for best results.",
-    "category": "Haircare",
-    "subCategory": "Hair Serum",
-    "images": ["https://i.imgur.com/w0C75oQ.jpg"],
+    "category": "hair-care",
+    "subCategory": "hair-serum",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Froot-repair-activating-advance-hair-regrowth.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Glycerin",
@@ -949,7 +967,7 @@
       }
     ],
     "discount": null,
-    "price": [699.0],
+    "price": [699],
     "variants": [],
     "howToUse": "1. Wash hair and towel dry. 2. Apply serum to damp scalp. 3. Massage in gently. 4. Style as usual. 5. Use regularly for best results.",
     "videoLink": null,
@@ -963,9 +981,11 @@
     "productId": "shramasa-renew-and-restore-hair-mask",
     "name": "Shramasa Renew & Restore Hair Mask",
     "description": "Shramasa Renew & Restore Hair Mask is a hair mask that helps to deeply hydrate, repair damage, strengthen strands, soften and smooth hair, nourish with vitamins and oils, and improve scalp health. It is formulated with key ingredients like Aqua, Lavender hydrosol, Glycerin, Propendial, Allantoin, D.Panthenol, Polyquaternium 10, 7, BTMS 50, kokum butter, Amla, Hibiscus, Emmogreen, lexfeel wow, CCTG keratin Protein wheat protein, Cola Moist, Blue Pea extract, Chamomile extract, Sodium gluconate Polysorbate 80, lexfeel wow, Xylisine, Isomal laurate. The mask is suitable for all hair types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Start with wet hair. Leave hair damp, apply mask all over, wrap in cling film for 40 minutes. Rinse Thoroughly, then shampoo and apply ultra pro hair cream. Use twice a week for optimal results. Suitable for ages 14 and above.",
-    "category": "Haircare",
-    "subCategory": "Hair Mask",
-    "images": ["https://i.imgur.com/6D7F970.jpg"],
+    "category": "hair-care",
+    "subCategory": "hair-mask",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Frenew-and-restore-hair-mask.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -1061,7 +1081,7 @@
       }
     ],
     "discount": null,
-    "price": [499.0],
+    "price": [499],
     "variants": [],
     "howToUse": "Start with wet hair. Leave hair damp, apply mask all over, wrap in cling film for 40 minutes. Rinse Thoroughly, then shampoo and apply ultra pro hair cream. Use twice a week for optimal results. Suitable for ages 14 and above.",
     "videoLink": null,
@@ -1075,9 +1095,11 @@
     "productId": "shramasa-ubtan-cleanser",
     "name": "Shramasa Ubtan Cleanser",
     "description": "Shramasa Ubtan Cleanser is a brightening cleanser that is a tradition for today's glow. It helps to gently exfoliate, hydrate, and soothes skin. It is formulated with natural ingredients that brighten skin, have anti-acne properties, deep cleanse, are anti-aging, improve complexion, and are chemical-free. It is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wash your face. Apply a small amount on fingertips or a cotton pad. Massage gently onto face. Leave on as directed. Leave to absorb or rinse off as directed. Apply a moisturizer. Use sunscreen if applying in the morning.",
-    "category": "Skincare",
-    "subCategory": "Cleanser",
-    "images": ["https://i.imgur.com/yOqXh7M.jpg"],
+    "category": "skin-care",
+    "subCategory": "cleanser",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fubtan-cleanser-brightening.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -1161,7 +1183,7 @@
       }
     ],
     "discount": null,
-    "price": [299.0],
+    "price": [299],
     "variants": [],
     "howToUse": "1. Cleanse: Wash your face. 2. Dispense: Apply a small amount on fingertips or a cotton pad. 3. Apply: Massage gently onto face. 4. Leave on/Rinse: Leave to absorb or rinse off as directed. 5. Moisturize: Apply a moisturizer. 6. Sun Protection: Use sunscreen if applying in the morning.",
     "videoLink": null,
@@ -1175,9 +1197,11 @@
     "productId": "shramasa-time-less-glow-serum",
     "name": "Shramasa Time Less Glow Serum",
     "description": "Shramasa Time Less Glow Serum is an ageless beauty in every drop serum infused lotion that helps to keep your skin hydrated, moisturized, provides moisture to the skin, protects against free radicals, brightens the skin, supports skin repair, and maintains product stability. It is formulated with key ingredients like Aqua, Glutathione, Snail Musin, a G Routine, Skin Repair Complexglycerine, D Panthenol Sodium Gluconate, Erylite, Trehalose, Sepi Max Zen, Avocado Oil, Jojoba Oil, Grapeseed Oil, Olivem 1000, Cq-10, Licorice Extract, Amla Extract, Neem Extract, Mix Fruit Extract, Saffron Extract, Alpha Arbutin, Kojic Dipalmitate, Saffron Essential Oil, Preservative. The serum is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wash face. Take serum amount. Dab on face. Gently massage in circular motions. Let it sink in. Follow with moisturizer if needed. Apply sunscreen during the day time and after three hour's for best result. Use as directed, once or twice daily. Adjust based on your skin's needs.",
-    "category": "Skincare",
-    "subCategory": "Serum",
-    "images": ["https://i.imgur.com/97l6m0j.jpg"],
+    "category": "skin-care",
+    "subCategory": "serum",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Ftime-less-glow.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -1277,7 +1301,7 @@
       }
     ],
     "discount": null,
-    "price": [599.0],
+    "price": [599],
     "variants": [],
     "howToUse": "1. Wash face. 2. Take serum amount. 3. Dab on face. 4. Gently massage in circular motions. 5. Let it sink in. 6. Follow with moisturizer if needed. 7. Apply sunscreen during the day time and after three hour's for best result. 8. Use as directed, once or twice daily. Adjust based on your skin's needs.",
     "videoLink": null,
@@ -1291,9 +1315,11 @@
     "productId": "shramasa-tripal-active-complex-serum",
     "name": "Shramasa Tripal Active Complex Serum",
     "description": "Shramasa Tripal Active Complex Serum is an oil-free and lightweight serum infused lotion that helps to minimize pore size, refines skin texture, controls oil production, hydrates the skin, improves skin elasticity, protects against environmental damage, and brightens complexion. It is formulated with key ingredients like Aqua, Licorice extract, Amla extract, Neem extract, Mulberry extract, Niacinamide, Alpha arbutin, Kojic dipalmitate, Afiippore, Snail musine, Tea tree essential oil, glycerine, D panthionol, sodiumgluconate, Erylite, Trehalose, Sepi max zen, CQ-10, Preservative. The serum is suitable for all skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Cleanse your face. Dispense a small amount of the serum-infused lotion. Dot it onto your skin. Spread evenly. Massage gently. Let it absorb. Finish with sunscreen during the day, reapply sunscreen after three hours for best results.",
-    "category": "Skincare",
-    "subCategory": "Serum",
-    "images": ["https://i.imgur.com/0292s4f.jpg"],
+    "category": "skin-care",
+    "subCategory": "serum",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Ftripal-active-complex.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -1373,7 +1399,7 @@
       }
     ],
     "discount": null,
-    "price": [599.0],
+    "price": [599],
     "variants": [],
     "howToUse": "1. Cleanse your face. 2. Dispense a small amount of the serum-infused lotion. 3. Dot it onto your skin. 4. Spread evenly. 5. Massage gently. 6. Let it absorb. 7. Finish with sunscreen during the day, reapply sunscreen after three hours for best results.",
     "videoLink": null,
@@ -1387,9 +1413,11 @@
     "productId": "shramasa-luster-lock-hair-mist",
     "name": "Shramasa Luster Lock Hair Mist",
     "description": "Shramasa Luster Lock Hair Mist is a sulfate and paraben free hair mist that helps to promote hair growth and health, nourishes and strengthens hair. It is formulated with key ingredients like Aqua (water), Hydrosol, Sodium Pca, Polyquaternium-7, Chloride, Bhringraj Extract, Fenugreek Extract, Rosemary Extract, Ginger Extract, Ashwagandha Extract, Neem Extract, Hibiscus Extract, Jatamashi Extract, Manjistha Extract, Wheat Protein, Calendula Extract, Preservative, Vitamin E, Fragrance. The mist is suitable for all hair types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Shake well. Apply to Clean Hair/Scalp. Section Hair. Spray/Apply Evenly. Massage Gently. Do Not Rinse. Style as Usual. For best results, apply daily. Use a mask once a week. Shampoo and condition at least three days a week.",
-    "category": "Haircare",
-    "subCategory": "Hair Mist",
-    "images": ["https://i.imgur.com/G8k2Zc9.jpg"],
+    "category": "hair-care",
+    "subCategory": "hair-mist",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Fluster-lock-hair-mist.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua (water)",
@@ -1469,7 +1497,7 @@
       }
     ],
     "discount": null,
-    "price": [350.0],
+    "price": [350],
     "variants": [],
     "howToUse": "1. Shake Well. 2. Apply to Clean Hair/Scalp. 3. Section Hair. 4. Spray/Apply Evenly. 5. Massage Gently. 6. Do Not Rinse. 7. Style as Usual. 8. For best results, apply daily. 9. Use a mask once a week. 10. Shampoo and condition at least three days a week.",
     "videoLink": null,
@@ -1483,9 +1511,11 @@
     "productId": "shramasa-acne-control-solution-serum",
     "name": "Shramasa Acne Control Solution Serum",
     "description": "Shramasa Acne Control Solution Serum is an oil-free and lightweight serum infused lotion that helps to exfoliate pores, control oil production, has anti-inflammatory properties, improves skin texture, and brightens complexion. It is formulated with key ingredients like Aqua, Avacado Oil, Jojoba Oil, Grapeseed Oil, Olivem 1000, Cq-10, Licorice Extract, Amla Extract, Neem Extract, Mix Fruit Extract, Alpha Arbutin, Glycerine, d Panthionol, Sodium Gluconate, Erylite, Trehalose, Sepi Max Zen, Kojic Dipalmitate, Salicylic Acid, Zinc Pca, Snail Musin, Tea Tree Essential Oil, Preservative. The serum is suitable for acne prone and oily skin types and is safe for use during pregnancy or breastfeeding. It is recommended to use within the recommended expiration date for optimal efficacy. Wash your face. Dispense and apply to face, avoiding the eye area. Gently massage the lotion into the skin. Allow the lotion to absorb into the skin. Follow with sunscreen. Apply sunscreen during the day time and every three hours for best result. Frequently use as directed, typically once or twice daily. Adjust based on your skin's needs.",
-    "category": "Skincare",
-    "subCategory": "Serum",
-    "images": ["https://i.imgur.com/Z9jR4zK.jpg"],
+    "category": "skin-care",
+    "subCategory": "serum",
+    "images": [
+      "https://firebasestorage.googleapis.com/v0/b/shramasa-care.appspot.com/o/images%2Fproducts%2Facne-control-solution.jpg?alt=media"
+    ],
     "ingredients": [
       {
         "name": "Aqua",
@@ -1581,7 +1611,7 @@
       }
     ],
     "discount": null,
-    "price": [599.0],
+    "price": [599],
     "variants": [],
     "howToUse": "1. Store in a cool, dry place, away from direct sunlight. 2. Do not apply to broken or irritated scalp. 3. Consult a healthcare professional before useif pregnant or breastfeeding. 4. Use within the recommended expiration date for optimal efficacy.",
     "videoLink": null,
