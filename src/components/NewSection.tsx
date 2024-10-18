@@ -11,7 +11,7 @@ export default function NewSection() {
   React.useEffect(() => {
     async function getData() {
       const response = await fetch(
-        "https://shramasa-server.onrender.com/api/products/get-all-products"
+        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/products/get-all-products"
       );
       const data = await response.json();
       setProducts(data.slice(0, 4));

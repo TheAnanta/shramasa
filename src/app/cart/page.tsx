@@ -21,18 +21,21 @@ export default function CartPage() {
     variant: number,
     isIncreased: boolean
   ) => {
-    fetch("https://shramasa-server.onrender.com/api/cart/modify-cart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: productId,
-        userId: user?.uid,
-        quantity: quantity,
-        variant: variant,
-      }),
-    }).then(async (response) => {
+    fetch(
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/modify-cart",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: productId,
+          userId: user?.uid,
+          quantity: quantity,
+          variant: variant,
+        }),
+      }
+    ).then(async (response) => {
       if (response.status == 200) {
         localStorage.setItem(
           "cart",
@@ -78,7 +81,7 @@ export default function CartPage() {
   React.useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        "https://shramasa-server.onrender.com/api/cart/get-user-cart",
+        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/get-user-cart",
         {
           method: "POST",
           headers: { "content-type": "application/json" },
@@ -100,7 +103,7 @@ export default function CartPage() {
 
   const handleRemoveItem = async (productId: string) => {
     const response = await fetch(
-      "https://shramasa-server.onrender.com/api/cart/remove-item-from-cart",
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/remove-item-from-cart",
       {
         method: "POST",
         headers: { "content-type": "application/json" },

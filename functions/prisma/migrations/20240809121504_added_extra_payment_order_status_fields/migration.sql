@@ -1,0 +1,5 @@
+-- AlterEnum
+ALTER TYPE "PaymentStatus" ADD VALUE 'REFUNDED';
+
+-- AlterTable
+ALTER TABLE "Order" ALTER COLUMN "status" SET DEFAULT 'INPROGRESS';

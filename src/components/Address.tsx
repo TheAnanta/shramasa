@@ -16,7 +16,7 @@ export default function Address(props: {
   const [userSelectedAddress, setUserSelectedAddress] = useState(0);
   useEffect(() => {
     fetch(
-      "https://shramasa-server.onrender.com/api/address/get-all-addresses-of-user/" +
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/get-all-addresses-of-user/" +
         userId,
       {
         method: "GET",
@@ -50,7 +50,7 @@ export default function Address(props: {
     if (houseNumber != null && houseNumber != undefined && houseNumber != "") {
       try {
         const response = await fetch(
-          "https://shramasa-server.onrender.com/api/address/create-address",
+          "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/create-address",
           {
             // Adjust this URL as needed
             method: "POST",

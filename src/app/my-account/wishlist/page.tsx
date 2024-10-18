@@ -9,7 +9,7 @@ export default function Page() {
   const [wishlist, setWishlist] = useState<any>([]);
   useEffect(() => {
     fetch(
-      "https://shramasa-server.onrender.com/api/wishlist/get-user-wishlist/" +
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/wishlist/get-user-wishlist/" +
         userId
     ).then(async (request) => {
       if (request.status === 200) {
@@ -20,7 +20,7 @@ export default function Page() {
             if (e === "") return;
             try {
               const response = await fetch(
-                "https://shramasa-server.onrender.com/api/products/get-product-by-id?productId=" +
+                "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/products/get-product-by-id?productId=" +
                   e,
                 {
                   // Update with the correct endpoint

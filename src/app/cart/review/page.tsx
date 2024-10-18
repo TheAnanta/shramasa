@@ -85,7 +85,7 @@ export default function ReviewCartPage() {
   React.useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        "https://shramasa-server.onrender.com/api/cart/get-user-cart",
+        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/get-user-cart",
         {
           method: "POST",
           headers: { "content-type": "application/json" },
@@ -100,7 +100,7 @@ export default function ReviewCartPage() {
   }, []);
   useEffect(() => {
     fetch(
-      "https://shramasa-server.onrender.com/api/address/get-all-addresses-of-user/" +
+      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/address/get-all-addresses-of-user/" +
         user?.uid,
       {
         method: "GET",
@@ -117,7 +117,7 @@ export default function ReviewCartPage() {
   useEffect(() => {
     if (couponId && cart) {
       fetch(
-        "https://shramasa-server.onrender.com/api/coupons/validate-coupon",
+        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/coupons/validate-coupon",
         {
           method: "POST",
           headers: {
