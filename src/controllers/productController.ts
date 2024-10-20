@@ -1,9 +1,12 @@
-import { Response, Request } from "express";
+import { Response, Request, RequestHandler } from "express";
 import prisma from "../prismaClient";
 import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 // checkAuthorizedByAdmin
 
-export const getLatestProducts = async (req: Request, res: Response) => {
+export const getLatestProducts: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const products = await prisma.product.findMany({
       orderBy: {
@@ -17,7 +20,10 @@ export const getLatestProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const addProduct = async (req: Request, res: Response) => {
+export const addProduct: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const {
     name,
     description,
@@ -101,7 +107,10 @@ export const addProduct = async (req: Request, res: Response) => {
   return res.status(200).json(product);
 };
 
-export const updateProduct = async (req: Request, res: Response) => {
+export const updateProduct: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const {
     name,
     description,
@@ -153,7 +162,10 @@ export const updateProduct = async (req: Request, res: Response) => {
   return res.status(200).json(product);
 };
 
-export const updateProductStock = async (req: Request, res: Response) => {
+export const updateProductStock: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { productId, stock, variant } = req.body;
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });
@@ -194,7 +206,10 @@ export const updateProductStock = async (req: Request, res: Response) => {
 
 //________________________________________________________
 
-export const publishProductReview = async (req: Request, res: Response) => {
+export const publishProductReview: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   //
   const { review, productId } = req.body;
 
@@ -259,7 +274,10 @@ export const publishProductReview = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllProducts = async (req: Request, res: Response) => {
+export const getAllProducts: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const productsTemp: any = await prisma.product.findMany();
     const products = await Promise.all(
@@ -296,7 +314,10 @@ export const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteProductById = async (req: Request, res: Response) => {
+export const deleteProductById: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { productId } = req.body;
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });
@@ -320,7 +341,10 @@ export const deleteProductById = async (req: Request, res: Response) => {
  * @param req categories from which the user needs top grossing
  * @param res A sample response
  */
-export const getHeroProducts = async (req: Request, res: Response) => {
+export const getHeroProducts: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const categories: string[] = req.body.categories;
 
@@ -354,7 +378,10 @@ export const getHeroProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductById = async (req: Request, res: Response) => {
+export const getProductById: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { productId } = req.query;
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });
@@ -374,11 +401,11 @@ export const getProductById = async (req: Request, res: Response) => {
         rating:
           e.reviews.length > 0
             ? (
-              e["reviews"]
-                .map((e: any) => e["rating"])
-                .reduce((acc: any, value: any) => acc + value, 0) /
-              e["reviews"].length
-            ).toFixed(2)
+                e["reviews"]
+                  .map((e: any) => e["rating"])
+                  .reduce((acc: any, value: any) => acc + value, 0) /
+                e["reviews"].length
+              ).toFixed(2)
             : 0,
         customerRatingCount: e.reviews.length,
       };
@@ -391,7 +418,10 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-export const getSimilarCatalogue = async (req: Request, res: Response) => {
+export const getSimilarCatalogue: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const { category } = req.body;
 

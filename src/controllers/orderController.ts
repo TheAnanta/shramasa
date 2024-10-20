@@ -3,7 +3,10 @@ import prisma from "../prismaClient";
 import { DiscountType, OrderStatus, PaymentStatus } from "@prisma/client";
 import { randomUUID } from "crypto";
 
-export const instantiateOrder = async (req: Request, res: Response) => {
+export const instantiateOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { userId, cartId, addressId, couponCode } = req.body;
   try {
     const cartItems = (
@@ -92,7 +95,10 @@ export const instantiateOrder = async (req: Request, res: Response) => {
   }
 };
 
-export const getOrder = async (req: Request, res: Response) => {
+export const getOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const { userId } = req.params;
     console.log(userId);
@@ -114,7 +120,7 @@ export const getOrder = async (req: Request, res: Response) => {
   }
 };
 
-export const addPaymentInfoFromRazorpay = async (
+export const addPaymentInfoFromRazorpay: any = async (
   req: Request,
   res: Response
 ) => {
@@ -141,7 +147,7 @@ export const addPaymentInfoFromRazorpay = async (
   }
 };
 
-export const updateOrder = async (
+export const updateOrder: any = async (
   orderId: string,
   data: any,
   callback: (paymentId: string) => Promise<void>,
@@ -162,7 +168,10 @@ export const updateOrder = async (
 };
 
 // Shramasa accepted the order
-export const confirmOrder = async (req: Request, res: Response) => {
+export const confirmOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { orderId, data } = req.body;
   if (!data["deliveryDate"]) {
     return res.status(400).json({ error: "Delivery date is required." });
@@ -177,11 +186,14 @@ export const confirmOrder = async (req: Request, res: Response) => {
     },
     status: OrderStatus.CONFIRMED,
   };
-  updateOrder(orderId, updatedData, async () => { }, res);
+  updateOrder(orderId, updatedData, async () => {}, res);
 };
 
 //user cancelled the order
-export const cancelOrder = async (req: Request, res: Response) => {
+export const cancelOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const { orderId } = req.body;
   const updatedData = {
     status: OrderStatus.CANCELLED,
@@ -205,17 +217,23 @@ export const cancelOrder = async (req: Request, res: Response) => {
 };
 
 //the payment was successful
-export const processOrder = async (req: Request, res: Response) => {
+export const processOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const { orderId } = req.body;
   const updatedData = {
     status: OrderStatus.PROCESSING,
   };
 
-  updateOrder(orderId, updatedData, async (paymentId) => { }, res);
+  updateOrder(orderId, updatedData, async (paymentId) => {}, res);
 };
 
 //the order was dispatched by the delivery partner
-export const dispatchOrder = async (req: Request, res: Response) => {
+export const dispatchOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const { orderId, deliveryTracking } = req.body;
   const updatedData = {
     additionalInfo: {
@@ -226,15 +244,18 @@ export const dispatchOrder = async (req: Request, res: Response) => {
     status: OrderStatus.DISPATCHED,
   };
 
-  updateOrder(orderId, updatedData, async (paymentId) => { }, res);
+  updateOrder(orderId, updatedData, async (paymentId) => {}, res);
 };
 
 //the order was delivered to the customer
-export const deliverOrder = async (req: Request, res: Response) => {
+export const deliverOrder: any = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const { orderId } = req.body;
   const updatedData = {
     status: OrderStatus.DELIVERED,
   };
 
-  updateOrder(orderId, updatedData, async (paymentId) => { }, res);
+  updateOrder(orderId, updatedData, async (paymentId) => {}, res);
 };

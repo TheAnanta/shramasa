@@ -3,17 +3,22 @@ import prisma from "../prismaClient";
 import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 // checkAuthorizedByAdmin(req, res);
 
-export const getAllSubCategories = async (req: Request, res: Response) => {
+export const getAllSubCategories: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const subcategories = await prisma.subCategory.findMany();
     res.json(subcategories);
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: "Internal server error" + error.name });
+    return res
+      .status(500)
+      .json({ error: "Internal server error" + error.name });
   }
 };
 
-export const getSubCategoriesByCategory = async (
+export const getSubCategoriesByCategory: any = async (
   req: Request,
   res: Response
 ) => {
@@ -35,11 +40,16 @@ export const getSubCategoriesByCategory = async (
     res.json(subcategories);
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: "Internal server error" + error.name });
+    return res
+      .status(500)
+      .json({ error: "Internal server error" + error.name });
   }
 };
 
-export const addSubCategory = async (req: Request, res: Response) => {
+export const addSubCategory: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { subcategoryName, subcategoryImage, categoryId } = req.body;
   const subcategoryId = subcategoryName.replace(/ /g, "-");
   if (!categoryId) {
@@ -74,15 +84,22 @@ export const addSubCategory = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: "Couldn't add subcategory: " + error.name });
+    return res
+      .status(500)
+      .json({ error: "Couldn't add subcategory: " + error.name });
   }
 };
 
-export const updateSubCategory = async (req: Request, res: Response) => {
+export const updateSubCategory: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { subcategoryName, subcategoryImage, categoryId, subcategoryId } =
     req.body;
   if (!subcategoryId) {
-    return res.status(400).json({ error: "subcategoryId expected. Found null." });
+    return res
+      .status(400)
+      .json({ error: "subcategoryId expected. Found null." });
   }
   if (!categoryId) {
     return res.status(400).json({ error: "categoryId expected. Found null." });

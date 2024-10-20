@@ -1,7 +1,10 @@
 import { Response, Request } from "express";
 import prisma from "../prismaClient";
 
-export const getCarousal = async (req: Request, res: Response) => {
+export const getCarousal: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const carousal = await prisma.product.findMany();
     //sort carousal by latest time,and limit it 5

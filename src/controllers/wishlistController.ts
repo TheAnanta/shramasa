@@ -1,7 +1,10 @@
 import { Response, Request } from "express";
 import prisma from "../prismaClient";
 
-export const getUserWishlist = async (req: Request, res: Response) => {
+export const getUserWishlist: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { userId } = req.params;
   if (!userId) {
     return res
@@ -23,7 +26,10 @@ export const getUserWishlist = async (req: Request, res: Response) => {
   }
 };
 
-export const modifyWishlist = async (req: Request, res: Response) => {
+export const modifyWishlist: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { productId, userId } = req.body;
   if (!productId) {
     return res.status(400).json({ error: "Product id not provided." });

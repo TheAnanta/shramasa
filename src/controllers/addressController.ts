@@ -2,7 +2,10 @@ import { Response, Request } from "express";
 import prisma from "../prismaClient";
 import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 
-export const createAddress = async (req: Request, res: Response) => {
+export const createAddress: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const {
       name,
@@ -18,9 +21,9 @@ export const createAddress = async (req: Request, res: Response) => {
     console.log(req.body);
     const userAddressLength = await prisma.address.count({
       where: {
-        userId: userId
-      }
-    })
+        userId: userId,
+      },
+    });
     const pincodeInt = parseInt(pincode);
     const addressData = await prisma.address.create({
       data: {
@@ -44,7 +47,10 @@ export const createAddress = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllAddressesOfUser = async (req: Request, res: Response) => {
+export const getAllAddressesOfUser: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const { userId } = req.params;
     const addresses = await prisma.address.findMany({
@@ -58,7 +64,10 @@ export const getAllAddressesOfUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getAddressById = async (req: Request, res: Response) => {
+export const getAddressById: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const addressId = req.body;
     const address = await prisma.address.findUnique({
@@ -72,23 +81,35 @@ export const getAddressById = async (req: Request, res: Response) => {
   }
 };
 
-export const updateAddressById = async (req: Request, res: Response) => {
+export const updateAddressById: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
-    const { addressId, name, setDefault, houseNumber, floor, apartment, landmark, address, pincode,
-      phoneNumber } =
-      req.body;
-    
-      console.log(req.body);
-      
+    const {
+      addressId,
+      name,
+      setDefault,
+      houseNumber,
+      floor,
+      apartment,
+      landmark,
+      address,
+      pincode,
+      phoneNumber,
+    } = req.body;
+
+    console.log(req.body);
+
     if (setDefault == 1) {
       await prisma.address.updateMany({
         where: {
           userId: req.body.userId,
-          isDefault: true
+          isDefault: true,
         },
         data: {
-          isDefault: false
-        }
+          isDefault: false,
+        },
       });
     }
     const addressData = await prisma.address.update({
@@ -111,13 +132,15 @@ export const updateAddressById = async (req: Request, res: Response) => {
     return res.status(200).json(addressData);
   } catch (error: any) {
     console.log(error);
-    
+
     return res.status(500).json({ error: error.message });
   }
 };
 
-export const deleteAddressById = async (req: Request, res: Response) => {
-
+export const deleteAddressById: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const { addressId } = req.body;
     console.log(addressId);
@@ -129,17 +152,17 @@ export const deleteAddressById = async (req: Request, res: Response) => {
     if (addressData.isDefault) {
       const newDefaultAddress = await prisma.address.findFirst({
         where: {
-          userId: addressData.userId
-        }
+          userId: addressData.userId,
+        },
       });
       if (newDefaultAddress) {
         await prisma.address.update({
           where: {
-            addressId: newDefaultAddress.addressId
+            addressId: newDefaultAddress.addressId,
           },
           data: {
-            isDefault: true
-          }
+            isDefault: true,
+          },
         });
       }
     }

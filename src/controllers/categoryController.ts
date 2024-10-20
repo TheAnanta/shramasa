@@ -4,7 +4,7 @@ import { checkAuthorizedByAdmin } from "../middlewares/authMiddleware";
 
 // checkAuthorizedByAdmin(req, res, next);
 
-export const getAllCategories = async (_: Request, res: Response) => {
+export const getAllCategories: any = async (_: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany();
     return res.json(categories);
@@ -14,7 +14,10 @@ export const getAllCategories = async (_: Request, res: Response) => {
   }
 };
 
-export const addCategory = async (req: Request, res: Response) => {
+export const addCategory: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { name, image } = req.body;
   if (!name || !image) {
     return res.status(400).json({ error: "Name is required" });
@@ -26,7 +29,7 @@ export const addCategory = async (req: Request, res: Response) => {
       data: {
         categoryId: categoryId,
         name: name,
-        image: image, 
+        image: image,
       },
     });
 
@@ -37,7 +40,10 @@ export const addCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const updateCategory = async (req: Request, res: Response) => {
+export const updateCategory: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { name, image, categoryId } = req.body;
   if (!categoryId) {
     return res.status(400).json({ error: "Invalid category id." });
@@ -62,7 +68,10 @@ export const updateCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteCategory = async (req: Request, res: Response) => {
+export const deleteCategory: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { categoryId } = req.body;
   if (!categoryId) {
     return res.status(400).json({ error: "Category id not provided." });

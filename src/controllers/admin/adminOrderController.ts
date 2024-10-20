@@ -1,7 +1,10 @@
 import { Response, Request } from "express";
 import prisma from "../../prismaClient";
 
-export const getAllUserOrders = async (req: Request, res: Response) => {
+export const getAllUserOrders: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   console.log("Get all user orders");
 
   try {
@@ -30,7 +33,10 @@ export const getAllUserOrders = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllCoupons = async (req: Request, res: Response) => {
+export const getAllCoupons: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   console.log("Get all user coupons");
 
   try {

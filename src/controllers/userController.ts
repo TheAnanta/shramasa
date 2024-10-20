@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import prisma from "../prismaClient";
 
-export const signup = async (req: Request, res: Response) => {
+export const signup: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { userId, name, email, phone } = req.body;
   console.log(req.body);
   console.log(userId, name, email, phone);
@@ -26,7 +29,10 @@ export const signup = async (req: Request, res: Response) => {
   }
 };
 
-export const getUser = async (req: Request, res: Response) => {
+export const getUser: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { userId } = req.body;
   if (!userId) {
     return res.status(400).json({ error: "User ID not provided." });
@@ -45,7 +51,10 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { userId, name, email, phone } = req.body;
   if (!userId) {
     return res.status(400).json({ error: "User ID not provided." });
@@ -76,7 +85,10 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser: any = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const { userId } = req.body;
   if (!userId) {
     return res.status(400).json({ error: "User ID not provided." });
