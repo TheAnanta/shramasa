@@ -6,6 +6,7 @@ import { MobileCartItem } from "../components/MobileCartItem";
 import { CartItem } from "../components/CartItem";
 import { FixedCartItem } from "../components/FixedCartItem";
 import { useSearchParams } from "next/navigation";
+import { RadioGroup } from "material-you-react";
 
 const initializeRazorpay = () => {
   return new Promise((resolve) => {
@@ -81,6 +82,7 @@ export default function ReviewCartPage() {
   const userSelectedAddress = parseInt(searchParams.get("address") || "0");
   const couponId = searchParams.get("coupon");
   const user = useAuthContext();
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   React.useEffect(() => {
     const getData = async () => {
@@ -386,7 +388,7 @@ export default function ReviewCartPage() {
           </p>
           <div className="flex h-[1px] bg-neutral-200"></div>
           <p className="font-bold">Payment Information</p>
-          <div className="space-y-3">
+          {/* <div className="space-y-3">
             <div className="flex gap-3">
               <input radioGroup="payment" type="radio" />
               <p>Cash On delivery</p>
@@ -395,9 +397,22 @@ export default function ReviewCartPage() {
               <input radioGroup="payment" type="radio" />
               <p>Pay now</p>
             </div>
+          </div> */}
+          <div className="radio">
+            <RadioGroup
+              children={["Cash On Delivery", "Pay Now"]}
+              value={paymentMethod}
+              onChange={(_) => {
+                setPaymentMethod(_);
+              }}
+            />
           </div>
           <button
             onClick={() => {
+              if(paymentMethod == "Cash On Delivery") {
+                //TODO Order function
+                return;
+              }
               makePayment(
                 parseInt(
                   (

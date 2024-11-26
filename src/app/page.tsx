@@ -44,9 +44,12 @@ export default function Home() {
                     })}
                   </ul>
                   <div className="flex justify-between items-start">
-                    <button className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full h-max">
+                    <a
+                      href="/about"
+                      className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full h-max"
+                    >
                       move on to know more
-                    </button>
+                    </a>
                     <img
                       src="/icons/arrow_down.svg"
                       className="size-12 ml-auto"

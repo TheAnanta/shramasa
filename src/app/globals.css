@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~material-you-react/dist/esm/index.css";
+
 * {
   color: #171717;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.radio p{
+  color: #202023;
 }
 
 /* @media (prefers-color-scheme: dark){
@@ -26,11 +32,10 @@
   @apply flex flex-col justify-center items-start pl-[42px] rounded-3xl;
   transition: all 0.5s ease-in-out;
   scroll-behavior: smooth;
-
 }
 
-.soyuz-grotesk{
-  font-family: 'Soyuz Grotesk';
+.soyuz-grotesk {
+  font-family: "Soyuz Grotesk";
 }
 
 table#cart td {
@@ -43,52 +48,41 @@ table#cart td {
   }
 }
 
-
 .material-symbols-outlined .filled {
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 .material-symbols-outlined .outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
-
 .name .phone {
-  @apply border-b pb-1 w-full text-base dark:bg-neutral-900
+  @apply border-b pb-1 w-full text-base dark:bg-neutral-900;
 }
 
 .input {
-  @apply border-b pb-1 w-full dark:bg-neutral-900
+  @apply border-b pb-1 w-full dark:bg-neutral-900;
 }
 
 .about p {
-  @apply opacity-70 font-medium 
+  @apply opacity-70 font-medium;
 }
 
-a:hover{
-  background: color-mix(in srgb, rgba(24,24,24,0.01), #46a627 8%);
+a:hover {
+  background: color-mix(in srgb, rgba(24, 24, 24, 0.01), #46a627 8%);
   border-radius: 99999px;
   /* padding: 6px 12px; */
 }
 
-a:active{
-  background: color-mix(in srgb, rgba(24,24,24,0.05), #46a627 20%);
+a:active {
+  background: color-mix(in srgb, rgba(24, 24, 24, 0.05), #46a627 20%);
   border-radius: 99999px;
   /* padding: 6px 12px; */
 }
 
-a{
+a {
   /* padding: 6px 12px; */
 }
-
 
 /* Custom class to hide scrollbar */
 .scrollbar-hide {

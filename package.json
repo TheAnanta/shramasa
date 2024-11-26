@@ -10,11 +10,8 @@
   },
   "dependencies": {
     "firebase": "^10.12.4",
-<<<<<<< HEAD
+    "material-you-react": "^0.0.1-beta.3.4",
     "next": "14.2.10",
-=======
-    "next": "14.2.5",
->>>>>>> my-account
     "razorpay": "^2.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
