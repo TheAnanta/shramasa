@@ -116,6 +116,7 @@ enum PaymentStatus {
 enum PaymentMethod {
   COD
   UPI
+  EMI
   NETBANKING
   CREDITCARD
   DEBITCARD
@@ -141,8 +142,8 @@ model Order {
   userId          String
   items           Json[]
   status          OrderStatus   @default(INPROGRESS)
-  paymentId       String
-  payment         Payment       @relation(fields: [paymentId], references: [paymentId])
+  paymentId       String?
+  payment         Payment?      @relation(fields: [paymentId], references: [paymentId])
   deliveryAddress String
   deliveryDate    DateTime?
   orderDate       DateTime      @default(now())

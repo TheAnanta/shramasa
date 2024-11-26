@@ -4,7 +4,7 @@ import { DiscountType, OrderStatus, PaymentStatus } from "@prisma/client";
 import { randomUUID } from "crypto";
 
 export const instantiateOrder = async (req: Request, res: Response) => {
-  const { userId, cartId, addressId, couponCode } = req.body;
+  const { userId, cartId, addressId, couponCode, paymentMethod } = req.body;
   try {
     const cartItems = (
       await Promise.all(
@@ -65,25 +65,28 @@ export const instantiateOrder = async (req: Request, res: Response) => {
         addressId: addressId,
       },
     });
-    const razorpayPaymentId = randomUUID();
+
+    const randomPaymentId = randomUUID();
     //TODO: Call the razorpay api to generate a razorpay order id to replace with `razorpayPaymentId`
-    const payment = await prisma.payment.create({
+
+    const payment = paymentMethod == "CashOnDelivery" ? (await prisma.payment.create({
       data: {
-        paymentId: razorpayPaymentId,
+        paymentId: randomPaymentId,
         amount: totalAmount - discount,
+        paymentMethod: "COD",
       },
-    });
+    })) : null;
+
     const order = await prisma.order.create({
       data: {
         userId: userId,
         items: cartItems,
-        // addressId: addressId,
         couponCode: couponCode,
         additionalInfo: {},
         deliveryAddress: JSON.stringify(address),
         discount: discount,
         discountType: coupon.type,
-        paymentId: payment.paymentId,
+        paymentId: payment?.paymentId,
       },
     });
     res.status(201).json(order);
@@ -115,6 +118,33 @@ export const getOrder = async (req: Request, res: Response) => {
 };
 
 export const addPaymentInfoFromRazorpay = async (
+  req: Request,
+  res: Response
+) => {
+  const {
+    razorpayPaymentId,
+    paymentStatus,
+    paymentMethod,
+    paymentMethodDetails,
+    amount
+  } = req.body;
+  try {
+    const payment = (await prisma.payment.create({
+      data: {
+        paymentId: razorpayPaymentId,
+        amount: amount,
+        status: paymentStatus,
+        method: paymentMethod,
+        paymentDetails: paymentMethodDetails,
+      },
+    }))
+    res.status(200).json(payment);
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+};
+
+export const updatePaymentInfoFromRazorpay = async (
   req: Request,
   res: Response
 ) => {
