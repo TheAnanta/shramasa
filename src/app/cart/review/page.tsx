@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import { MobileCartItem } from "../components/MobileCartItem";
 import { CartItem } from "../components/CartItem";
 import { FixedCartItem } from "../components/FixedCartItem";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RadioGroup } from "material-you-react";
+import Razorpay from "razorpay";
 
 const initializeRazorpay = () => {
   return new Promise((resolve) => {
@@ -24,7 +25,16 @@ const initializeRazorpay = () => {
   });
 };
 
-const makePayment = async (amount: number) => {
+const makePayment = async (
+  amount: number,
+  handler: (
+    razorpayPaymentId: string,
+    paymentStatus: string,
+    paymentMethodRazorpay: string,
+    paymentMethodDetails: any,
+    amount: number
+  ) => void
+) => {
   const res = await initializeRazorpay();
 
   if (!res) {
@@ -46,25 +56,31 @@ const makePayment = async (amount: number) => {
     order_id: data.id,
     description:
       "Thank you for your purchasing from Shramasa. We'll reach back to you with organics soon.",
-    // image:
-    //   "https://lh3.googleusercontent.com/9v_pYj1CXETeu4G_id_-dP7b_q8Ys_Ga05S01yvU0aKxRWkzkxJGa2qWXrkWXtYzVsFV4Tuj1aQE6d-KsJGD8fTFJQFrGTLofjL_IknxGreQXGelhAg4",
     handler: function (response: any) {
-      // TODO Validate payment at server - using webhooks is a better idea.
-      //assign paymentSuccessful to firebase
-      // addData("registrations", user?.uid, {
-      //   payment_state: 1,
-      //   paymentId: response.razorpay_payment_id,
-      //   orderId: response.razorpay_order_id,
-      //   signature: response.razorpay_signature,
-      // }).then((_) => {
-      //   setRegistrationStatus(true);
-      //   console.log(response);
-      // });
+      const razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY || "",
+        key_secret: process.env.RAZORPAY_SECRET,
+      });
+      razorpay.orders.fetchPayments(data.id).then((e: any) => {
+        handler(
+          response.razorpay_payment_id,
+          e.error == null ? "SUCCESS" : "FAILED",
+          e.items[0].method == "card"
+            ? e.items[0].card.type == "debit"
+              ? "DEBITCARD"
+              : "CREDITCARD"
+            : e.items[0].method.toString().toUppercase(),
+          e.items[0].method == "card"
+            ? e.items[0].card
+            : e.items[0].method == "netbanking"
+            ? e.items[0].bank
+            : e.items[0].method == "wallet"
+            ? e.items[0].wallet
+            : e.items[0].vpa,
+          amount
+        );
+      });
     },
-    // prefill: {
-    //   name: formState.firstName + " " + formState.lastName,
-    //   email: formState.email,
-    // },
   };
 
   const paymentObject = new (window as any).Razorpay(options);
@@ -83,6 +99,7 @@ export default function ReviewCartPage() {
   const couponId = searchParams.get("coupon");
   const user = useAuthContext();
   const [paymentMethod, setPaymentMethod] = useState("");
+  const router = useRouter();
 
   React.useEffect(() => {
     const getData = async () => {
@@ -408,9 +425,35 @@ export default function ReviewCartPage() {
             />
           </div>
           <button
-            onClick={() => {
-              if(paymentMethod == "Cash On Delivery") {
-                //TODO Order function
+            onClick={async () => {
+              const response = await fetch(
+                "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/orders/instantiate-order",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    userId: user?.uid,
+                    cartId: cart.cartId,
+                    addressId:
+                      userAddresses[userSelectedAddress || 0].addressId,
+                    couponCode: couponId,
+                    paymentMethod:
+                      paymentMethod == "Cash On Delivery"
+                        ? "CashOnDelivery"
+                        : "Razorpay",
+                  }),
+                }
+              );
+              if (paymentMethod == "Cash On Delivery") {
+                if (response.status == 201) {
+                  router.push(
+                    "/order/successful?id=" + (await response.json()).orderId
+                  );
+                } else {
+                  router.push("/order/failed");
+                }
                 return;
               }
               makePayment(
@@ -451,9 +494,39 @@ export default function ReviewCartPage() {
                         coupon.maxDiscount
                       ))
                   ).toFixed(2)
-                )
+                ),
+                (
+                  razorpayPaymentId: string,
+                  paymentStatus: string,
+                  paymentMethodRazorpay: string,
+                  paymentMethodDetails: any,
+                  amount: number
+                ) => {
+                  //TODO: create razorpay payment and update the order with the payment id
+                  fetch("/add-payment-info", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      razorpayPaymentId: razorpayPaymentId,
+                      paymentStatus: paymentStatus,
+                      paymentMethod: paymentMethodRazorpay,
+                      paymentMethodDetails: paymentMethodDetails,
+                      amount: amount,
+                    }),
+                  }).then(async (e) => {
+                    if (e.status == 201) {
+                      router.push(
+                        "/order/successful?id=" +
+                          (await response.json()).orderId
+                      );
+                    } else {
+                      router.push("/order/failed");
+                    }
+                  });
+                }
               );
-              localStorage.setItem("hasRegistered", "paymentPending");
             }}
             className="py-2 px-6 bg-[#46A627] rounded-full text-white font-bold"
           >
