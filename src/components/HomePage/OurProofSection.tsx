@@ -17,11 +17,7 @@ export function OurProofSection() {
   const loadMoreImages = () => {
     setImages((prevImages) => [
       ...prevImages,
-      "/images/proofs/badge_one.svg",
-      "/images/proofs/badge_one.svg",
-      "/images/proofs/badge_one.svg",
-      "/images/proofs/badge_one.svg",
-      "/images/proofs/badge_one.svg",
+      "/images/products/hair-care/all-hair-care/pro-kera-ultimate-repair-shampoo.jpg",
     ]);
   };
 
@@ -54,21 +50,18 @@ export function OurProofSection() {
   }, []);
 
   return (
-    <div className="dark:bg-neutral-800 bg-[#F2F2F2] grow rounded-3xl py-9 flex flex-col justify-between">
-      <p className="text-xl font-semibold px-9">Our proof</p>
-      <div
-        ref={scrollContainerRef}
-        className="flex overflow-x-auto scrollbar-hide"
-        style={{ scrollBehavior: "smooth" }}
-      >
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            className="size-20 mx-[1.125rem]"
-            alt={`badge ${index}`}
-          />
-        ))}
+    <div className="dark:bg-neutral-800 rounded-3xl py-2">
+      <div className="flex flex-col text-left items-center justify-center px-16">
+        <p className="text-xl font-bold">One of Top Products #1</p>
+        <img
+          src={
+            "/images/products/hair-care/all-hair-care/pro-kera-ultimate-repair-shampoo.jpg"
+          }
+          className="w-24 my-6"
+        />
+        <a href="/explore?categoryId=hair-care" className="hover:text-[#46a627] hover:underline bg-white hover:bg-white">
+          Explore Items
+        </a>
       </div>
     </div>
   );
