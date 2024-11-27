@@ -5,6 +5,7 @@ import { login, signup } from "@/lib/login_validations";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
+import Error from "@/components/Error";
 
 type AuthType = "login" | "signup";
 
@@ -12,7 +13,7 @@ export default function Page() {
   const [authType, setAuthType] = useState<AuthType>("login");
   const currentPageInfo = PageInfo[authType];
   const router = useRouter();
-
+  const [error, setError] = useState<string>("");
   return (
     <main className="md:h-screen h-auto w-screen flex">
       <div className="w-full h-max my-auto mx-auto flex flex-col justify-center items-center md:flex-row md:justify-around md:items-center">
@@ -36,6 +37,8 @@ export default function Page() {
               className="bg-neutral-300/50 border border-neutral-500/30 px-6 py-2 mb-2 rounded-3xl"
             />
           ))}
+          {error && <Error children={error} />}{" "}
+          {/* Render Error component here */}
           <div className="w-full flex flex-row">
             <button
               formAction={
@@ -46,13 +49,11 @@ export default function Page() {
               {currentPageInfo?.btnTxt}
             </button>
           </div>
-
           <div className="flex justify-center items-center gap-2">
             <div className="w-1/2 h-0.5 bg-neutral-300"></div>
             <p className="text-sm text-neutral-400 font-semibold">or</p>
             <div className="w-1/2 h-0.5 bg-neutral-300"></div>
           </div>
-
           <div
             onClick={() => {
               signInWithPopup(auth, new GoogleAuthProvider()).then(
@@ -92,7 +93,7 @@ export default function Page() {
                         if (request.status === 200) {
                           router.push("/");
                         } else {
-                          alert("Error: " + response.error);
+                          setError(response.error);
                         }
                       }, 1000);
                     } else {
@@ -116,7 +117,6 @@ export default function Page() {
               {currentPageInfo.oAuthTxt}
             </p>
           </div>
-
           <p
             onClick={() => setAuthType(currentPageInfo?.changeStateOption)}
             className="text-sm text-center space-x-4 cursor-pointer"
@@ -189,7 +189,7 @@ const PageInfo: Record<
         id: 4,
       },
     ],
-    oAuthTxt: "Sigup With Google",
+    oAuthTxt: "SignUp With Google",
     btnTxt: "Signup",
     alternative: {
       parent: "Already a user?",
