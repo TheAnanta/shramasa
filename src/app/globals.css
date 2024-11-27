@@ -10,7 +10,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.radio p{
+html {
+  background-color: white !important;
+}
+
+.radio p {
   color: #202023;
 }
 

@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import prisma from "../prismaClient";
-import { DiscountType, OrderStatus, PaymentStatus } from "@prisma/client";
+import { DiscountType, OrderStatus, PaymentStatus, PaymentMethod } from "@prisma/client";
 import { randomUUID } from "crypto";
 
 export const instantiateOrder = async (req: Request, res: Response) => {
   const { userId, cartId, addressId, couponCode, paymentMethod } = req.body;
   try {
+    console.log("123");
     const cartItems = (
       await Promise.all(
         (await prisma.cart.findUnique({
@@ -38,13 +39,23 @@ export const instantiateOrder = async (req: Request, res: Response) => {
     if (cartItems.length === 0) {
       return res.status(400).json({ error: "Cart is empty." });
     }
-    const coupon = (
+    console.log(cartItems);
+    const coupon = couponCode != null ? (
       await prisma.coupon.findMany({
         where: {
           code: couponCode,
         },
       })
-    )[0];
+    )[0] : {
+      couponId: "",
+      code: "",
+      discount: 0,
+      minCartValue: 0,
+      maxDiscount: 0,
+      type: DiscountType.AMOUNT,
+      validTill: new Date((new Date()).getTime() + 86400000),
+      isActive: true,
+    };
     const totalAmount = cartItems
       .map((e) => (e.price ?? 0) * e.quantity)
       .reduce((p, c) => p + c);
@@ -73,7 +84,7 @@ export const instantiateOrder = async (req: Request, res: Response) => {
       data: {
         paymentId: randomPaymentId,
         amount: totalAmount - discount,
-        paymentMethod: "COD",
+        method: PaymentMethod.COD,
       },
     })) : null;
 
@@ -89,6 +100,11 @@ export const instantiateOrder = async (req: Request, res: Response) => {
         paymentId: payment?.paymentId,
       },
     });
+    const deleteCartOps = await prisma.cart.delete({
+      where: {
+        cartId: cartId,
+      },
+    })
     res.status(201).json(order);
   } catch (error) {
     res.status(400).json({ error: error });
@@ -174,7 +190,7 @@ export const updatePaymentInfoFromRazorpay = async (
 export const updateOrder = async (
   orderId: string,
   data: any,
-  callback: (paymentId: string) => Promise<void>,
+  callback: (paymentId) => Promise<void>,
   res: Response
 ) => {
   try {

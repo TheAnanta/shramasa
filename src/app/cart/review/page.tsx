@@ -57,29 +57,35 @@ const makePayment = async (
     description:
       "Thank you for your purchasing from Shramasa. We'll reach back to you with organics soon.",
     handler: function (response: any) {
-      const razorpay = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY || "",
-        key_secret: process.env.RAZORPAY_SECRET,
-      });
-      razorpay.orders.fetchPayments(data.id).then((e: any) => {
-        handler(
-          response.razorpay_payment_id,
-          e.error == null ? "SUCCESS" : "FAILED",
-          e.items[0].method == "card"
-            ? e.items[0].card.type == "debit"
-              ? "DEBITCARD"
-              : "CREDITCARD"
-            : e.items[0].method.toString().toUppercase(),
-          e.items[0].method == "card"
-            ? e.items[0].card
-            : e.items[0].method == "netbanking"
-            ? e.items[0].bank
-            : e.items[0].method == "wallet"
-            ? e.items[0].wallet
-            : e.items[0].vpa,
-          amount
-        );
-      });
+      fetch("/api/payments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          payment_id: response.razorpay_payment_id,
+        }),
+      })
+        .then(async (e) => await e.json())
+        .then((e: any) => {
+          handler(
+            response.razorpay_payment_id,
+            e.error == null ? "SUCCESS" : "FAILED",
+            e.method == "card"
+              ? e.card.type == "debit"
+                ? "DEBITCARD"
+                : "CREDITCARD"
+              : e.method.toString().toUpperCase(),
+            e.method == "card"
+              ? e.card
+              : e.method == "netbanking"
+              ? e.bank
+              : e.method == "wallet"
+              ? e.wallet
+              : e.vpa,
+            amount
+          );
+        });
     },
   };
 
@@ -447,7 +453,9 @@ export default function ReviewCartPage() {
                 }
               );
               if (paymentMethod == "Cash On Delivery") {
+                console.log(response);
                 if (response.status == 201) {
+                  localStorage.removeItem("cart");
                   router.push(
                     "/order/successful?id=" + (await response.json()).orderId
                   );
@@ -503,25 +511,30 @@ export default function ReviewCartPage() {
                   amount: number
                 ) => {
                   //TODO: create razorpay payment and update the order with the payment id
-                  fetch("/add-payment-info", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      razorpayPaymentId: razorpayPaymentId,
-                      paymentStatus: paymentStatus,
-                      paymentMethod: paymentMethodRazorpay,
-                      paymentMethodDetails: paymentMethodDetails,
-                      amount: amount,
-                    }),
-                  }).then(async (e) => {
-                    if (e.status == 201) {
+                  fetch(
+                    "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/orders/add-payment-info",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        razorpayPaymentId: razorpayPaymentId,
+                        paymentStatus: paymentStatus,
+                        paymentMethod: paymentMethodRazorpay,
+                        paymentMethodDetails: paymentMethodDetails,
+                        amount: amount,
+                      }),
+                    }
+                  ).then(async (e) => {
+                    if (e.status == 201 || e.status == 200) {
+                      localStorage.removeItem("cart");
                       router.push(
                         "/order/successful?id=" +
                           (await response.json()).orderId
                       );
                     } else {
+                      console.log(e);
                       router.push("/order/failed");
                     }
                   });
