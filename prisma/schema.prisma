@@ -97,7 +97,7 @@ model Wishlist {
 
 model Review {
   reviewId   String   @id
-  userId     String
+  userId     String   @unique
   rating     Float
   reviewText String
   dateAdded  DateTime @default(now())
