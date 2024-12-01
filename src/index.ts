@@ -12,6 +12,7 @@ import adminRoutes from "./routes/admin/adminRoute";
 import addressRouter from "./routes/addressRoute";
 import reviewRouter from "./routes/reviewRoute";
 import nameRouter from "./routes/nameRoute";
+import similarCatalogueRouter from "./routes/similarCatalogueRouter";
 
 const app = express();
 app.use(express.json());
@@ -29,7 +30,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/address", addressRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/names", nameRouter);
-
+app.use("/api/catalogue", similarCatalogueRouter);
 app.listen(3001, () => {
   console.log("Server is running on http://localhost:3001");
 });
