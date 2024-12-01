@@ -177,3 +177,10 @@ model Carousel {
   image      String
   link       String
 }
+
+model Blogs {
+  blogId      Int      @id @default(autoincrement())
+  title       String
+  description String
+  date        DateTime
+}
