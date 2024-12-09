@@ -12,9 +12,9 @@ import CategoriesSection from "@/components/CategoriesSection";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between pb-24  mx-[8.25%]">
+      <CategoriesSection />
       <Hero />
       <NewSection />
-      <CategoriesSection />
       <div className="w-full space-y-3 my-6">
         <table>
           <tbody>
