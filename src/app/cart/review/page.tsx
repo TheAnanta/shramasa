@@ -503,7 +503,7 @@ export default function ReviewCartPage() {
                       ))
                   ).toFixed(2)
                 ),
-                (
+                async (
                   razorpayPaymentId: string,
                   paymentStatus: string,
                   paymentMethodRazorpay: string,
@@ -524,6 +524,7 @@ export default function ReviewCartPage() {
                         paymentMethod: paymentMethodRazorpay,
                         paymentMethodDetails: paymentMethodDetails,
                         amount: amount,
+                        orderId: (await response.json()).orderId
                       }),
                     }
                   ).then(async (e) => {

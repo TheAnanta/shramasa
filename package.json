@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@keyvaluesystems/react-stepper": "^1.0.4",
+    "@mui/material": "^6.1.10",
     "firebase": "^10.12.4",
     "material-you-react": "^0.0.1-beta.3.4",
     "next": "14.2.10",
