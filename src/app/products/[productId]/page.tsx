@@ -5,6 +5,7 @@ import { Product } from "@/types/interfaces";
 import React from "react";
 import Catalogue from "./Catalogue";
 import Error from "@/components/Error";
+import { useRouter } from "next/navigation";
 export default function ProductPage({
   params,
 }: {
@@ -19,7 +20,7 @@ export default function ProductPage({
   const user = useAuthContext();
   const [selectedVariant, setSelectedVariant] = React.useState(0);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-
+  const router = useRouter();
   const updateCart = async (
     quantity: number,
     variant: number,
@@ -311,6 +312,52 @@ export default function ProductPage({
                     </div>
                   </div>
                 )}
+                 <button
+                    className="py-2 px-6 font-semibold bg-[#4285F4] text-white rounded-full"
+                    onClick={() => {
+                      fetch(
+                        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/add-product-to-cart",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            productId: product?.productId,
+                            userId: user?.uid,
+                            variant: selectedVariant,
+                          }),
+                        }
+                      ).then(async (response) => {
+                        if (response.status == 200) {
+                          localStorage.setItem(
+                            "cart",
+                            JSON.stringify({
+                              items: [
+                                ...(JSON.parse(
+                                  localStorage.getItem("cart") ?? `{"items":[]}`
+                                )["items"] as any[]),
+                                {
+                                  productId: product?.productId,
+                                  quantity: 1,
+                                  variant: selectedVariant,
+                                },
+                              ],
+                            })
+                          );
+                          setCartItem(1);
+                          router.push("/cart");
+                        } else {
+                          alert(
+                            "Failed to add to cart. " +
+                              (await response.json())["error"]
+                          );
+                        }
+                      });
+                    }}
+                  >
+                    Buy Now
+                  </button>
                 <div
                   className="size-10 flex items-center justify-center border rounded-xl cursor-pointer"
                   onClick={() => {

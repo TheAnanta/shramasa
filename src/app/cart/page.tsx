@@ -43,25 +43,25 @@ export default function CartPage() {
             items:
               quantity == 0
                 ? (
-                    JSON.parse(localStorage.getItem("cart") ?? `{"items": []}`)[
-                      "items"
-                    ] as any[]
-                  ).filter(
-                    (item) =>
-                      item.productId !== productId && item.variant !== variant
-                  )
+                  JSON.parse(localStorage.getItem("cart") ?? `{"items": []}`)[
+                  "items"
+                  ] as any[]
+                ).filter(
+                  (item) =>
+                    item.productId !== productId && item.variant !== variant
+                )
                 : [
-                    ...(
-                      JSON.parse(
-                        localStorage.getItem("cart") ?? `{"items": []}`
-                      )["items"] as any[]
-                    ).filter((item) => item.productId !== productId),
-                    {
-                      productId: productId,
-                      quantity: quantity,
-                      variant: variant,
-                    },
-                  ],
+                  ...(
+                    JSON.parse(
+                      localStorage.getItem("cart") ?? `{"items": []}`
+                    )["items"] as any[]
+                  ).filter((item) => item.productId !== productId),
+                  {
+                    productId: productId,
+                    quantity: quantity,
+                    variant: variant,
+                  },
+                ],
           })
         );
         const newProductQuantities: any = {
@@ -248,10 +248,7 @@ export default function CartPage() {
               </span>
               <p className="text-xl font-bold">Your cart is empty</p>
               <p className="md:w-[65ch] mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-                assumenda quibusdam nesciunt voluptatem officiis laborum
-                corrupti. Similique laborum dolorum adipisci dolorem? Illo
-                cumque, recusandae doloribus rem excepturi unde. Esse, alias.
+                Explore from our range of body-safe chemicals used in cosmetics, hair care, and skin care products. From rejuvenating hair oils to nourishing skin treatments, each product is designed with the modern woman in mind—someone who values quality, safety, and sustainability.
               </p>
               <Link
                 href={"/explore"}
@@ -271,10 +268,10 @@ export default function CartPage() {
         onReviewCart={(address, deliveryMode) => {
           router.push(
             "/cart/review?address=" +
-              address +
-              "&deliveryMode=" +
-              deliveryMode +
-              (coupon && "&coupon=" + coupon)
+            address +
+            "&deliveryMode=" +
+            deliveryMode +
+            (coupon && "&coupon=" + coupon)
           );
         }}
       />
