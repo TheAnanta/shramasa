@@ -118,8 +118,9 @@ export default function ProductPage({
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch product data");
-        }
+          alert("Failed to fetch product data");
+	return;        
+}
 
         const data = await response.json();
         console.log(data);
