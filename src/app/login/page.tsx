@@ -16,7 +16,7 @@ export default function Page() {
   const [error, setError] = useState<string>("");
   return (
     <main className="md:h-screen h-auto w-screen flex">
-      <div className="w-full h-max my-auto mx-auto flex flex-col justify-center items-center md:flex-row md:justify-around md:items-center">
+      <div className="w-full h-max my-auto mx-auto flex flex-col-reverse justify-center items-center md:flex-row md:justify-around md:items-center">
         <img
           src="./images/products/hair-shampoo-banner.png"
           alt="shampoo showcase"

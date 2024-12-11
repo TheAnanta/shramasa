@@ -50,7 +50,7 @@ export default function CategoriesSection() {
           <a
             href={"/explore?categoryId=" + c.categoryId}
             key={c.categoryId}
-            className="w-full max-w-xl bg-white shadow-lg rounded-2xl overflow-hidden hover:transition transition duration-300"
+            className="w-full max-w-xl bg-white shadow-lg rounded-full overflow-hidden hover:transition transition duration-300"
           >
             <img
               src={"/images/banners/organic-cosmetics.jpg"}
