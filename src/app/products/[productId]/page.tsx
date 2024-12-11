@@ -1,6 +1,7 @@
 "use client";
 import { useAuthContext } from "@/app/context/AuthContext";
 import ProductCard from "@/components/ProductCard";
+import toast from "react-hot-toast";
 import { Product } from "@/types/interfaces";
 import React from "react";
 import Catalogue from "./Catalogue";
@@ -119,8 +120,8 @@ export default function ProductPage({
 
         if (!response.ok) {
           alert("Failed to fetch product data");
-	return;        
-}
+          return;
+        }
 
         const data = await response.json();
         console.log(data);
@@ -313,52 +314,52 @@ export default function ProductPage({
                     </div>
                   </div>
                 )}
-                 <button
-                    className="py-2 px-6 font-semibold bg-[#4285F4] text-white rounded-full"
-                    onClick={() => {
-                      fetch(
-                        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/add-product-to-cart",
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({
-                            productId: product?.productId,
-                            userId: user?.uid,
-                            variant: selectedVariant,
-                          }),
-                        }
-                      ).then(async (response) => {
-                        if (response.status == 200) {
-                          localStorage.setItem(
-                            "cart",
-                            JSON.stringify({
-                              items: [
-                                ...(JSON.parse(
-                                  localStorage.getItem("cart") ?? `{"items":[]}`
-                                )["items"] as any[]),
-                                {
-                                  productId: product?.productId,
-                                  quantity: 1,
-                                  variant: selectedVariant,
-                                },
-                              ],
-                            })
-                          );
-                          setCartItem(1);
-                          router.push("/cart");
-                        } else {
-                          alert(
-                            "Failed to add to cart. " +
-                              (await response.json())["error"]
-                          );
-                        }
-                      });
-                    }}
-                  >
-                    Buy Now
-                  </button>
+                <button
+                  className="py-2 px-6 font-semibold bg-[#4285F4] text-white rounded-full"
+                  onClick={() => {
+                    fetch(
+                      "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/cart/add-product-to-cart",
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          productId: product?.productId,
+                          userId: user?.uid,
+                          variant: selectedVariant,
+                        }),
+                      }
+                    ).then(async (response) => {
+                      if (response.status == 200) {
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify({
+                            items: [
+                              ...(JSON.parse(
+                                localStorage.getItem("cart") ?? `{"items":[]}`
+                              )["items"] as any[]),
+                              {
+                                productId: product?.productId,
+                                quantity: 1,
+                                variant: selectedVariant,
+                              },
+                            ],
+                          })
+                        );
+                        setCartItem(1);
+                        router.push("/cart");
+                      } else {
+                        alert(
+                          "Failed to add to cart. " +
+                            (await response.json())["error"]
+                        );
+                      }
+                    });
+                  }}
+                >
+                  Buy Now
+                </button>
                 <div
                   className="size-10 flex items-center justify-center border rounded-xl cursor-pointer"
                   onClick={() => {
@@ -505,54 +506,58 @@ export default function ProductPage({
                         ))}
                     </div>
                   )}
-                  <textarea
-                    title="review"
-                    className="border rounded-xl w-full mt-3"
-                    cols={40}
-                    rows={4}
-                    disabled={
-                      (product?.reviews?.filter(
-                        (review) => review.userId === user.uid
-                      ).length || 0) > 0
-                    }
-                    value={
-                      product?.reviews?.filter(
-                        (review) => review.userId === user.uid
-                      )[0]?.review
-                    }
-                    name="review"
-                  />
-                  <button
-                    formAction={async (formData) => {
-                      const body = {
-                        productId: params.productId,
-                        review: {
-                          userId: user.uid,
-                          name: user.displayName ?? "Anonymous User",
-                          rating: userRatingStar,
-                          review: formData.get("review"),
-                        },
-                      };
-
-                      const response = await fetch(
-                        "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/products/publish-product-review",
-                        {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify(body),
+                  {product?.reviews?.filter(
+                    (review) => review.userId === user.uid
+                  ).length === 0 ? (
+                    <>
+                      <textarea
+                        title="review"
+                        className="border rounded-xl w-full mt-3 p-4"
+                        cols={40}
+                        placeholder="Write your review for the product..."
+                        rows={4}
+                        disabled={
+                          (product?.reviews?.filter(
+                            (review) => review.userId === user.uid
+                          ).length || 0) > 0
                         }
-                      );
-                      if (response.status == 200) {
-                        alert("Review submitted successfully");
-                      } else {
-                        alert("Failed to submit review. ");
-                        // (await response.json())["message"]?.toString() ?? "");
-                      }
-                    }}
-                    className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full mt-3"
-                  >
-                    Submit
-                  </button>
+                        name="review"
+                      />
+                      <button
+                        formAction={async (formData) => {
+                          const body = {
+                            productId: params.productId,
+                            review: {
+                              userId: user.uid,
+                              name: user.displayName ?? "Anonymous User",
+                              rating: userRatingStar,
+                              review: formData.get("review"),
+                            },
+                          };
+
+                          const response = await fetch(
+                            "https://us-central1-shramasa-care.cloudfunctions.net/webApi/api/products/publish-product-review",
+                            {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify(body),
+                            }
+                          );
+                          if (response.status == 200) {
+                            toast.success("Review submitted successfully");
+                          } else {
+                            alert("Failed to submit review. ");
+                            // (await response.json())["message"]?.toString() ?? "");
+                          }
+                        }}
+                        className="py-2 px-6 font-semibold bg-[#46A627] text-white rounded-full mt-3"
+                      >
+                        Submit
+                      </button>
+                    </>
+                  ) : (
+                    <div></div>
+                  )}
                 </form>
               </div>
             )}
