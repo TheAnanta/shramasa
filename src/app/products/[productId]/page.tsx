@@ -281,6 +281,7 @@ export default function ProductPage({
                               ],
                             })
                           );
+                          toast.success("Add Product to the cart")
                           setCartItem(1);
                         } else {
                           alert(
@@ -348,6 +349,7 @@ export default function ProductPage({
                           })
                         );
                         setCartItem(1);
+                        toast.success("Proceed to Checkout...")
                         router.push("/cart");
                       } else {
                         alert(
