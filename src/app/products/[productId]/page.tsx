@@ -3,7 +3,7 @@ import { useAuthContext } from "@/app/context/AuthContext";
 import ProductCard from "@/components/ProductCard";
 import toast from "react-hot-toast";
 import { Product } from "@/types/interfaces";
-import React from "react";
+import React, { useState } from "react";
 import Catalogue from "./Catalogue";
 import Error from "@/components/Error";
 import { useRouter } from "next/navigation";
@@ -17,8 +17,9 @@ export default function ProductPage({
   const [product, setProduct] = React.useState<Product>();
   const [userRatingStar, setUserRatingStar] = React.useState(0);
   const [cartItem, setCartItem] = React.useState(0);
-  const [isWishlisted, setIsWishlisted] = React.useState(false);
+  const [isWishlisted, setIsWishlisted] = React.useState(true);
   const user = useAuthContext();
+  const [loading, setLoading] = useState<Boolean>(false);
   const [selectedVariant, setSelectedVariant] = React.useState(0);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const router = useRouter();
@@ -125,7 +126,7 @@ export default function ProductPage({
 
         const data = await response.json();
         console.log(data);
-
+        setLoading(false);
         setProduct(data);
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -143,11 +144,18 @@ export default function ProductPage({
           className="mt-[20px] space-x-[2.77%] flex
     lg:flex-row items-center lg:items-start justify-center flex-col"
         >
-          <img
-            src={product?.images[0]}
-            alt="product_image"
-            className="rounded-xl w-[600px] pb-12 lg:pb-0 object-cover md:aspect-[0.85]"
-          />
+          {" "}
+          {!loading ? (
+            <img
+              src={product?.images[0]}
+              alt="product_image"
+              className="rounded-xl w-[600px] pb-12 lg:pb-0 object-cover md:aspect-[0.85]"
+            />
+          ) : (
+            <div className="w-screen h-screen flex justify-center items-center">
+              <img src="/loading.gif" className="w-1/4" />
+            </div>
+          )}
           <div className="flex flex-col items-start justify-start lg:w-1/2 xl:w-auto">
             <div className="flex pt-4 pb-4 gap-x-2 justify-between items-start w-full">
               <div>
@@ -281,7 +289,7 @@ export default function ProductPage({
                               ],
                             })
                           );
-                          toast.success("Add Product to the cart")
+                          toast.success("Add Product to the cart");
                           setCartItem(1);
                         } else {
                           alert(
@@ -349,7 +357,7 @@ export default function ProductPage({
                           })
                         );
                         setCartItem(1);
-                        toast.success("Proceed to Checkout...")
+                        toast.success("Proceed to Checkout...");
                         router.push("/cart");
                       } else {
                         alert(

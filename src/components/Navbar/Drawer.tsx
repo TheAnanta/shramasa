@@ -37,8 +37,8 @@ export default function Drawer({ isOpen, toggle }: NavbarProps) {
             <a href="/my-account" className="">
               My Account
             </a>
-            <a href="/cart">Cart</a>
-            <a href="/wishlist">WishList</a>
+            <a href="/my-account/cart">Cart</a>
+            <a href="/my-account/wishlist">WishList</a>
           </div>
         ) : (
           <a href="/login">Login / SignUp</a>
