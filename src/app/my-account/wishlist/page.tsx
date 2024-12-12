@@ -72,9 +72,11 @@ export default function Page() {
               variantName={item?.variants[0]}
               variant={item?.variants[0]}
               onRemove={(productId: string) => {
+                setLoading(true); // Set loading to true when removing item
                 setWishlist(
                   wishlist.filter((item: any) => item.productId !== productId)
                 );
+                setLoading(false); // Set loading to false after removing item
               }}
             />
           ))}
